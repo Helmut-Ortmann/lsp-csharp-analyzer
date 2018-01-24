@@ -1,6 +1,8 @@
 # LSP Analyzer
 
-A windows C# GUI to analyze code by the help of a Language Server. LSP Analyzer is based on the C# Implementation [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol). 
+A windows C# GUI to analyse code with the help of a Language Server. LSP Analyzer is based on the C# Implementation [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol). 
+
+![](../../wiki/images/LspAnalyzer.png)
 
 ## Goals
 
@@ -62,6 +64,7 @@ Great support by [CQuery C/C++ language server](https://github.com/cquery-projec
 - [CQuery C/C++ language server](https://github.com/cquery-project/cquery)
 - [Language Server Protocol](https://microsoft.github.io/language-server-protocol/)
 - [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol), the C# implementation of LSP here used
+- [Wiki](../../wiki)
 
 
  

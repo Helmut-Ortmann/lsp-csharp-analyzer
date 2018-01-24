@@ -1,0 +1,13 @@
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\bin\Release\netstandard2.0\OmniSharp.Extensions.LanguageClient.deps.json
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\bin\Release\netstandard2.0\OmniSharp.Extensions.LanguageClient.dll
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\bin\Release\netstandard2.0\OmniSharp.Extensions.LanguageClient.pdb
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\bin\Release\netstandard2.0\OmniSharp.Extensions.JsonRpc.dll
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\bin\Release\netstandard2.0\OmniSharp.Extensions.LanguageProtocol.dll
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\bin\Release\netstandard2.0\OmniSharp.Extensions.JsonRpc.pdb
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\bin\Release\netstandard2.0\OmniSharp.Extensions.LanguageProtocol.pdb
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\obj\Release\netstandard2.0\Client.csprojResolveAssemblyReference.cache
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\obj\Release\netstandard2.0\Client.csproj.CoreCompileInputs.cache
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\obj\Release\netstandard2.0\Client.AssemblyInfoInputs.cache
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\obj\Release\netstandard2.0\Client.AssemblyInfo.cs
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\obj\Release\netstandard2.0\OmniSharp.Extensions.LanguageClient.dll
+D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Client\obj\Release\netstandard2.0\OmniSharp.Extensions.LanguageClient.pdb

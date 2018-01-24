@@ -19,3 +19,4 @@ D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-prot
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-protocol\JsonRpc\obj\Debug\net46\JsonRpc.AssemblyInfo.cs
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-protocol\JsonRpc\obj\Debug\net46\OmniSharp.Extensions.JsonRpc.dll
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-protocol\JsonRpc\obj\Debug\net46\OmniSharp.Extensions.JsonRpc.pdb
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-protocol\JsonRpc\obj\Debug\net46\JsonRpc.csprojResolveAssemblyReference.cache

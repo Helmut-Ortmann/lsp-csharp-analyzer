@@ -137,3 +137,13 @@ D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\Seril
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\obj\Debug\LspAnalyzer.exe
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\obj\Debug\LspAnalyzer.pdb
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Reactive.Core.dll
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Reactive.Interfaces.dll
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Reactive.Linq.dll
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Reactive.PlatformServices.dll
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Reactive.Windows.Threading.dll
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Reactive.Core.xml
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Reactive.Interfaces.xml
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Reactive.Linq.xml
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Reactive.PlatformServices.xml
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Reactive.Windows.Threading.xml

@@ -15,4 +15,3 @@ D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-prot
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-protocol\JsonRpc\obj\Debug\netstandard1.6\JsonRpc.AssemblyInfo.cs
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-protocol\JsonRpc\obj\Debug\netstandard1.6\OmniSharp.Extensions.JsonRpc.dll
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-protocol\JsonRpc\obj\Debug\netstandard1.6\OmniSharp.Extensions.JsonRpc.pdb
-D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-protocol\JsonRpc\obj\Debug\netstandard1.6\JsonRpc.csprojResolveAssemblyReference.cache

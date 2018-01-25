@@ -29,15 +29,14 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
-            this.txtServerExe = new System.Windows.Forms.TextBox();
             this.txtServerPath = new System.Windows.Forms.TextBox();
             this.lblServer = new System.Windows.Forms.Label();
-            this.txtServerPid = new System.Windows.Forms.TextBox();
+            this.txtServerState = new System.Windows.Forms.TextBox();
             this.grdServerCapabilities = new System.Windows.Forms.DataGridView();
             this.txtWorkspace = new System.Windows.Forms.TextBox();
             this.txtDocument = new System.Windows.Forms.TextBox();
@@ -88,7 +87,6 @@ namespace LspAnalyzer
             this.panel3 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.txtReferencesFilter = new System.Windows.Forms.TextBox();
-            this.labelReferencesSymbol = new System.Windows.Forms.Label();
             this.txtReferencesSymbolName = new System.Windows.Forms.TextBox();
             this.txtReferenceSymbol = new System.Windows.Forms.TextBox();
             this.grdReferences = new System.Windows.Forms.DataGridView();
@@ -108,12 +106,16 @@ namespace LspAnalyzer
             this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lpoadServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.defineCSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lSPSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filterSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.lpoadServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.defineCSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.label13 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -166,19 +168,11 @@ namespace LspAnalyzer
             this.btnShutDown.UseVisualStyleBackColor = true;
             this.btnShutDown.Click += new System.EventHandler(this.btnShutDown_Click);
             // 
-            // txtServerExe
-            // 
-            this.txtServerExe.Location = new System.Drawing.Point(79, 3);
-            this.txtServerExe.Name = "txtServerExe";
-            this.txtServerExe.Size = new System.Drawing.Size(113, 20);
-            this.txtServerExe.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.txtServerExe, "The *.exe file of the server");
-            // 
             // txtServerPath
             // 
-            this.txtServerPath.Location = new System.Drawing.Point(286, 4);
+            this.txtServerPath.Location = new System.Drawing.Point(185, 4);
             this.txtServerPath.Name = "txtServerPath";
-            this.txtServerPath.Size = new System.Drawing.Size(498, 20);
+            this.txtServerPath.Size = new System.Drawing.Size(747, 20);
             this.txtServerPath.TabIndex = 1;
             this.toolTip1.SetToolTip(this.txtServerPath, "Full path of LSP server exe file.");
             // 
@@ -192,13 +186,14 @@ namespace LspAnalyzer
             this.lblServer.TabIndex = 2;
             this.lblServer.Text = "Server";
             // 
-            // txtServerPid
+            // txtServerState
             // 
-            this.txtServerPid.Location = new System.Drawing.Point(198, 4);
-            this.txtServerPid.Name = "txtServerPid";
-            this.txtServerPid.Size = new System.Drawing.Size(82, 20);
-            this.txtServerPid.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.txtServerPid, "State of the server");
+            this.txtServerState.Location = new System.Drawing.Point(79, 4);
+            this.txtServerState.Name = "txtServerState";
+            this.txtServerState.ReadOnly = true;
+            this.txtServerState.Size = new System.Drawing.Size(95, 20);
+            this.txtServerState.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.txtServerState, "State of the server");
             // 
             // grdServerCapabilities
             // 
@@ -207,14 +202,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle7;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -229,16 +224,18 @@ namespace LspAnalyzer
             // 
             this.txtWorkspace.Location = new System.Drawing.Point(79, 30);
             this.txtWorkspace.Name = "txtWorkspace";
-            this.txtWorkspace.Size = new System.Drawing.Size(705, 20);
+            this.txtWorkspace.Size = new System.Drawing.Size(853, 20);
             this.txtWorkspace.TabIndex = 5;
-            this.toolTip1.SetToolTip(this.txtWorkspace, "Workspace C/C++.\r\n\r\nThe root directory of your C/C++ code");
+            this.toolTip1.SetToolTip(this.txtWorkspace, "Workspace  with e.g your C/C++ code.\r\n\r\nThe root directory of your thing to analy" +
+        "ze by the specified language server.");
             // 
             // txtDocument
             // 
             this.txtDocument.Location = new System.Drawing.Point(79, 56);
             this.txtDocument.Name = "txtDocument";
-            this.txtDocument.Size = new System.Drawing.Size(705, 20);
+            this.txtDocument.Size = new System.Drawing.Size(853, 20);
             this.txtDocument.TabIndex = 6;
+            this.toolTip1.SetToolTip(this.txtDocument, "The document to handle.Depending of the context this field is input/output.");
             // 
             // label1
             // 
@@ -265,7 +262,7 @@ namespace LspAnalyzer
             // 
             // txtSymbol
             // 
-            this.txtSymbol.Location = new System.Drawing.Point(367, 1);
+            this.txtSymbol.Location = new System.Drawing.Point(441, 1);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(1);
             this.txtSymbol.Name = "txtSymbol";
             this.txtSymbol.Size = new System.Drawing.Size(193, 20);
@@ -379,6 +376,8 @@ namespace LspAnalyzer
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.label12);
+            this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.txtWsSymbolKind);
             this.panel2.Controls.Add(this.txtWsSymbolFile);
@@ -395,14 +394,14 @@ namespace LspAnalyzer
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(3, 3);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 15);
+            this.label3.Size = new System.Drawing.Size(44, 15);
             this.label3.TabIndex = 1;
-            this.label3.Text = "Filter";
+            this.label3.Text = "Name:";
             this.toolTip1.SetToolTip(this.label3, resources.GetString("label3.ToolTip"));
             // 
             // txtWsSymbolKind
             // 
-            this.txtWsSymbolKind.Location = new System.Drawing.Point(203, 0);
+            this.txtWsSymbolKind.Location = new System.Drawing.Point(286, 1);
             this.txtWsSymbolKind.Name = "txtWsSymbolKind";
             this.txtWsSymbolKind.Size = new System.Drawing.Size(337, 20);
             this.txtWsSymbolKind.TabIndex = 0;
@@ -411,18 +410,18 @@ namespace LspAnalyzer
             // 
             // txtWsSymbolFile
             // 
-            this.txtWsSymbolFile.Location = new System.Drawing.Point(546, 1);
+            this.txtWsSymbolFile.Location = new System.Drawing.Point(668, 1);
             this.txtWsSymbolFile.Name = "txtWsSymbolFile";
-            this.txtWsSymbolFile.Size = new System.Drawing.Size(225, 20);
+            this.txtWsSymbolFile.Size = new System.Drawing.Size(251, 20);
             this.txtWsSymbolFile.TabIndex = 0;
             this.toolTip1.SetToolTip(this.txtWsSymbolFile, resources.GetString("txtWsSymbolFile.ToolTip"));
             this.txtWsSymbolFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtWsSymbol_KeyPress);
             // 
             // txtWsSymbolName
             // 
-            this.txtWsSymbolName.Location = new System.Drawing.Point(43, 0);
+            this.txtWsSymbolName.Location = new System.Drawing.Point(53, 2);
             this.txtWsSymbolName.Name = "txtWsSymbolName";
-            this.txtWsSymbolName.Size = new System.Drawing.Size(150, 20);
+            this.txtWsSymbolName.Size = new System.Drawing.Size(183, 20);
             this.txtWsSymbolName.TabIndex = 0;
             this.toolTip1.SetToolTip(this.txtWsSymbolName, resources.GetString("txtWsSymbolName.ToolTip"));
             this.txtWsSymbolName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtWsSymbol_KeyPress);
@@ -552,11 +551,11 @@ namespace LspAnalyzer
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(628, 6);
+            this.label11.Location = new System.Drawing.Point(696, 4);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(65, 15);
+            this.label11.Size = new System.Drawing.Size(38, 15);
             this.label11.TabIndex = 5;
-            this.label11.Text = "Filter/Kind:";
+            this.label11.Text = "\'Kind\'";
             // 
             // label9
             // 
@@ -564,23 +563,23 @@ namespace LspAnalyzer
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(4, 4);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(48, 15);
+            this.label9.Size = new System.Drawing.Size(41, 15);
             this.label9.TabIndex = 3;
-            this.label9.Text = "Symbol";
+            this.label9.Text = "Name";
             // 
             // txtDocumentKind
             // 
-            this.txtDocumentKind.Location = new System.Drawing.Point(699, 4);
+            this.txtDocumentKind.Location = new System.Drawing.Point(740, 3);
             this.txtDocumentKind.Name = "txtDocumentKind";
-            this.txtDocumentKind.Size = new System.Drawing.Size(135, 20);
+            this.txtDocumentKind.Size = new System.Drawing.Size(179, 20);
             this.txtDocumentKind.TabIndex = 2;
             this.txtDocumentKind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDocumentKind_KeyPress);
             // 
             // txtDocumentSymbolComplete
             // 
-            this.txtDocumentSymbolComplete.Location = new System.Drawing.Point(356, 3);
+            this.txtDocumentSymbolComplete.Location = new System.Drawing.Point(417, 3);
             this.txtDocumentSymbolComplete.Name = "txtDocumentSymbolComplete";
-            this.txtDocumentSymbolComplete.Size = new System.Drawing.Size(252, 20);
+            this.txtDocumentSymbolComplete.Size = new System.Drawing.Size(273, 20);
             this.txtDocumentSymbolComplete.TabIndex = 1;
             // 
             // txtDocumentSymbolName
@@ -685,7 +684,6 @@ namespace LspAnalyzer
             // 
             this.panel3.Controls.Add(this.label4);
             this.panel3.Controls.Add(this.txtReferencesFilter);
-            this.panel3.Controls.Add(this.labelReferencesSymbol);
             this.panel3.Controls.Add(this.txtReferencesSymbolName);
             this.panel3.Controls.Add(this.txtReferenceSymbol);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -698,7 +696,7 @@ namespace LspAnalyzer
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(690, 5);
+            this.label4.Location = new System.Drawing.Point(645, 5);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 15);
             this.label4.TabIndex = 4;
@@ -706,32 +704,22 @@ namespace LspAnalyzer
             // 
             // txtReferencesFilter
             // 
-            this.txtReferencesFilter.Location = new System.Drawing.Point(733, 4);
+            this.txtReferencesFilter.Location = new System.Drawing.Point(688, 4);
             this.txtReferencesFilter.Name = "txtReferencesFilter";
-            this.txtReferencesFilter.Size = new System.Drawing.Size(153, 20);
+            this.txtReferencesFilter.Size = new System.Drawing.Size(231, 20);
             this.txtReferencesFilter.TabIndex = 3;
-            // 
-            // labelReferencesSymbol
-            // 
-            this.labelReferencesSymbol.AutoSize = true;
-            this.labelReferencesSymbol.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelReferencesSymbol.Location = new System.Drawing.Point(4, 4);
-            this.labelReferencesSymbol.Name = "labelReferencesSymbol";
-            this.labelReferencesSymbol.Size = new System.Drawing.Size(51, 15);
-            this.labelReferencesSymbol.TabIndex = 2;
-            this.labelReferencesSymbol.Text = "Symbol:";
             // 
             // txtReferencesSymbolName
             // 
-            this.txtReferencesSymbolName.Location = new System.Drawing.Point(61, 4);
+            this.txtReferencesSymbolName.Location = new System.Drawing.Point(3, 3);
             this.txtReferencesSymbolName.Name = "txtReferencesSymbolName";
             this.txtReferencesSymbolName.ReadOnly = true;
-            this.txtReferencesSymbolName.Size = new System.Drawing.Size(305, 20);
+            this.txtReferencesSymbolName.Size = new System.Drawing.Size(316, 20);
             this.txtReferencesSymbolName.TabIndex = 1;
             // 
             // txtReferenceSymbol
             // 
-            this.txtReferenceSymbol.Location = new System.Drawing.Point(381, 5);
+            this.txtReferenceSymbol.Location = new System.Drawing.Point(325, 4);
             this.txtReferenceSymbol.Name = "txtReferenceSymbol";
             this.txtReferenceSymbol.ReadOnly = true;
             this.txtReferenceSymbol.Size = new System.Drawing.Size(303, 20);
@@ -788,6 +776,7 @@ namespace LspAnalyzer
             this.flowLayoutPanel1.Controls.Add(this.btnWsSymbol);
             this.flowLayoutPanel1.Controls.Add(this.btnDocumentSymbol);
             this.flowLayoutPanel1.Controls.Add(this.btnShutDown);
+            this.flowLayoutPanel1.Controls.Add(this.label13);
             this.flowLayoutPanel1.Controls.Add(this.txtSymbol);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(2, 416);
@@ -906,8 +895,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle8;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(922, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -919,9 +908,8 @@ namespace LspAnalyzer
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.txtDocument);
             this.panel1.Controls.Add(this.txtWorkspace);
-            this.panel1.Controls.Add(this.txtServerPid);
+            this.panel1.Controls.Add(this.txtServerState);
             this.panel1.Controls.Add(this.txtServerPath);
-            this.panel1.Controls.Add(this.txtServerExe);
             this.panel1.Controls.Add(this.lblServer);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 25);
@@ -949,11 +937,29 @@ namespace LspAnalyzer
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 18);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // lpoadServerToolStripMenuItem
+            // 
+            this.lpoadServerToolStripMenuItem.Name = "lpoadServerToolStripMenuItem";
+            this.lpoadServerToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.lpoadServerToolStripMenuItem.Text = "Define Language Server";
+            this.lpoadServerToolStripMenuItem.ToolTipText = "Define the LSP server to use. The *.exe file which represents the LSP server.\r\n\r\n" +
+    "Currently only CQuery (https://github.com/cquery-project/cquery) is supported.";
+            this.lpoadServerToolStripMenuItem.Click += new System.EventHandler(this.lpoadServerToolStripMenuItem_Click);
+            // 
+            // defineCSourceToolStripMenuItem
+            // 
+            this.defineCSourceToolStripMenuItem.Name = "defineCSourceToolStripMenuItem";
+            this.defineCSourceToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.defineCSourceToolStripMenuItem.Text = "Define Workspace";
+            this.defineCSourceToolStripMenuItem.ToolTipText = "Define the root directory of your workspace.\r\n\r\ne.g. root of your C/C++ code.";
+            this.defineCSourceToolStripMenuItem.Click += new System.EventHandler(this.defineCSourceToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lSPSpecificationToolStripMenuItem,
-            this.filterSpecificationToolStripMenuItem});
+            this.filterSpecificationToolStripMenuItem,
+            this.helpToolStripMenuItem1});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 18);
             this.helpToolStripMenuItem.Text = "Help";
@@ -972,22 +978,46 @@ namespace LspAnalyzer
             this.filterSpecificationToolStripMenuItem.Text = "Filter Specification";
             this.filterSpecificationToolStripMenuItem.Click += new System.EventHandler(this.filterSpecificationToolStripMenuItem_Click);
             // 
-            // lpoadServerToolStripMenuItem
+            // label10
             // 
-            this.lpoadServerToolStripMenuItem.Name = "lpoadServerToolStripMenuItem";
-            this.lpoadServerToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.lpoadServerToolStripMenuItem.Text = "Define server";
-            this.lpoadServerToolStripMenuItem.ToolTipText = "Define the LSP server to use. The *.exe file which represents the LSP server.\r\n\r\n" +
-    "Currently only CQuery (https://github.com/cquery-project/cquery) is supported.";
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(242, 3);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(35, 15);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Kind:";
             // 
-            // defineCSourceToolStripMenuItem
+            // label12
             // 
-            this.defineCSourceToolStripMenuItem.Name = "defineCSourceToolStripMenuItem";
-            this.defineCSourceToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.defineCSourceToolStripMenuItem.Text = "Define C source";
-            this.defineCSourceToolStripMenuItem.ToolTipText = "Define the root directory of your C/C++ code.";
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(629, 3);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(30, 15);
+            this.label12.TabIndex = 1;
+            this.label12.Text = "File:";
             // 
-            // LspManager
+            // helpToolStripMenuItem1
+            // 
+            this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(171, 22);
+            this.helpToolStripMenuItem1.Text = "Help";
+            this.helpToolStripMenuItem1.ToolTipText = "Show Wiki";
+            this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(386, 2);
+            this.label13.Margin = new System.Windows.Forms.Padding(20, 2, 3, 2);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(51, 15);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "Symbol:";
+            // 
+            // LspAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -995,7 +1025,9 @@ namespace LspAnalyzer
             this.Controls.Add(this.tblGui);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "LspAnalyzer";
-            this.Text = "LSP Manager";
+            this.Text = "LSP Analyzer";
+            this.toolTip1.SetToolTip(this, "Tool to:\r\n- Test a laguage server features\r\n- Analyze a language supported by a l" +
+        "anguange server ");
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LspManager_FormClosed);
             this.Load += new System.EventHandler(this.LspManager_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).EndInit();
@@ -1042,10 +1074,9 @@ namespace LspAnalyzer
 
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Button btnShutDown;
-        private System.Windows.Forms.TextBox txtServerExe;
         private System.Windows.Forms.TextBox txtServerPath;
         private System.Windows.Forms.Label lblServer;
-        private System.Windows.Forms.TextBox txtServerPid;
+        private System.Windows.Forms.TextBox txtServerState;
         private System.Windows.Forms.DataGridView grdServerCapabilities;
         private System.Windows.Forms.TextBox txtWorkspace;
         private System.Windows.Forms.TextBox txtDocument;
@@ -1086,7 +1117,6 @@ namespace LspAnalyzer
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtReferencesFilter;
-        private System.Windows.Forms.Label labelReferencesSymbol;
         private System.Windows.Forms.TextBox txtReferencesSymbolName;
         private System.Windows.Forms.TextBox txtReferenceSymbol;
         private System.Windows.Forms.DataGridView grdReferences;
@@ -1122,6 +1152,10 @@ namespace LspAnalyzer
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ToolStripMenuItem lpoadServerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem defineCSourceToolStripMenuItem;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
+        private System.Windows.Forms.Label label13;
     }
 }
 

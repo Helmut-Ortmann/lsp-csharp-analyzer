@@ -95,12 +95,8 @@ namespace LspAnalyzer
 
 
         private string _resourceDirectory = @"../lib/LLVM-5.0.1-win64/lib/clang/5.0.1/";
-        private string _lspServerCompilationDatabaseDirectory = null;
-           // @"d:/hoData/Development/GitHub/LSP/cquery/build/release/";//compile_commands.json";
-        //private string _compilationDatabaseDirectory =
-        //    "C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Community\\VC\\Tools\\MSVC\\14.12.25827\\bin\\HostX64\\x64\\";
-
-        //private string _documentPath = @"d:\hoData\Projects\00Current\ZF\Work\source\amm.c";
+        private readonly string _lspServerCompilationDatabaseDirectory = null;
+        
         public LspAnalyzer()
         {
             InitializeComponent();
@@ -119,9 +115,7 @@ namespace LspAnalyzer
             _loggerFactory.AddSerilog();
             Log.Logger.Information($"Start logging LSP Sample Client PID={Process.GetCurrentProcess().Id}");
             _logger = _loggerFactory.CreateLogger<LspAnalyzer>();
-            //_logger.LogInformation("Test: LogInformation");
-            //_logger.LogDebug("Test: Debug");
-            //_logger.LogError("Test: Error");
+
         }
         /// <summary>
         /// Initialize GUI fields
@@ -170,7 +164,7 @@ namespace LspAnalyzer
 
             _bsServerCapabilities.DataSource = _dtServerCapabilities;
             _bsClientCapabilities.DataSource = _dtClientCapabilities;
-            ServerProcessState(txtServerPid);
+            ServerProcessState(txtServerState);
             btnRun.Enabled = true;
             tabDocument.SelectedTab = tabCapabilities;
             
@@ -240,7 +234,7 @@ namespace LspAnalyzer
                 }
             );
             Log.Information($"Background Shutdown server ended");
-            ServerProcessState(txtServerPid);
+            ServerProcessState(txtServerState);
             btnShutDown.Enabled = true;
         }
 
@@ -269,15 +263,22 @@ namespace LspAnalyzer
 
         private void LspManager_Load(object sender, EventArgs e)
         {
-            txtServerExe.Text = Path.GetFileName(_lspServerPath);
             txtServerPath.Text = _lspServerPath;
             txtWorkspace.Text = _workSpacePath;
             
             //txtDocument.Text = _documentPath.Replace(_workSpacePath, "").TrimStart('\\');
-            txtServerPid.Text = "";
+            txtServerState.Text = "";
             grdServerCapabilities.DataSource = _bsServerCapabilities;
             grdClientCapabilities.DataSource = _bsClientCapabilities;
             grdWorkspaceSymbols.DataSource = _bsServerSymbols;
+
+            // Tooltips dynamic
+            grdClientCapabilities.ShowCellToolTips = false;
+            grdServerCapabilities.ShowCellToolTips = false;
+            grdWorkspaceSymbols.ShowCellToolTips = false;
+            grdDocument.ShowCellToolTips = false;
+            grdReferences.ShowCellToolTips = false;
+
 
             // Make an Aggregate filters 
             _aggregateFilterSymbol = new AggregateGridFilter(
@@ -919,6 +920,49 @@ namespace LspAnalyzer
                 toolTip1.Hide((DataGridView) sender);
             }
 
+        }
+
+        private void defineCSourceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using(var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    _workSpacePath = fbd.SelectedPath;
+                    txtWorkspace.Text = _workSpacePath;
+
+                }
+            }
+        }
+
+        private void lpoadServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_serverProcess != null && _serverProcess.IsRunning)
+            {
+                MessageBox.Show("Can't change a running server", "Server is running, Break");
+            }
+            else
+            {
+                OpenFileDialog serverPathOpenDialog = new OpenFileDialog();
+                serverPathOpenDialog.Filter = @"Exe Files (*.exe)|*.exe|All File (*.*)|*.*";
+                serverPathOpenDialog.FilterIndex = 1;
+
+                serverPathOpenDialog.Multiselect = false;
+                if (serverPathOpenDialog.ShowDialog() == DialogResult.OK)    
+                {     
+                    _lspServerPath = serverPathOpenDialog.FileName;
+                    txtServerPath.Text = _lspServerPath;
+
+                }
+            }
+
+        }
+
+        private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/Helmut-Ortmann/lsp-csharp-analyzer/wiki");
         }
     }
 }

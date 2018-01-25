@@ -1,6 +1,8 @@
 # LSP Analyzer
 
-A windows C# GUI to analyse code with the help of a Language Server. LSP Analyzer is based on the C# Implementation [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol). 
+A Windows C# [GUI](../../wiki/Gui) to analyse code with the help of a Language Server. LSP Analyzer is based on the C# framework [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol). As a language server, I decided to use C/C++ language server [CQuery](https://github.com/cquery-project/cquery).
+
+The concept is to use arbitrary language servers and to configure them by JSON as it is done by editors.
 
 ![](../../wiki/images/LspAnalyzer.png)
 
@@ -11,16 +13,17 @@ A windows C# GUI to analyse code with the help of a Language Server. LSP Analyze
 - Analyze code
   - Required Interfaces
   - Provided Interfaces
-  - Connect an UML tool with code
+  - Connect an UML/SysML tool with code
+- Arbitrary language servers
 
 ## Features
 
 LSP Analyzer supports the following features:
 
-- GUI
+- [GUI](../../wiki/Gui)
   - Grid
-  - Filter
-  - Open in Editor 
+  - [Filter](../../wiki/Filter)
+  - Open in Editor (currently onle VS Code) 
 - Choose language server
 - Choose wokspace with code or whatever
   - Symbol
@@ -28,6 +31,14 @@ LSP Analyzer supports the following features:
   - Reference
   - Highlight
   - Hover
+- Extensible
+
+## Supported Servers
+
+-  [CQuery C/C++ language server](https://github.com/cquery-project/cquery)
+-  Servers with stdio protocol
+-  The basic framework [CQuery C/C++ language server](https://github.com/cquery-project/cquery) supports all types
+
 
 ## Based on
 
@@ -41,7 +52,7 @@ The implementation of the language-server-protocol in C#.
 
 ## State
 
--  In migration from local usage to GITHUB (not yet usuable)
+-  In migration from local usage to GitHub
 -  Tested with [CQuery C/C++ language server](https://github.com/cquery-project/cquery) 
 
 ## Installation
@@ -50,14 +61,20 @@ The implementation of the language-server-protocol in C#.
 -  Visual Studio 2017 community
 -  Install and compile C/C++ Language Server [CQuery C/C++ language server](https://github.com/cquery-project/cquery)
 -  [CQuery C/C++ language server](https://github.com/cquery-project/cquery) is shipped inside solution
+-  see also: [Installation](../../wiki/Installation)
 
 ## Thanks
 
-Great support by [CQuery C/C++ language server](https://github.com/cquery-project/cquery) and [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol).
+Great support by 
+
+- [CQuery C/C++ language server](https://github.com/cquery-project/cquery) and 
+- [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol).
 
 ## Glossary
 
 - LSP Language Server Protocol
+- Project
+- Workspace The code or whatever to analyze
 
 ## Reference 
 
@@ -65,6 +82,8 @@ Great support by [CQuery C/C++ language server](https://github.com/cquery-projec
 - [Language Server Protocol](https://microsoft.github.io/language-server-protocol/)
 - [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol), the C# implementation of LSP here used
 - [Wiki](../../wiki)
+
+
 
 
  

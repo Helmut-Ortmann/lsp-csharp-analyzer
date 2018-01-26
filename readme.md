@@ -21,13 +21,13 @@ The concept is to use arbitrary language servers and to configure them by JSON a
 LSP Analyzer supports the following features:
 
 - [GUI](../../wiki/Gui)
-  - Grid
+  - Grid to visualize found results
   - [Filter](../../wiki/Filter)
-  - Open in Editor (currently onle VS Code) 
+  - Open implementation in Editor (currently onle VS Code) 
 - Choose language server
 - Choose wokspace with code or whatever
   - Symbol
-  - Search gloabl
+  - Search global
   - Reference
   - Highlight
   - Hover
@@ -36,7 +36,7 @@ LSP Analyzer supports the following features:
 ## Supported Servers
 
 -  [CQuery C/C++ language server](https://github.com/cquery-project/cquery)
--  Servers with stdio protocol
+-  Servers with stdio protocol and of course the standard RPC-JSON
 -  The basic framework [CQuery C/C++ language server](https://github.com/cquery-project/cquery) supports all types
 
 
@@ -59,7 +59,7 @@ The implementation of the language-server-protocol in C#.
 
 -  Windows, .net framework 4.6.1
 -  Visual Studio 2017 community
--  Install and compile C/C++ Language Server [CQuery C/C++ language server](https://github.com/cquery-project/cquery)
+-  Install and compile Language Server [CQuery C/C++ language server](https://github.com/cquery-project/cquery)
 -  [CQuery C/C++ language server](https://github.com/cquery-project/cquery) is shipped inside solution
 -  see also: [Installation](../../wiki/Installation)
 

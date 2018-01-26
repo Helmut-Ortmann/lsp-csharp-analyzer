@@ -21,6 +21,7 @@ using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Serialization;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
+using LspAnalyzer.Services.Db;
 
 
 // ReSharper disable once CheckNamespace
@@ -50,6 +51,8 @@ namespace LspAnalyzer
         DataTable _dtSymbols = new DataTable();
         DataTable _dtReferences = new DataTable();
         DataTable _dtHighlight = new DataTable();
+
+        private string _dbSymbolPath = @"c:\temp\dbSymbol.sqlite";
 
         
         private ProcessStartInfo _lspServerProcessStartInfo;
@@ -963,6 +966,16 @@ namespace LspAnalyzer
         private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/Helmut-Ortmann/lsp-csharp-analyzer/wiki");
+        }
+        /// <summary>
+        /// Generate Symbol DB
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnGenerateSymbols_Click(object sender, EventArgs e)
+        {
+            SymbolDb symbolDbDb = new SymbolDb(_dbSymbolPath);
+            symbolDbDb.Create();
         }
     }
 }

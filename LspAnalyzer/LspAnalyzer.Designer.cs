@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -54,6 +54,8 @@ namespace LspAnalyzer
             this.tabWsSymbol = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtWsSymbolKind = new System.Windows.Forms.TextBox();
             this.txtWsSymbolFile = new System.Windows.Forms.TextBox();
@@ -94,6 +96,7 @@ namespace LspAnalyzer
             this.tblGui = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnDocumentSymbol = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
             this.tabDocument = new System.Windows.Forms.TabControl();
             this.tabClientCapability = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -111,11 +114,9 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lSPSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filterSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.label13 = new System.Windows.Forms.Label();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.btnGenerateSymbols = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -159,7 +160,7 @@ namespace LspAnalyzer
             // 
             // btnShutDown
             // 
-            this.btnShutDown.Location = new System.Drawing.Point(290, 1);
+            this.btnShutDown.Location = new System.Drawing.Point(367, 1);
             this.btnShutDown.Margin = new System.Windows.Forms.Padding(1);
             this.btnShutDown.Name = "btnShutDown";
             this.btnShutDown.Size = new System.Drawing.Size(75, 23);
@@ -202,14 +203,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle1;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -262,7 +263,7 @@ namespace LspAnalyzer
             // 
             // txtSymbol
             // 
-            this.txtSymbol.Location = new System.Drawing.Point(441, 1);
+            this.txtSymbol.Location = new System.Drawing.Point(518, 1);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(1);
             this.txtSymbol.Name = "txtSymbol";
             this.txtSymbol.Size = new System.Drawing.Size(193, 20);
@@ -387,6 +388,26 @@ namespace LspAnalyzer
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(922, 24);
             this.panel2.TabIndex = 1;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(629, 3);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(30, 15);
+            this.label12.TabIndex = 1;
+            this.label12.Text = "File:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(242, 3);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(35, 15);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Kind:";
             // 
             // label3
             // 
@@ -775,6 +796,7 @@ namespace LspAnalyzer
             this.flowLayoutPanel1.Controls.Add(this.btnRun);
             this.flowLayoutPanel1.Controls.Add(this.btnWsSymbol);
             this.flowLayoutPanel1.Controls.Add(this.btnDocumentSymbol);
+            this.flowLayoutPanel1.Controls.Add(this.btnGenerateSymbols);
             this.flowLayoutPanel1.Controls.Add(this.btnShutDown);
             this.flowLayoutPanel1.Controls.Add(this.label13);
             this.flowLayoutPanel1.Controls.Add(this.txtSymbol);
@@ -794,6 +816,17 @@ namespace LspAnalyzer
             this.btnDocumentSymbol.TabIndex = 1;
             this.btnDocumentSymbol.Text = "Document Symbol";
             this.btnDocumentSymbol.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(463, 2);
+            this.label13.Margin = new System.Windows.Forms.Padding(20, 2, 3, 2);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(51, 15);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "Symbol:";
             // 
             // tabDocument
             // 
@@ -895,8 +928,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(922, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -978,26 +1011,6 @@ namespace LspAnalyzer
             this.filterSpecificationToolStripMenuItem.Text = "Filter Specification";
             this.filterSpecificationToolStripMenuItem.Click += new System.EventHandler(this.filterSpecificationToolStripMenuItem_Click);
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(242, 3);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(35, 15);
-            this.label10.TabIndex = 1;
-            this.label10.Text = "Kind:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(629, 3);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(30, 15);
-            this.label12.TabIndex = 1;
-            this.label12.Text = "File:";
-            // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
@@ -1006,16 +1019,17 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem1.ToolTipText = "Show Wiki";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
             // 
-            // label13
+            // btnGenerateSymbols
             // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(386, 2);
-            this.label13.Margin = new System.Windows.Forms.Padding(20, 2, 3, 2);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(51, 15);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "Symbol:";
+            this.btnGenerateSymbols.Location = new System.Drawing.Point(290, 1);
+            this.btnGenerateSymbols.Margin = new System.Windows.Forms.Padding(1);
+            this.btnGenerateSymbols.Name = "btnGenerateSymbols";
+            this.btnGenerateSymbols.Size = new System.Drawing.Size(75, 23);
+            this.btnGenerateSymbols.TabIndex = 4;
+            this.btnGenerateSymbols.Text = "GenSymbolDb";
+            this.toolTip1.SetToolTip(this.btnGenerateSymbols, "Generate Tooltip DB");
+            this.btnGenerateSymbols.UseVisualStyleBackColor = true;
+            this.btnGenerateSymbols.Click += new System.EventHandler(this.btnGenerateSymbols_Click);
             // 
             // LspAnalyzer
             // 
@@ -1156,6 +1170,7 @@ namespace LspAnalyzer
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button btnGenerateSymbols;
     }
 }
 

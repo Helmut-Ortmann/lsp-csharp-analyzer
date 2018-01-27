@@ -92,6 +92,7 @@ namespace LspAnalyzer
             this.txtReferencesSymbolName = new System.Windows.Forms.TextBox();
             this.txtReferenceSymbol = new System.Windows.Forms.TextBox();
             this.grdReferences = new System.Windows.Forms.DataGridView();
+            this.btnGenerateSymbols = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tblGui = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -116,7 +117,6 @@ namespace LspAnalyzer
             this.filterSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.btnGenerateSymbols = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -761,6 +761,18 @@ namespace LspAnalyzer
             this.grdReferences.TabIndex = 1;
             this.grdReferences.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdInterfaces_CellMouseEnter);
             // 
+            // btnGenerateSymbols
+            // 
+            this.btnGenerateSymbols.Location = new System.Drawing.Point(290, 1);
+            this.btnGenerateSymbols.Margin = new System.Windows.Forms.Padding(1);
+            this.btnGenerateSymbols.Name = "btnGenerateSymbols";
+            this.btnGenerateSymbols.Size = new System.Drawing.Size(75, 23);
+            this.btnGenerateSymbols.TabIndex = 4;
+            this.btnGenerateSymbols.Text = "GenSymbolDb";
+            this.toolTip1.SetToolTip(this.btnGenerateSymbols, "Generate Tooltip DB");
+            this.btnGenerateSymbols.UseVisualStyleBackColor = true;
+            this.btnGenerateSymbols.Click += new System.EventHandler(this.btnGenerateSymbols_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -1018,18 +1030,6 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem1.Text = "Help";
             this.helpToolStripMenuItem1.ToolTipText = "Show Wiki";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
-            // 
-            // btnGenerateSymbols
-            // 
-            this.btnGenerateSymbols.Location = new System.Drawing.Point(290, 1);
-            this.btnGenerateSymbols.Margin = new System.Windows.Forms.Padding(1);
-            this.btnGenerateSymbols.Name = "btnGenerateSymbols";
-            this.btnGenerateSymbols.Size = new System.Drawing.Size(75, 23);
-            this.btnGenerateSymbols.TabIndex = 4;
-            this.btnGenerateSymbols.Text = "GenSymbolDb";
-            this.toolTip1.SetToolTip(this.btnGenerateSymbols, "Generate Tooltip DB");
-            this.btnGenerateSymbols.UseVisualStyleBackColor = true;
-            this.btnGenerateSymbols.Click += new System.EventHandler(this.btnGenerateSymbols_Click);
             // 
             // LspAnalyzer
             // 

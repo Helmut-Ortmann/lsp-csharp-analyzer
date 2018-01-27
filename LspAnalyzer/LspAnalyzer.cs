@@ -52,7 +52,7 @@ namespace LspAnalyzer
         DataTable _dtReferences = new DataTable();
         DataTable _dtHighlight = new DataTable();
 
-        private string _dbSymbolPath = @"c:\temp\dbSymbol.sqlite";
+        private string _dbSymbolPath = @"c:\temp\DbSymbol.sqlite";
 
         
         private ProcessStartInfo _lspServerProcessStartInfo;
@@ -974,8 +974,12 @@ namespace LspAnalyzer
         /// <param name="e"></param>
         private void btnGenerateSymbols_Click(object sender, EventArgs e)
         {
-            SymbolDb symbolDbDb = new SymbolDb(_dbSymbolPath);
-            symbolDbDb.Create();
+            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath);
+            symbolDb.Create();
+            symbolDb.LoadFiles(_workSpacePath);
+            symbolDb.LoadItems(_dtSymbols);
+
+            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'", "SymbolDB loaded");
         }
     }
 }

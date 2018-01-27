@@ -149,10 +149,10 @@ D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\Syste
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Reactive.Windows.Threading.xml
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\linq2db.dll
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\LspDb.dll
-D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Data.SQLite.dll
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\LspDb.pdb
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\LspDb.dll.config
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\linq2db.pdb
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\linq2db.xml
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Data.SQLite.dll
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Data.SQLite.xml
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Data.SQLite.dll.config

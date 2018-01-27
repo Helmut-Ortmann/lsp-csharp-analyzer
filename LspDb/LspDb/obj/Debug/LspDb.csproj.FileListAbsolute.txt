@@ -13,7 +13,7 @@ D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspDb\LspDb\bin\Debug\linq2
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspDb\LspDb\bin\Debug\linq2db.xml
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspDb\LspDb\bin\Debug\System.Data.SQLite.xml
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspDb\LspDb\bin\Debug\System.Data.SQLite.dll.config
-D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspDb\LspDb\obj\Debug\LspDb.csprojResolveAssemblyReference.cache
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspDb\LspDb\obj\Debug\LspDb.csproj.CoreCompileInputs.cache
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspDb\LspDb\obj\Debug\LspDb.dll
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspDb\LspDb\obj\Debug\LspDb.pdb
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspDb\LspDb\obj\Debug\LspDb.csprojResolveAssemblyReference.cache

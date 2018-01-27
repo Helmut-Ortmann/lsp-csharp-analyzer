@@ -977,7 +977,7 @@ namespace LspAnalyzer
             SymbolDb symbolDb = new SymbolDb(_dbSymbolPath);
             symbolDb.Create();
             symbolDb.LoadFiles(_workSpacePath);
-            symbolDb.LoadItems(_dtSymbols);
+            symbolDb.LoadItems(_workSpacePath, _dtSymbols);
 
             MessageBox.Show($"SymbolDB='{_dbSymbolPath}'", "SymbolDB loaded");
         }

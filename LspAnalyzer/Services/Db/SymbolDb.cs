@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using DataModels.Symbols;
 using LinqToDB;
 using LinqToDB.DataProvider;
@@ -83,6 +84,9 @@ namespace LspAnalyzer.Services.Db
 
                 MakeKindDictionary(db);
 
+                db.GetTable<CodeItems>()
+                    .Delete();
+
             }
 
            return true;
@@ -120,9 +124,9 @@ namespace LspAnalyzer.Services.Db
                     .Delete();
 
                 var files = from f in Directory.GetFiles(workspace, "*.*", SearchOption.AllDirectories)
-                            where Path.GetExtension(f).ToLower().StartsWith(".c") ||
-                                  Path.GetExtension(f).ToLower().StartsWith(".h")
-                            select f;
+                    where Path.GetExtension(f).ToLower().StartsWith(".c") ||
+                          Path.GetExtension(f).ToLower().StartsWith(".h")
+                    select f.ToLower().Replace(@"\" , "/");
 
   
                 foreach (var file in files)
@@ -142,8 +146,9 @@ namespace LspAnalyzer.Services.Db
         /// <summary>
         /// Load items from data table
         /// </summary>
+        /// <param name="workspace"></param>
         /// <param name="dt"></param>
-        public void LoadItems(DataTable dt)
+        public void LoadItems(string workspace, DataTable dt)
         {
             
 
@@ -151,18 +156,18 @@ namespace LspAnalyzer.Services.Db
             using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
 
             {
-                var items = from DataRow i in dt.Rows
-                    join f in db.Files on i.Field<string>("File") equals f.Name
+               var items = from DataRow i in dt.Rows
+                    join f in db.Files on Path.Combine(workspace.ToLower().Replace(@"\","/"), i.Field<string>("File")).ToLower().Replace(@"\","/") equals f.Name
                     join k in db.CodeItemKinds on i.Field<string>("Kind") equals k.Name 
                     where i.Field<string>("Kind") != "File"
                     select new
                     {
                         Name = i.Field<string>("Name"),
                         Kind = k.Id,
-                        StartLine = Int32.Parse(i.Field<string>("StartLine")),
-                        EndLine = Int32.Parse(i.Field<string>("EndLine")),
-                        StartChar = Int32.Parse(i.Field<string>("StartChar")),
-                        EndChar = Int32.Parse(i.Field<string>("EndChar")),
+                        StartLine = i.Field<long>("StartLine"),
+                        EndLine = i.Field<long>("EndLine"),
+                        StartChar = i.Field<long>("StartChar"),
+                        EndChar = i.Field<long>("EndChar"),
                         FileId = f.Id
                     };
                 foreach (var i in items)
@@ -171,14 +176,16 @@ namespace LspAnalyzer.Services.Db
                     {
                         Name = i.Name,
                         Kind = i.Kind,
-                        StartLine = i.StartLine,
-                        StartColumn = i.StartChar,
-                        EndLine = i.StartLine,
-                        EndColumn = i.StartChar,
+                        StartLine = (int)i.StartLine,
+                        StartColumn = (int)i.StartChar,
+                        EndLine = (int)i.StartLine,
+                        EndColumn = (int)i.StartChar,
                         FileId = i.FileId
 
                     });
                 }
+
+                MessageBox.Show($"Count={items.Count()}", "Symbols loaded");
             }
 
         }

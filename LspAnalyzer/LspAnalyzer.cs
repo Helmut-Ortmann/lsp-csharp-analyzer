@@ -386,6 +386,7 @@ namespace LspAnalyzer
             //grdWorkspaceSymbols.Columns[5].Width = true;
             //grdWorkspaceSymbols.Columns[6].Width = false;
             txtWsSymbolName.Text = $"*{txtSymbol.Text}";
+            txtWsCount.Text = grdWorkspaceSymbols.Rows.Count.ToString();
 
         }
 
@@ -974,12 +975,21 @@ namespace LspAnalyzer
         /// <param name="e"></param>
         private void btnGenerateSymbols_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
             SymbolDb symbolDb = new SymbolDb(_dbSymbolPath);
-            symbolDb.Create();
             symbolDb.LoadFiles(_workSpacePath);
             symbolDb.LoadItems(_workSpacePath, _dtSymbols);
+            Cursor.Current = Cursors.Default;
 
-            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'", "SymbolDB loaded");
+            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'", "Symbols added from grid");
+        }
+
+        private void btnCreateSSQLiteDB_Click(object sender, EventArgs e)
+        {
+            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath);
+            symbolDb.Create();
+            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'", "SymbolDB created");
+
         }
     }
 }

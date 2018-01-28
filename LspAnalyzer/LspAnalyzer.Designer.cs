@@ -117,6 +117,8 @@ namespace LspAnalyzer
             this.filterSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.txtWsCount = new System.Windows.Forms.TextBox();
+            this.btnCreateSSQLiteDB = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -160,7 +162,7 @@ namespace LspAnalyzer
             // 
             // btnShutDown
             // 
-            this.btnShutDown.Location = new System.Drawing.Point(367, 1);
+            this.btnShutDown.Location = new System.Drawing.Point(448, 1);
             this.btnShutDown.Margin = new System.Windows.Forms.Padding(1);
             this.btnShutDown.Name = "btnShutDown";
             this.btnShutDown.Size = new System.Drawing.Size(75, 23);
@@ -263,7 +265,7 @@ namespace LspAnalyzer
             // 
             // txtSymbol
             // 
-            this.txtSymbol.Location = new System.Drawing.Point(518, 1);
+            this.txtSymbol.Location = new System.Drawing.Point(599, 1);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(1);
             this.txtSymbol.Name = "txtSymbol";
             this.txtSymbol.Size = new System.Drawing.Size(193, 20);
@@ -377,6 +379,7 @@ namespace LspAnalyzer
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.txtWsCount);
             this.panel2.Controls.Add(this.label12);
             this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.label3);
@@ -403,7 +406,7 @@ namespace LspAnalyzer
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(242, 3);
+            this.label10.Location = new System.Drawing.Point(285, 3);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(35, 15);
             this.label10.TabIndex = 1;
@@ -413,7 +416,7 @@ namespace LspAnalyzer
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 3);
+            this.label3.Location = new System.Drawing.Point(66, 5);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 15);
             this.label3.TabIndex = 1;
@@ -422,9 +425,9 @@ namespace LspAnalyzer
             // 
             // txtWsSymbolKind
             // 
-            this.txtWsSymbolKind.Location = new System.Drawing.Point(286, 1);
+            this.txtWsSymbolKind.Location = new System.Drawing.Point(326, 1);
             this.txtWsSymbolKind.Name = "txtWsSymbolKind";
-            this.txtWsSymbolKind.Size = new System.Drawing.Size(337, 20);
+            this.txtWsSymbolKind.Size = new System.Drawing.Size(297, 20);
             this.txtWsSymbolKind.TabIndex = 0;
             this.toolTip1.SetToolTip(this.txtWsSymbolKind, resources.GetString("txtWsSymbolKind.ToolTip"));
             this.txtWsSymbolKind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtWsSymbol_KeyPress);
@@ -440,9 +443,9 @@ namespace LspAnalyzer
             // 
             // txtWsSymbolName
             // 
-            this.txtWsSymbolName.Location = new System.Drawing.Point(53, 2);
+            this.txtWsSymbolName.Location = new System.Drawing.Point(116, 1);
             this.txtWsSymbolName.Name = "txtWsSymbolName";
-            this.txtWsSymbolName.Size = new System.Drawing.Size(183, 20);
+            this.txtWsSymbolName.Size = new System.Drawing.Size(163, 20);
             this.txtWsSymbolName.TabIndex = 0;
             this.toolTip1.SetToolTip(this.txtWsSymbolName, resources.GetString("txtWsSymbolName.ToolTip"));
             this.txtWsSymbolName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtWsSymbol_KeyPress);
@@ -763,7 +766,7 @@ namespace LspAnalyzer
             // 
             // btnGenerateSymbols
             // 
-            this.btnGenerateSymbols.Location = new System.Drawing.Point(290, 1);
+            this.btnGenerateSymbols.Location = new System.Drawing.Point(371, 1);
             this.btnGenerateSymbols.Margin = new System.Windows.Forms.Padding(1);
             this.btnGenerateSymbols.Name = "btnGenerateSymbols";
             this.btnGenerateSymbols.Size = new System.Drawing.Size(75, 23);
@@ -808,6 +811,7 @@ namespace LspAnalyzer
             this.flowLayoutPanel1.Controls.Add(this.btnRun);
             this.flowLayoutPanel1.Controls.Add(this.btnWsSymbol);
             this.flowLayoutPanel1.Controls.Add(this.btnDocumentSymbol);
+            this.flowLayoutPanel1.Controls.Add(this.btnCreateSSQLiteDB);
             this.flowLayoutPanel1.Controls.Add(this.btnGenerateSymbols);
             this.flowLayoutPanel1.Controls.Add(this.btnShutDown);
             this.flowLayoutPanel1.Controls.Add(this.label13);
@@ -833,7 +837,7 @@ namespace LspAnalyzer
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(463, 2);
+            this.label13.Location = new System.Drawing.Point(544, 2);
             this.label13.Margin = new System.Windows.Forms.Padding(20, 2, 3, 2);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(51, 15);
@@ -1031,6 +1035,25 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem1.ToolTipText = "Show Wiki";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
             // 
+            // txtWsCount
+            // 
+            this.txtWsCount.Location = new System.Drawing.Point(1, 4);
+            this.txtWsCount.Name = "txtWsCount";
+            this.txtWsCount.ReadOnly = true;
+            this.txtWsCount.Size = new System.Drawing.Size(62, 20);
+            this.txtWsCount.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.txtWsCount, "The count of shown rows.");
+            // 
+            // btnCreateSSQLiteDB
+            // 
+            this.btnCreateSSQLiteDB.Location = new System.Drawing.Point(292, 3);
+            this.btnCreateSSQLiteDB.Name = "btnCreateSSQLiteDB";
+            this.btnCreateSSQLiteDB.Size = new System.Drawing.Size(75, 23);
+            this.btnCreateSSQLiteDB.TabIndex = 5;
+            this.btnCreateSSQLiteDB.Text = "CreateSQL DB";
+            this.btnCreateSSQLiteDB.UseVisualStyleBackColor = true;
+            this.btnCreateSSQLiteDB.Click += new System.EventHandler(this.btnCreateSSQLiteDB_Click);
+            // 
             // LspAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1171,6 +1194,8 @@ namespace LspAnalyzer
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem1;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btnGenerateSymbols;
+        private System.Windows.Forms.TextBox txtWsCount;
+        private System.Windows.Forms.Button btnCreateSSQLiteDB;
     }
 }
 

@@ -156,6 +156,19 @@ namespace LspAnalyzer.Services.Db
             using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
 
             {
+                // delete all items that are part of the input symbol table
+                var itemsToDelete = (from DataRow g in dt.Rows
+                    //join k in db.CodeItemKinds on g.Field<string>("Kind") equals k.Name
+                    join i in db.CodeItems on g.Field<string>("Name").Trim() equals i.Name.Trim()
+                    where g.Field<string>("Kind") != "File"
+                    select new
+                    {
+                        Name = i.Name,
+                        Id = i.Id
+                    }).ToDataTable();
+
+                int itemsToDeleteCount = itemsToDelete.Rows.Count; 
+               // all symbols
                var items = from DataRow i in dt.Rows
                     join f in db.Files on Path.Combine(workspace.ToLower().Replace(@"\","/"), i.Field<string>("File")).ToLower().Replace(@"\","/") equals f.Name
                     join k in db.CodeItemKinds on i.Field<string>("Kind") equals k.Name 

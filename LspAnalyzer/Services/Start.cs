@@ -28,7 +28,9 @@ namespace LspAnalyzer.Analyze
             {
                 var row = grid.SelectedRows[0];
                 string filePath = row.Cells[columnName].Value.ToString();
-                filePath = Path.Combine(workSpacePath, filePath);
+                // relative path
+                if (! Path.IsPathRooted(filePath))
+                    filePath = Path.Combine(workSpacePath, filePath);
 
                 // Character position in line relative  1
                 string characterPosition = characterPositionName != ""
@@ -38,7 +40,7 @@ namespace LspAnalyzer.Analyze
                     ? $":{Parse(row.Cells[lineNumberName].Value.ToString()) + 1}{characterPosition} -g"
                     : "";
 
-                StartApp(@"Code", $"{filePath}{lineNumber}");
+                StartApp(@"Code", $@"""{filePath}""{lineNumber}");
                 if (grid.Columns.Contains("Name"))
                 {
                     // Copy Function name to Clipboard

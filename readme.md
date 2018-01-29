@@ -79,6 +79,7 @@ Great support by
 ## Reference 
 
 - [CQuery C/C++ language server](https://github.com/cquery-project/cquery)
+- [Client Features explained](https://code.visualstudio.com/docs/extensionAPI/language-support), VS Code
 - [Language Server Protocol](https://microsoft.github.io/language-server-protocol/)
 - [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol), the C# implementation of LSP here used
 - [Wiki](../../wiki)

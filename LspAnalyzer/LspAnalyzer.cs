@@ -335,7 +335,8 @@ namespace LspAnalyzer
                 MessageBox.Show("Client not initialized, Break");
                 return;
             }
-            if (txtSymbol.Text.Trim() == "")
+            // Empty string should be allowed to show all possible symbols
+            if (txtSymbol.Text.Trim() == "xxxxxxxxx")
             {
                 MessageBox.Show("No symbol to search for defined, Break");
                 return;
@@ -386,7 +387,7 @@ namespace LspAnalyzer
             //grdWorkspaceSymbols.Columns[5].Width = true;
             //grdWorkspaceSymbols.Columns[6].Width = false;
             txtWsSymbolName.Text = $"*{txtSymbol.Text}";
-            txtWsCount.Text = grdWorkspaceSymbols.Rows.Count.ToString();
+            txtWsCount.Text = grdWorkspaceSymbols.RowCount.ToString("N0");
 
         }
 
@@ -396,7 +397,7 @@ namespace LspAnalyzer
             if (e.KeyChar == (char)Keys.Enter)
             {
                 _aggregateFilterSymbol.FilterGrid();
-                txtWsCount.Text = grdWorkspaceSymbols.Rows.Count.ToString();
+                txtWsCount.Text = grdWorkspaceSymbols.RowCount.ToString("N0");
                 e.Handled = true;
             }
         }
@@ -614,16 +615,17 @@ namespace LspAnalyzer
                 if (_client == null)
                 {
                     MessageBox.Show("Client not initialized, Break");
+                    e.Handled = true;
                     return;
                 }
-                if (txtSymbol.Text.Trim() == "")
+                if (txtSymbol.Text.Trim() == "xxxxxx")
                 {
                     MessageBox.Show("No symbol to search for defined, Break");
+                    e.Handled = true;
                     return;
                 }
-
-                await RequestSymbol(txtSymbol.Text);
                 e.Handled = true;
+                await RequestSymbol(txtSymbol.Text);
             }
         }
 
@@ -982,7 +984,7 @@ namespace LspAnalyzer
             var count = symbolDb.LoadItems(_workSpacePath, _dtSymbols);
             Cursor.Current = Cursors.Default;
 
-            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\n\r\nWorkspace='{_workSpacePath}'\r\nLoaded symbols={count}", "Symbols added from grid");
+            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_workSpacePath}'\r\nLoaded symbols={count:N0}", "Symbols added from grid");
         }
 
         private void btnCreateSSQLiteDB_Click(object sender, EventArgs e)

@@ -2,6 +2,9 @@
 
 A Windows C# [GUI](../../wiki/Gui) to analyse code with the help of a Language Server. LSP Analyzer is based on the C# framework [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol). As a language server, I decided to use C/C++ language server [CQuery](https://github.com/cquery-project/cquery).
 
+-  GUI to analyze with [filters](../../wiki/Filter)
+-  [SQLite database](../../wiki/Database) to analyze with arbitrary SQL queries
+
 The concept is to use arbitrary language servers and to configure them by JSON as it is done by editors.
 
 ![](../../wiki/images/LspAnalyzer.png)
@@ -15,6 +18,7 @@ The concept is to use arbitrary language servers and to configure them by JSON a
   - Provided Interfaces
   - Connect an UML/SysML tool with code
 - Arbitrary language servers
+- Store Symbols in an [SQLite database](../../wiki/Database)
 
 ## Features
 

@@ -21,6 +21,7 @@ using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Serialization;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
+using LspAnalyzer.Services.Db;
 
 
 // ReSharper disable once CheckNamespace
@@ -50,6 +51,8 @@ namespace LspAnalyzer
         DataTable _dtSymbols = new DataTable();
         DataTable _dtReferences = new DataTable();
         DataTable _dtHighlight = new DataTable();
+
+        private string _dbSymbolPath = @"c:\temp\DbSymbol.sqlite";
 
         
         private ProcessStartInfo _lspServerProcessStartInfo;
@@ -332,7 +335,8 @@ namespace LspAnalyzer
                 MessageBox.Show("Client not initialized, Break");
                 return;
             }
-            if (txtSymbol.Text.Trim() == "")
+            // Empty string should be allowed to show all possible symbols
+            if (txtSymbol.Text.Trim() == "xxxxxxxxx")
             {
                 MessageBox.Show("No symbol to search for defined, Break");
                 return;
@@ -383,6 +387,7 @@ namespace LspAnalyzer
             //grdWorkspaceSymbols.Columns[5].Width = true;
             //grdWorkspaceSymbols.Columns[6].Width = false;
             txtWsSymbolName.Text = $"*{txtSymbol.Text}";
+            txtWsCount.Text = grdWorkspaceSymbols.RowCount.ToString("N0");
 
         }
 
@@ -392,6 +397,7 @@ namespace LspAnalyzer
             if (e.KeyChar == (char)Keys.Enter)
             {
                 _aggregateFilterSymbol.FilterGrid();
+                txtWsCount.Text = grdWorkspaceSymbols.RowCount.ToString("N0");
                 e.Handled = true;
             }
         }
@@ -609,16 +615,17 @@ namespace LspAnalyzer
                 if (_client == null)
                 {
                     MessageBox.Show("Client not initialized, Break");
+                    e.Handled = true;
                     return;
                 }
-                if (txtSymbol.Text.Trim() == "")
+                if (txtSymbol.Text.Trim() == "xxxxxx")
                 {
                     MessageBox.Show("No symbol to search for defined, Break");
+                    e.Handled = true;
                     return;
                 }
-
-                await RequestSymbol(txtSymbol.Text);
                 e.Handled = true;
+                await RequestSymbol(txtSymbol.Text);
             }
         }
 
@@ -963,6 +970,31 @@ namespace LspAnalyzer
         private void helpToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/Helmut-Ortmann/lsp-csharp-analyzer/wiki");
+        }
+        /// <summary>
+        /// Generate Symbol DB
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnGenerateSymbols_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath);
+            symbolDb.LoadFiles(_workSpacePath);
+            var count = symbolDb.LoadItems(_workSpacePath, _dtSymbols);
+            Cursor.Current = Cursors.Default;
+
+            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_workSpacePath}'\r\nLoaded symbols={count:N0}", "Symbols added from grid");
+        }
+
+        private void btnCreateSSQLiteDB_Click(object sender, EventArgs e)
+        {
+            Cursor.Current = Cursors.WaitCursor;
+            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath);
+            symbolDb.Create();
+            Cursor.Current = Cursors.Default;
+            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'", "SymbolDB created");
+
         }
     }
 }

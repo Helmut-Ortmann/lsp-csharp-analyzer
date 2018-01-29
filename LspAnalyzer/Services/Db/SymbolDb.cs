@@ -38,6 +38,8 @@ namespace LspAnalyzer.Services.Db
             { 
                 var sp = db.DataProvider.GetSchemaProvider();
                 var dbSchema = sp.GetSchema(db);
+
+                db.BeginTransaction();
                 if (dbSchema.Tables.All(t => t.TableName != "code_item_kinds"))
                 {
                     db.CreateTable<CodeItemKinds>();
@@ -86,6 +88,7 @@ namespace LspAnalyzer.Services.Db
 
                 db.GetTable<CodeItems>()
                     .Delete();
+                db.CommitTransaction();
 
             }
 
@@ -128,7 +131,7 @@ namespace LspAnalyzer.Services.Db
                           Path.GetExtension(f).ToLower().StartsWith(".h")
                     select f.ToLower().Replace(@"\" , "/");
 
-  
+                db.BeginTransaction();
                 foreach (var file in files)
                 {
                     db
@@ -140,6 +143,7 @@ namespace LspAnalyzer.Services.Db
                             });
                         
                 }
+                db.CommitTransaction();
             }
         }
 
@@ -148,14 +152,15 @@ namespace LspAnalyzer.Services.Db
         /// </summary>
         /// <param name="workspace"></param>
         /// <param name="dt"></param>
-        public void LoadItems(string workspace, DataTable dt)
+        public int LoadItems(string workspace, DataTable dt)
         {
-            
 
+            int count = 0;
             // create all files
             using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
 
             {
+
                 // delete all items that are part of the input symbol table
                 var itemsToDelete = (from DataRow g in dt.Rows
                     //join k in db.CodeItemKinds on g.Field<string>("Kind") equals k.Name
@@ -183,6 +188,7 @@ namespace LspAnalyzer.Services.Db
                         EndChar = i.Field<long>("EndChar"),
                         FileId = f.Id
                     };
+                db.BeginTransaction();
                 foreach (var i in items)
                 {
                     db.Insert<CodeItems>(new CodeItems
@@ -197,9 +203,11 @@ namespace LspAnalyzer.Services.Db
 
                     });
                 }
-
-                MessageBox.Show($"Count={items.Count()}", "Symbols loaded");
+                db.CommitTransaction();
+                count = items.Count();
             }
+
+            return count;
 
         }
 

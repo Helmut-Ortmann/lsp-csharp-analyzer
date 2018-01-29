@@ -396,6 +396,7 @@ namespace LspAnalyzer
             if (e.KeyChar == (char)Keys.Enter)
             {
                 _aggregateFilterSymbol.FilterGrid();
+                txtWsCount.Text = grdWorkspaceSymbols.Rows.Count.ToString();
                 e.Handled = true;
             }
         }
@@ -978,16 +979,18 @@ namespace LspAnalyzer
             Cursor.Current = Cursors.WaitCursor;
             SymbolDb symbolDb = new SymbolDb(_dbSymbolPath);
             symbolDb.LoadFiles(_workSpacePath);
-            symbolDb.LoadItems(_workSpacePath, _dtSymbols);
+            var count = symbolDb.LoadItems(_workSpacePath, _dtSymbols);
             Cursor.Current = Cursors.Default;
 
-            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'", "Symbols added from grid");
+            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\n\r\nWorkspace='{_workSpacePath}'\r\nLoaded symbols={count}", "Symbols added from grid");
         }
 
         private void btnCreateSSQLiteDB_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
             SymbolDb symbolDb = new SymbolDb(_dbSymbolPath);
             symbolDb.Create();
+            Cursor.Current = Cursors.Default;
             MessageBox.Show($"SymbolDB='{_dbSymbolPath}'", "SymbolDB created");
 
         }

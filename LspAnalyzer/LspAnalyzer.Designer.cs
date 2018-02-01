@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -54,6 +54,7 @@ namespace LspAnalyzer
             this.tabWsSymbol = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtWsCount = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -97,6 +98,7 @@ namespace LspAnalyzer
             this.tblGui = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnDocumentSymbol = new System.Windows.Forms.Button();
+            this.btnCreateSSQLiteDB = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.tabDocument = new System.Windows.Forms.TabControl();
             this.tabClientCapability = new System.Windows.Forms.TabPage();
@@ -117,8 +119,7 @@ namespace LspAnalyzer
             this.filterSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.txtWsCount = new System.Windows.Forms.TextBox();
-            this.btnCreateSSQLiteDB = new System.Windows.Forms.Button();
+            this.cQueryCallersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -205,14 +206,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle3;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -392,6 +393,15 @@ namespace LspAnalyzer
             this.panel2.Size = new System.Drawing.Size(922, 24);
             this.panel2.TabIndex = 1;
             // 
+            // txtWsCount
+            // 
+            this.txtWsCount.Location = new System.Drawing.Point(1, 4);
+            this.txtWsCount.Name = "txtWsCount";
+            this.txtWsCount.ReadOnly = true;
+            this.txtWsCount.Size = new System.Drawing.Size(62, 20);
+            this.txtWsCount.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.txtWsCount, "The count of shown rows.");
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -476,9 +486,10 @@ namespace LspAnalyzer
             this.hoverToolStripMenuItem,
             this.signitureToolStripMenuItem,
             this.referencesToolStripMenuItem,
-            this.highlightInDocumentToolStripMenuItem});
+            this.highlightInDocumentToolStripMenuItem,
+            this.cQueryCallersToolStripMenuItem});
             this.contextMenuStripSymbol.Name = "contextMenuStrip1";
-            this.contextMenuStripSymbol.Size = new System.Drawing.Size(212, 142);
+            this.contextMenuStripSymbol.Size = new System.Drawing.Size(212, 186);
             this.toolTip1.SetToolTip(this.contextMenuStripSymbol, "Select the wanted names and Click on Copy Names to Clipboard.\r\n\r\nLSP Manger copie" +
         "s the ordered names to clipboard.");
             // 
@@ -833,6 +844,16 @@ namespace LspAnalyzer
             this.btnDocumentSymbol.Text = "Document Symbol";
             this.btnDocumentSymbol.UseVisualStyleBackColor = true;
             // 
+            // btnCreateSSQLiteDB
+            // 
+            this.btnCreateSSQLiteDB.Location = new System.Drawing.Point(292, 3);
+            this.btnCreateSSQLiteDB.Name = "btnCreateSSQLiteDB";
+            this.btnCreateSSQLiteDB.Size = new System.Drawing.Size(75, 23);
+            this.btnCreateSSQLiteDB.TabIndex = 5;
+            this.btnCreateSSQLiteDB.Text = "CreateSQL DB";
+            this.btnCreateSSQLiteDB.UseVisualStyleBackColor = true;
+            this.btnCreateSSQLiteDB.Click += new System.EventHandler(this.btnCreateSSQLiteDB_Click);
+            // 
             // label13
             // 
             this.label13.AutoSize = true;
@@ -944,8 +965,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(922, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -1035,24 +1056,12 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem1.ToolTipText = "Show Wiki";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
             // 
-            // txtWsCount
+            // cQueryCallersToolStripMenuItem
             // 
-            this.txtWsCount.Location = new System.Drawing.Point(1, 4);
-            this.txtWsCount.Name = "txtWsCount";
-            this.txtWsCount.ReadOnly = true;
-            this.txtWsCount.Size = new System.Drawing.Size(62, 20);
-            this.txtWsCount.TabIndex = 2;
-            this.toolTip1.SetToolTip(this.txtWsCount, "The count of shown rows.");
-            // 
-            // btnCreateSSQLiteDB
-            // 
-            this.btnCreateSSQLiteDB.Location = new System.Drawing.Point(292, 3);
-            this.btnCreateSSQLiteDB.Name = "btnCreateSSQLiteDB";
-            this.btnCreateSSQLiteDB.Size = new System.Drawing.Size(75, 23);
-            this.btnCreateSSQLiteDB.TabIndex = 5;
-            this.btnCreateSSQLiteDB.Text = "CreateSQL DB";
-            this.btnCreateSSQLiteDB.UseVisualStyleBackColor = true;
-            this.btnCreateSSQLiteDB.Click += new System.EventHandler(this.btnCreateSSQLiteDB_Click);
+            this.cQueryCallersToolStripMenuItem.Name = "cQueryCallersToolStripMenuItem";
+            this.cQueryCallersToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.cQueryCallersToolStripMenuItem.Text = "CQuery/Callers";
+            this.cQueryCallersToolStripMenuItem.Click += new System.EventHandler(this.callersToolStripMenuItem_Click);
             // 
             // LspAnalyzer
             // 
@@ -1196,6 +1205,7 @@ namespace LspAnalyzer
         private System.Windows.Forms.Button btnGenerateSymbols;
         private System.Windows.Forms.TextBox txtWsCount;
         private System.Windows.Forms.Button btnCreateSSQLiteDB;
+        private System.Windows.Forms.ToolStripMenuItem cQueryCallersToolStripMenuItem;
     }
 }
 

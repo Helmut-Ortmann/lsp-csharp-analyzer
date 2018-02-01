@@ -110,6 +110,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client
             Workspace = new WorkspaceClient(this);
             Window = new WindowClient(this);
             TextDocument = new TextDocumentClient(this);
+            CommandCqueryCallers = new CommandCqueryCallers(this);
 
             _dispatcher = new LspDispatcher(_serializer);
             _dispatcher.RegisterHandler(_dynamicRegistrationHandler);
@@ -143,6 +144,8 @@ namespace OmniSharp.Extensions.LanguageServer.Client
         ///     The LSP Text Document API.
         /// </summary>
         public TextDocumentClient TextDocument { get; }
+
+        public CommandCqueryCallers CommandCqueryCallers { get; }
 
         /// <summary>
         ///     The LSP Window API.

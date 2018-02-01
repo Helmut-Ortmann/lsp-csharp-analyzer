@@ -590,6 +590,65 @@ namespace LspAnalyzer
             }
 
         }
+         private async void callersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (grdWorkspaceSymbols.SelectedRows.Count > 0)
+            {
+                var row = grdWorkspaceSymbols.SelectedRows[0];
+                var document = GetWsDocument(row);
+                var symbolName = GetWsSymbolName(row);
+                var startLine = GetWsStartLine(row);
+                var startPosition = GetWsStartPosition(row);
+                var endLine = GetWsEndLine(row);
+                var endPosition = GetWsEndPosition(row);
+
+                // estimate position of function name in Function symbol for functions
+                var symbolIntern = GetWsSymbolIntern(row);
+                var kind = GetWsSymbolKind(row);
+
+                var intern = LspFile.ReadLocation(document, startLine, startPosition, endLine, endPosition);
+
+                // Determine start position of symbol
+                Position position = GetSymbolStartPosition(intern, symbolName, new Position{Line=startLine, Character = startPosition});
+                txtReferencesSymbolName.Text = symbolName;
+
+                // ReferenceParams: Request
+                // Response: LocationContainer
+                var locations = await _client.CommandCqueryCallers.CqueryCallers(document, (int)position.Line, (int)position.Character);
+
+                
+                var dtCallers = (from rec in locations
+                    orderby rec.Uri.AbsolutePath,  rec.Range.Start.Line
+                    select new
+                    {
+
+                        File = rec.Uri.LocalPath.Replace(_workSpacePath,"").TrimStart('/'),
+                        StartLine = rec.Range.Start.Line,
+                        StartChar = rec.Range.Start.Character,
+                        EndLine = rec.Range.End.Line,
+                        EndChar = rec.Range.End.Character
+
+                    }
+                ).ToDataTable();
+
+
+
+                _bsReferences.DataSource = dtCallers;
+                grdReferences.DataSource = _bsReferences;
+                tabDocument.SelectedTab = tabReferences;
+                grdReferences.Columns[0].Width = 400; // Name
+                grdReferences.Columns[1].Width = 45;  // Kind
+                grdReferences.Columns[2].Width = 350; // File
+                grdReferences.Columns[3].Visible = true;
+
+                txtReferenceSymbol.Text = $"{symbolIntern}";
+                txtReferencesFilter.Text = "";
+               
+
+            }
+
+        }
+
 
         private async void txtSymbol_MouseDoubleClick(object sender, MouseEventArgs e)
         {

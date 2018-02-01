@@ -123,6 +123,18 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>181, 17</value>
   </metadata>
+  <metadata name="contextMenuStripSymbol.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>393, 17</value>
+  </metadata>
+  <data name="openImplementationToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Start the Implementation to edit with the Editor defined for the type.
+
+hoReverse copies the function name to clipboard for fast location in code..
+
+For VS Code:
+- CTRL * F (Find)
+- CTRL+V (Paste Clipboard)</value>
+  </data>
   <data name="label3.ToolTip" xml:space="preserve">
     <value>Filter "Name" of Symbol:
 - 'myNameFilter'
@@ -188,18 +200,6 @@ You can also add free filters like:
 (Name Like 'AB*' OR Kind = 'Function' OR File  = 'appl*')
 
 For 'Kind' look in the LSP specification under SymbolKind.</value>
-  </data>
-  <metadata name="contextMenuStripSymbol.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>393, 17</value>
-  </metadata>
-  <data name="openImplementationToolStripMenuItem.ToolTipText" xml:space="preserve">
-    <value>Start the Implementation to edit with the Editor defined for the type.
-
-hoReverse copies the function name to clipboard for fast location in code..
-
-For VS Code:
-- CTRL * F (Find)
-- CTRL+V (Paste Clipboard)</value>
   </data>
   <metadata name="contextMenuReference.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>583, 17</value>

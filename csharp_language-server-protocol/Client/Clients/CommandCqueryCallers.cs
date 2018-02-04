@@ -77,9 +77,25 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Clients
             {
                 Name = @"cquery/callers",
                 Title = "Callers",
-                Arguments = (JArray)JToken.FromObject(request)
+                Arguments = JObject.FromObject(request)
             };
-            return await Client.SendRequest<LocationContainer>(@"command", command, cancellationToken).ConfigureAwait(false);
+            var method = "command";
+            var request1 = new TextDocumentPositionParams
+            {
+                TextDocument = new TextDocumentItem
+                {
+                    Uri = documentUri
+                },
+                Position = new Position
+                {
+                    Line = line,
+                    Character = column
+                }
+            };
+            method = @"$cquery/callers";
+            //method = @"TextDocument/references";
+
+            return await Client.SendRequest<LocationContainer>(method, request1, cancellationToken).ConfigureAwait(false);
 
         }
       

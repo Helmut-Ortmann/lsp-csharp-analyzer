@@ -684,7 +684,10 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
 
             //Log.LogDebug("Sending outgoing payload ({PayloadSize} bytes)...", payloadBuffer.Length);
             await _output.WriteAsync(payloadBuffer, 0, payloadBuffer.Length, _cancellation);
-            Log.LogDebug("Sent outgoing payload ({PayloadSize} bytes).", payloadBuffer.Length);
+            string logMessage = payload.Length > 200
+                ? logMessage = payload.Substring(0, 200)
+                : payload;
+            Log.LogDebug($"Sent outgoing payload ({payloadBuffer.Length})='{logMessage}'.");
 
             //Log.LogDebug("Flushing output stream...");
             await _output.FlushAsync(_cancellation);

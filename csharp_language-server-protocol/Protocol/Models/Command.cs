@@ -22,9 +22,8 @@ namespace OmniSharp.Extensions.LanguageServer.Protocol.Models
         /// Arguments that the command handler should be
         /// invoked with.
         /// </summary>
-        //[Optional]
-        //public JArray Arguments { get; set; }
-        [JsonProperty(DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate, NullValueHandling = NullValueHandling.Ignore)]
-        public JObject Arguments { get; set; }
+        [Optional]
+        public JArray Arguments { get; set; }
+
     }
 }

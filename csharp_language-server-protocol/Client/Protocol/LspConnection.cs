@@ -598,17 +598,12 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
                                     }
                                     else
                                     {
-                                        
-                                        string msg = message.Result?.ToString(Formatting.None);
-                                        if (msg == null) msg = "";
-                                        if (msg.Length > 200) msg = msg.Substring(0, 200);
-                                        
                                         Log.LogDebug("Received response {RequestId} from language server: {ResponseResult}",
                                             requestId,
-                                            msg
+                                            message.Result?.ToString(Formatting.None)
                                         );
 
-                                        //Log.LogDebug("Completing request {RequestId}.", requestId);
+                                        Log.LogDebug("Completing request {RequestId}.", requestId);
 
                                         completion.TrySetResult(message);
                                     }
@@ -625,7 +620,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
                         else
                         {
                             // Notification.
-                            if (message.Method != "$cquery/progress") Log.LogDebug("Received {NotificationMethod} notification from language server: {NotificationParameters}",
+                            Log.LogDebug("Received {NotificationMethod} notification from language server: {NotificationParameters}",
                                 message.Method,
                                 message.Params?.ToString(Formatting.None)
                             );
@@ -678,20 +673,17 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
                 $"Content-Length: {payloadBuffer.Length}\r\n\r\n"
             );
 
-            //Log.LogDebug("Sending outgoing header ({HeaderSize} bytes)...", headerBuffer.Length);
+            Log.LogDebug("Sending outgoing header ({HeaderSize} bytes)...", headerBuffer.Length);
             await _output.WriteAsync(headerBuffer, 0, headerBuffer.Length, _cancellation);
-            //Log.LogDebug("Sent outgoing header ({HeaderSize} bytes).", headerBuffer.Length);
+            Log.LogDebug("Sent outgoing header ({HeaderSize} bytes).", headerBuffer.Length);
 
-            //Log.LogDebug("Sending outgoing payload ({PayloadSize} bytes)...", payloadBuffer.Length);
+            Log.LogDebug("Sending outgoing payload ({PayloadSize} bytes)...", payloadBuffer.Length);
             await _output.WriteAsync(payloadBuffer, 0, payloadBuffer.Length, _cancellation);
-            string logMessage = payload.Length > 200
-                ? logMessage = payload.Substring(0, 200)
-                : payload;
-            Log.LogDebug($"Sent outgoing payload ({payloadBuffer.Length})='{logMessage}'.");
+            Log.LogDebug("Sent outgoing payload ({PayloadSize} bytes).", payloadBuffer.Length);
 
-            //Log.LogDebug("Flushing output stream...");
+            Log.LogDebug("Flushing output stream...");
             await _output.FlushAsync(_cancellation);
-            //Log.LogDebug("Flushed output stream.");
+            Log.LogDebug("Flushed output stream.");
         }
 
         /// <summary>
@@ -702,12 +694,12 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
         /// </returns>
         async Task<ServerMessage> ReceiveMessage()
         {
-            //Log.LogDebug("Reading response headers...");
+            Log.LogDebug("Reading response headers...");
 
             byte[] headerBuffer = new byte[HeaderBufferSize];
             int bytesRead = await _input.ReadAsync(headerBuffer, 0, MinimumHeaderLength, _cancellation);
 
-            //Log.LogDebug("Read {ByteCount} bytes from input stream.", bytesRead);
+            Log.LogDebug("Read {ByteCount} bytes from input stream.", bytesRead);
 
             if (bytesRead == 0)
                 return null; // Stream closed.
@@ -719,25 +711,25 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
                    headerBuffer[bytesRead - 4] != CR || headerBuffer[bytesRead - 3] != LF ||
                    headerBuffer[bytesRead - 2] != CR || headerBuffer[bytesRead - 1] != LF)
             {
-                //Log.LogDebug("Reading additional data from input stream...");
+                Log.LogDebug("Reading additional data from input stream...");
 
                 // Read single bytes until we've got a valid end-of-header sequence.
                 var additionalBytesRead = await _input.ReadAsync(headerBuffer, bytesRead, 1, _cancellation);
                 if (additionalBytesRead == 0)
                     return null; // no more _input, mitigates endless loop here.
 
-                //Log.LogDebug("Read {ByteCount} bytes of additional data from input stream.", additionalBytesRead);
+                Log.LogDebug("Read {ByteCount} bytes of additional data from input stream.", additionalBytesRead);
 
                 bytesRead += additionalBytesRead;
             }
 
             string headers = HeaderEncoding.GetString(headerBuffer, 0, bytesRead);
-            //Log.LogDebug("Got raw headers: {Headers}", headers);
+            Log.LogDebug("Got raw headers: {Headers}", headers);
 
             if (string.IsNullOrWhiteSpace(headers))
                 return null; // Stream closed.
 
-            //Log.LogDebug("Read response headers {Headers}.", headers);
+            Log.LogDebug("Read response headers {Headers}.", headers);
 
             Dictionary<string, string> parsedHeaders = ParseHeaders(headers);
 
@@ -751,13 +743,13 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
 
             int contentLength = Int32.Parse(contentLengthHeader);
 
-            //Log.LogDebug("Reading response body ({ExpectedByteCount} bytes expected).", contentLength);
+            Log.LogDebug("Reading response body ({ExpectedByteCount} bytes expected).", contentLength);
 
             var requestBuffer = new byte[contentLength];
             var received = 0;
             while (received < contentLength)
             {
-                //Log.LogDebug("Reading segment of incoming request body ({ReceivedByteCount} of {TotalByteCount} bytes so far)...", received, contentLength);
+                Log.LogDebug("Reading segment of incoming request body ({ReceivedByteCount} of {TotalByteCount} bytes so far)...", received, contentLength);
 
                 var payloadBytesRead = await _input.ReadAsync(requestBuffer, received, requestBuffer.Length - received, _cancellation);
                 if (payloadBytesRead == 0)
@@ -768,26 +760,15 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
                 }
                 received += payloadBytesRead;
 
-                //Log.LogDebug("Read segment of incoming request body ({ReceivedByteCount} of {TotalByteCount} bytes so far).", received, contentLength);
+                Log.LogDebug("Read segment of incoming request body ({ReceivedByteCount} of {TotalByteCount} bytes so far).", received, contentLength);
             }
 
-            //Log.LogDebug("Received entire payload ({ReceivedByteCount} bytes).", received);
+            Log.LogDebug("Received entire payload ({ReceivedByteCount} bytes).", received);
 
             string responseBody = PayloadEncoding.GetString(requestBuffer);
-            ServerMessage message;
-            try
-            {
-                message = JsonConvert.DeserializeObject<ServerMessage>(responseBody, Serializer.Settings);
-            }
-            catch (Exception e)
-            {
-                Log.LogError(e,"Error JsonConvert.DeserializeObject<ServerMessage>");
-                message = new ServerMessage();
-               
-            }
+            ServerMessage message = JsonConvert.DeserializeObject<ServerMessage>(responseBody, Serializer.Settings);
 
-            var msg = responseBody.Length > 200 ? responseBody.Substring(0, 200) : responseBody;
-            if (message.Method != @"$cquery/progress") Log.LogDebug($"Read response body {msg}.");
+            Log.LogDebug("Read response body {ResponseBody}.", responseBody);
 
             return message;
         }
@@ -874,8 +855,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
                 throw new ArgumentNullException(nameof(requestMessage));
 
             string requestId = requestMessage.Id.ToString();
-            if (requestMessage.Method == "$cquery/progress") return;
-            if (requestMessage.Method != "$cquery/progress") Log.LogDebug("Dispatching incoming {RequestMethod} request {RequestId}...", requestMessage.Method, requestId);
+            Log.LogDebug("Dispatching incoming {RequestMethod} request {RequestId}...", requestMessage.Method, requestId);
 
             CancellationTokenSource requestCancellation = CancellationTokenSource.CreateLinkedTokenSource(_cancellation);
             _requestCancellations.TryAdd(requestId, requestCancellation);
@@ -913,7 +893,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
                 }
                 else if (handlerTask.IsCompleted)
                 {
-                    if (requestMessage.Method != "$cquery/progress") Log.LogDebug("{RequestMethod} request {RequestId} complete (Result = {@Result}).", requestMessage.Method, requestId, handlerTask.Result);
+                    Log.LogDebug("{RequestMethod} request {RequestId} complete (Result = {@Result}).", requestMessage.Method, requestId, handlerTask.Result);
 
                     _outgoing.TryAdd(new ClientMessage
                     {
@@ -928,7 +908,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
             });
 #pragma warning restore CS4014 // Continuation does the work we need; no need to await it as this would tie up the dispatch loop.
 
-            if (requestMessage.Method != "$cquery/progress") Log.LogDebug("Dispatched incoming {RequestMethod} request {RequestId}.", requestMessage.Method, requestMessage.Id);
+            Log.LogDebug("Dispatched incoming {RequestMethod} request {RequestId}.", requestMessage.Method, requestMessage.Id);
         }
 
         /// <summary>
@@ -975,7 +955,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
             if (notificationMessage == null)
                 throw new ArgumentNullException(nameof(notificationMessage));
 
-            if (notificationMessage.Method != "$cquery/progress") Log.LogDebug("Dispatching incoming {NotificationMethod} notification...", notificationMessage.Method);
+            Log.LogDebug("Dispatching incoming {NotificationMethod} notification...", notificationMessage.Method);
 
             Task<bool> handlerTask;
             if (notificationMessage.Params != null)
@@ -996,12 +976,12 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Protocol
                 }
                 else if (handlerTask.IsCompleted)
                 {
-                    if (notificationMessage.Method != "$cquery/progress") Log.LogDebug("{NotificationMethod} notification complete.", notificationMessage.Method);
+                    Log.LogDebug("{NotificationMethod} notification complete.", notificationMessage.Method);
 
                     if (completedHandler.Result)
                         Log.LogDebug("Dispatched incoming {NotificationMethod} notification.", notificationMessage.Method);
                     else
-                    if (notificationMessage.Method != "$cquery/progress") Log.LogDebug("Ignored incoming {NotificationMethod} notification (no handler registered).", notificationMessage.Method);
+                        Log.LogDebug("Ignored incoming {NotificationMethod} notification (no handler registered).", notificationMessage.Method);
                 }
             });
 #pragma warning restore CS4014 // Continuation does the work we need; no need to await it as this would tie up the dispatch loop.

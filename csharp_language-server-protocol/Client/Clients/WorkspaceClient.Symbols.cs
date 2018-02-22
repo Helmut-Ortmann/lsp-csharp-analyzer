@@ -20,8 +20,8 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Clients
         /// </returns>
         public async Task<SymbolInformationContainer> Symbol(string query, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (query == null) query = "";
-           
+            //if (string.IsNullOrWhiteSpace(query))
+            //    throw new ArgumentException("Argument cannot be null, empty, or entirely composed of whitespace: 'query'.", nameof(query));
 
             var request = new WorkspaceSymbolParams
             {

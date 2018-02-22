@@ -117,8 +117,6 @@ namespace OmniSharp.Extensions.JsonRpc
                     }
                     // TODO sometimes: encoding should be based on the respective header (including the wrong "utf8" value)
                     var payload = System.Text.Encoding.UTF8.GetString(requestBuffer);
-                    // protocol input 
-                    _logger.LogInformation(payload);
                     HandleRequest(payload);
                 }
             }

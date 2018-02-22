@@ -31,15 +31,6 @@
           "lib/net45/Newtonsoft.Json.dll": {}
         }
       },
-      "Serilog/2.6.0": {
-        "type": "package",
-        "compile": {
-          "lib/net46/Serilog.dll": {}
-        },
-        "runtime": {
-          "lib/net46/Serilog.dll": {}
-        }
-      },
       "System.Collections/4.0.11": {
         "type": "package",
         "frameworkAssemblies": [
@@ -171,7 +162,6 @@
         "dependencies": {
           "Newtonsoft.Json": "10.0.3",
           "OmniSharp.Extensions.JsonRpc": "1.0.0",
-          "Serilog": "2.6.0",
           "System.ValueTuple": "4.4.0"
         },
         "compile": {
@@ -520,29 +510,6 @@
             "assetType": "native",
             "rid": "ubuntu.16.10-x64"
           }
-        }
-      },
-      "Serilog/2.6.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.CSharp": "4.0.1",
-          "System.Collections": "4.0.11",
-          "System.Collections.NonGeneric": "4.0.1",
-          "System.Dynamic.Runtime": "4.0.11",
-          "System.Globalization": "4.0.11",
-          "System.Linq": "4.1.0",
-          "System.Reflection": "4.1.0",
-          "System.Reflection.Extensions": "4.0.1",
-          "System.Runtime": "4.1.0",
-          "System.Runtime.Extensions": "4.1.0",
-          "System.Text.RegularExpressions": "4.1.0",
-          "System.Threading": "4.0.11"
-        },
-        "compile": {
-          "lib/netstandard1.3/Serilog.dll": {}
-        },
-        "runtime": {
-          "lib/netstandard1.3/Serilog.dll": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -1756,7 +1723,6 @@
           "NETStandard.Library": "1.6.1",
           "Newtonsoft.Json": "10.0.3",
           "OmniSharp.Extensions.JsonRpc": "1.0.0",
-          "Serilog": "2.6.0",
           "System.ValueTuple": "4.4.0"
         },
         "compile": {
@@ -2155,23 +2121,6 @@
         "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
         "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.nuspec",
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
-      ]
-    },
-    "Serilog/2.6.0": {
-      "sha512": "hxHgHkza8ZowrvQ+jTEF2ypDWGP8NbNtxPQIx7ogTAM9fisDFo2+6kOaxCkleZLO8hiyq0kW5tDLkgm/dbj9uA==",
-      "type": "package",
-      "path": "serilog/2.6.0",
-      "files": [
-        "lib/net45/Serilog.dll",
-        "lib/net45/Serilog.xml",
-        "lib/net46/Serilog.dll",
-        "lib/net46/Serilog.xml",
-        "lib/netstandard1.0/Serilog.dll",
-        "lib/netstandard1.0/Serilog.xml",
-        "lib/netstandard1.3/Serilog.dll",
-        "lib/netstandard1.3/Serilog.xml",
-        "serilog.2.6.0.nupkg.sha512",
-        "serilog.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {

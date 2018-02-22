@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -88,31 +88,18 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Processes
             _serverStartInfo.UseShellExecute = false;
             _serverStartInfo.RedirectStandardInput = true;
             _serverStartInfo.RedirectStandardOutput = true;
-            Process serverProcess;
-            try
-            {
-                serverProcess = _serverProcess = new Process
-                {
-                    StartInfo = _serverStartInfo,
-                    EnableRaisingEvents = true
-                };
-            
-            
-                serverProcess.Exited += ServerProcess_Exit;
-                serverProcess.Start();
-            }
-            catch (Exception e)
-            {
-                Log.LogDebug($"Server process throw an exception\r\n{e}.");
-                throw new InvalidOperationException("Failed to launch language server .");
-            }
 
-            // Wait for completion
-            if (!ServerStartCompletion.TrySetResult(null))
+            Process serverProcess = _serverProcess = new Process
             {
-                Log.LogDebug($"Server process throw an exception on StartCompletion.");
+                StartInfo = _serverStartInfo,
+                EnableRaisingEvents = true
+            };
+            serverProcess.Exited += ServerProcess_Exit;
+
+            if (!serverProcess.Start())
                 throw new InvalidOperationException("Failed to launch language server .");
-            }
+
+            ServerStartCompletion.TrySetResult(null);
 
             return Task.CompletedTask;
         }
@@ -144,15 +131,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Processes
 
             OnExited();
             ServerExitCompletion.TrySetResult(null);
-
-            try
-            {
-                ServerStartCompletion = new TaskCompletionSource<object>();
-            }
-            catch (Exception)
-            {
-               
-            }
+            ServerStartCompletion = new TaskCompletionSource<object>();
         }
     }
 }

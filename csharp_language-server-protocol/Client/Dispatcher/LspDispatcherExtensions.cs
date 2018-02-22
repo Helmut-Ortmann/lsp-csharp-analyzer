@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using OmniSharp.Extensions.LanguageServer.Client.Handlers;
 
 namespace OmniSharp.Extensions.LanguageServer.Client.Dispatcher

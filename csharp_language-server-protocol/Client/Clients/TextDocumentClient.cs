@@ -73,7 +73,6 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Clients
                     Character = column
                 }
             };
-            
 
             return await Client.SendRequest<TResponse>(method, request, cancellationToken).ConfigureAwait(false);
         }

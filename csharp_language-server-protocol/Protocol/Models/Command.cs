@@ -24,6 +24,5 @@ namespace OmniSharp.Extensions.LanguageServer.Protocol.Models
         /// </summary>
         [Optional]
         public JArray Arguments { get; set; }
-
     }
 }

@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v1.6/",
-    "signature": "35256e72e69d5c25ed9804e02f39676e07652857"
+    "signature": "00d1c07fb13406b5a297b27c6f699ff5af2f5dfb"
   },
   "compilationOptions": {},
   "targets": {
@@ -12,7 +12,6 @@
           "NETStandard.Library": "1.6.1",
           "Newtonsoft.Json": "10.0.3",
           "OmniSharp.Extensions.JsonRpc": "1.0.0",
-          "Serilog": "2.6.0",
           "System.ValueTuple": "4.4.0"
         },
         "runtime": {
@@ -188,25 +187,6 @@
       "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
-      "Serilog/2.6.0": {
-        "dependencies": {
-          "Microsoft.CSharp": "4.3.0",
-          "System.Collections": "4.3.0",
-          "System.Collections.NonGeneric": "4.3.0",
-          "System.Dynamic.Runtime": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.Linq": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Reflection.Extensions": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Text.RegularExpressions": "4.3.0",
-          "System.Threading": "4.3.0"
-        },
-        "runtime": {
-          "lib/netstandard1.3/Serilog.dll": {}
-        }
-      },
       "System.AppContext/4.3.0": {
         "dependencies": {
           "System.Runtime": "4.3.0"
@@ -1203,13 +1183,6 @@
       "sha512": "sha512-YozenbDaLt94JjysfmMHi1GYTbdPxgkhMSOzseGpETeKPDlrdDEgN++yYLBKUtvImUbBGwSuOajF+knOIvPzbw==",
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.0",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512"
-    },
-    "Serilog/2.6.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-hxHgHkza8ZowrvQ+jTEF2ypDWGP8NbNtxPQIx7ogTAM9fisDFo2+6kOaxCkleZLO8hiyq0kW5tDLkgm/dbj9uA==",
-      "path": "serilog/2.6.0",
-      "hashPath": "serilog.2.6.0.nupkg.sha512"
     },
     "System.AppContext/4.3.0": {
       "type": "package",

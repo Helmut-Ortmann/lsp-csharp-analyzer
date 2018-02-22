@@ -40,7 +40,16 @@ namespace OmniSharp.Extensions.LanguageServer.Server
             Stream input,
             Stream output,
             ILoggerFactory loggerFactory)
-            : this(input, output, new LspReciever(), new RequestProcessIdentifier(), loggerFactory, new Serializer())
+            : this(input, output, loggerFactory, addDefaultLoggingProvider: true)
+        {
+        }
+
+        public LanguageServer(
+            Stream input,
+            Stream output,
+            ILoggerFactory loggerFactory,
+            bool addDefaultLoggingProvider)
+            : this(input, output, new LspReciever(), new RequestProcessIdentifier(), loggerFactory, new Serializer(), addDefaultLoggingProvider)
         {
         }
 
@@ -50,19 +59,23 @@ namespace OmniSharp.Extensions.LanguageServer.Server
             LspReciever reciever,
             IRequestProcessIdentifier requestProcessIdentifier,
             ILoggerFactory loggerFactory,
-            Serializer serializer)
+            Serializer serializer,
+            bool addDefaultLoggingProvider)
         {
             var outputHandler = new OutputHandler(output, serializer);
-            // TODO: This might not be the best
-            loggerFactory.AddProvider(new LanguageServerLoggerProvider(this));
+
+            if (addDefaultLoggingProvider)
+                loggerFactory.AddProvider(new LanguageServerLoggerProvider(this));
 
             _reciever = reciever;
             _loggerFactory = loggerFactory;
             _serializer = serializer;
             _handlerMactherCollection = new HandlerMatcherCollection
             {
-                new TextDocumentMatcher(_loggerFactory.CreateLogger<TextDocumentMatcher>()),
-                new ExecuteCommandMatcher(_loggerFactory.CreateLogger<ExecuteCommandMatcher>())
+                new TextDocumentMatcher(_loggerFactory.CreateLogger<TextDocumentMatcher>(), _collection.TextDocumentSyncHandlers),
+                new ExecuteCommandMatcher(_loggerFactory.CreateLogger<ExecuteCommandMatcher>()),
+                new ResolveCommandMatcher(_loggerFactory.CreateLogger<ResolveCommandMatcher>()),
+                new DocumentLinkCommandMatcher(_loggerFactory.CreateLogger<DocumentLinkCommandMatcher>())
             };
 
             _requestRouter = new LspRequestRouter(_collection, loggerFactory, _handlerMactherCollection, _serializer);
@@ -78,6 +91,11 @@ namespace OmniSharp.Extensions.LanguageServer.Server
 
         public InitializeParams Client { get; private set; }
         public InitializeResult Server { get; private set; }
+
+        /// <summary>
+        ///     The minimum level for the server's default logger.
+        /// </summary>
+        public LogLevel MinimumLogLevel { get; set; } = LogLevel.Information;
 
         public IDisposable AddHandler(string method, IJsonRpcHandler handler)
         {

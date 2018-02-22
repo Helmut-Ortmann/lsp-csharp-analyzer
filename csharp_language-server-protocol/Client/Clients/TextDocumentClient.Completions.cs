@@ -33,7 +33,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client.Clients
         public Task<CompletionList> Completions(string filePath, int line, int column, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrWhiteSpace(filePath))
-               throw new ArgumentException($"Argument cannot be null, empty, or entirely composed of whitespace: {nameof(filePath)}.", nameof(filePath));
+                throw new ArgumentException($"Argument cannot be null, empty, or entirely composed of whitespace: {nameof(filePath)}.", nameof(filePath));
 
             Uri documentUri = DocumentUri.FromFileSystemPath(filePath);
 

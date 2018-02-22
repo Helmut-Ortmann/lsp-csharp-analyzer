@@ -92,7 +92,8 @@ namespace LspAnalyzer
         // --help        Print this help information.
         //string _lspServerPath = @"d:\hoData\Development\GitHub\LSP\cquery\build\release\bin\cquery.exe";
         string _lspServerParameter = @"--language-server --log-file d:/temp/CQuery.log";
-        string _workSpacePath = @"d:/hoData/Projects/00Current/ZF/Work/source";
+        //string _workSpacePath = @"d:/hoData/Projects/00Current/ZF/Work/source";
+        string _workSpacePath = @"d:/hoData/Development/GitHub/LSP/Lsp_TestC";
 
         private string _lspServerCacheDirectory = @"d:/temp/cquery/cacheDirectory";
 
@@ -614,7 +615,7 @@ namespace LspAnalyzer
 
                 // ReferenceParams: Request
                 // Response: LocationContainer
-                var locations = await _client.CommandCqueryCallers.CqueryCallers(document, (int)position.Line, (int)position.Character);
+                var locations = await _client.TextDocument.CqueryCallers(document, (int)position.Line, (int)position.Character);
 
                 
                 var dtCallers = (from rec in locations

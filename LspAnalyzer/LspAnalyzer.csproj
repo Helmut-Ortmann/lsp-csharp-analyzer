@@ -123,6 +123,7 @@
     <Compile Include="Services\Linq.cs" />
     <Compile Include="Services\LspFile.cs" />
     <Compile Include="Services\Start.cs" />
+    <Compile Include="Services\TimeMeasurement.cs" />
     <EmbeddedResource Include="LspAnalyzer.resx">
       <DependentUpon>LspAnalyzer.cs</DependentUpon>
     </EmbeddedResource>

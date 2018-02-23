@@ -81,6 +81,24 @@ namespace LspAnalyzer.Analyze
                     $"Can't start '{app}'!");
             }
         }
+
+        public static void StartFile(string path)
+        {
+            if (File.Exists(path))
+            {
+                try
+                {
+
+                    Process.Start(path);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"Can't start file '{path}'!\n\n{e}",
+                        $"Can't start file '{path}'!");
+                }
+            }
+        }
+
         public static DataGridView GetDataGridViewOfContextMenu(object sender)
         {
             // Try to cast the sender to a ToolStripItem

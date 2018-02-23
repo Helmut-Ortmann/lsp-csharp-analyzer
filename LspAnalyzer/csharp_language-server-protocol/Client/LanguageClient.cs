@@ -243,7 +243,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client
         public async Task Initialize(string workspaceRoot, object initializationOptions = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (IsInitialized)
-                throw new InvalidOperationException(@"Client has already been initialised.");
+                throw new InvalidOperationException("Client has already been initialised.");
 
             try
             {
@@ -279,7 +279,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client
             }
             catch (Exception initializationError)
             {
-                // Capture the initialization error so anyone awaiting IsReady will also see it.
+                // Capture the initialisation error so anyone awaiting IsReady will also see it.
                 _readyCompletion.TrySetException(initializationError);
 
                 throw;

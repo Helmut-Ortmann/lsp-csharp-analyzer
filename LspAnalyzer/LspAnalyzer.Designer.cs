@@ -54,6 +54,7 @@ namespace LspAnalyzer
             this.tabWsSymbol = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtWsCount = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -69,6 +70,7 @@ namespace LspAnalyzer
             this.signitureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.referencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.highlightInDocumentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cQueryCallersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabDocumentSymbol = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -97,6 +99,7 @@ namespace LspAnalyzer
             this.tblGui = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnDocumentSymbol = new System.Windows.Forms.Button();
+            this.btnCreateSSQLiteDB = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.tabDocument = new System.Windows.Forms.TabControl();
             this.tabClientCapability = new System.Windows.Forms.TabPage();
@@ -113,12 +116,15 @@ namespace LspAnalyzer
             this.lpoadServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defineCSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showCFrameworkLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showCQueryLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.lSPSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filterSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.txtWsCount = new System.Windows.Forms.TextBox();
-            this.btnCreateSSQLiteDB = new System.Windows.Forms.Button();
+            this.txtState = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -392,6 +398,15 @@ namespace LspAnalyzer
             this.panel2.Size = new System.Drawing.Size(922, 24);
             this.panel2.TabIndex = 1;
             // 
+            // txtWsCount
+            // 
+            this.txtWsCount.Location = new System.Drawing.Point(1, 4);
+            this.txtWsCount.Name = "txtWsCount";
+            this.txtWsCount.ReadOnly = true;
+            this.txtWsCount.Size = new System.Drawing.Size(62, 20);
+            this.txtWsCount.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.txtWsCount, "The count of shown rows.");
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -476,9 +491,10 @@ namespace LspAnalyzer
             this.hoverToolStripMenuItem,
             this.signitureToolStripMenuItem,
             this.referencesToolStripMenuItem,
-            this.highlightInDocumentToolStripMenuItem});
+            this.highlightInDocumentToolStripMenuItem,
+            this.cQueryCallersToolStripMenuItem});
             this.contextMenuStripSymbol.Name = "contextMenuStrip1";
-            this.contextMenuStripSymbol.Size = new System.Drawing.Size(212, 142);
+            this.contextMenuStripSymbol.Size = new System.Drawing.Size(212, 164);
             this.toolTip1.SetToolTip(this.contextMenuStripSymbol, "Select the wanted names and Click on Copy Names to Clipboard.\r\n\r\nLSP Manger copie" +
         "s the ordered names to clipboard.");
             // 
@@ -530,6 +546,13 @@ namespace LspAnalyzer
             this.highlightInDocumentToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.highlightInDocumentToolStripMenuItem.Text = "Highlight in Document";
             this.highlightInDocumentToolStripMenuItem.Click += new System.EventHandler(this.highlightInDocumentToolStripMenuItem_Click);
+            // 
+            // cQueryCallersToolStripMenuItem
+            // 
+            this.cQueryCallersToolStripMenuItem.Name = "cQueryCallersToolStripMenuItem";
+            this.cQueryCallersToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.cQueryCallersToolStripMenuItem.Text = "CQuery/Callers";
+            this.cQueryCallersToolStripMenuItem.Click += new System.EventHandler(this.callersToolStripMenuItem_Click);
             // 
             // tabDocumentSymbol
             // 
@@ -794,6 +817,7 @@ namespace LspAnalyzer
             this.tblGui.Controls.Add(this.tabDocument, 0, 2);
             this.tblGui.Controls.Add(this.panel1, 0, 1);
             this.tblGui.Controls.Add(this.menuStrip1, 0, 0);
+            this.tblGui.Controls.Add(this.txtState, 0, 4);
             this.tblGui.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tblGui.Location = new System.Drawing.Point(0, 0);
             this.tblGui.Name = "tblGui";
@@ -832,6 +856,16 @@ namespace LspAnalyzer
             this.btnDocumentSymbol.TabIndex = 1;
             this.btnDocumentSymbol.Text = "Document Symbol";
             this.btnDocumentSymbol.UseVisualStyleBackColor = true;
+            // 
+            // btnCreateSSQLiteDB
+            // 
+            this.btnCreateSSQLiteDB.Location = new System.Drawing.Point(292, 3);
+            this.btnCreateSSQLiteDB.Name = "btnCreateSSQLiteDB";
+            this.btnCreateSSQLiteDB.Size = new System.Drawing.Size(75, 23);
+            this.btnCreateSSQLiteDB.TabIndex = 5;
+            this.btnCreateSSQLiteDB.Text = "CreateSQL DB";
+            this.btnCreateSSQLiteDB.UseVisualStyleBackColor = true;
+            this.btnCreateSSQLiteDB.Click += new System.EventHandler(this.btnCreateSSQLiteDB_Click);
             // 
             // label13
             // 
@@ -1006,53 +1040,73 @@ namespace LspAnalyzer
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showCFrameworkLogToolStripMenuItem,
+            this.showCQueryLogToolStripMenuItem,
+            this.toolStripSeparator3,
             this.lSPSpecificationToolStripMenuItem,
             this.filterSpecificationToolStripMenuItem,
+            this.toolStripSeparator4,
             this.helpToolStripMenuItem1});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 18);
             this.helpToolStripMenuItem.Text = "Help";
             // 
+            // showCFrameworkLogToolStripMenuItem
+            // 
+            this.showCFrameworkLogToolStripMenuItem.Name = "showCFrameworkLogToolStripMenuItem";
+            this.showCFrameworkLogToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.showCFrameworkLogToolStripMenuItem.Text = "Show C# Framework log";
+            this.showCFrameworkLogToolStripMenuItem.ToolTipText = "Shows the log file of the C# Framework\r\n\r\n(see: https://github.com/OmniSharp/csha" +
+    "rp-language-server-protocol)";
+            this.showCFrameworkLogToolStripMenuItem.Click += new System.EventHandler(this.showCFrameworkLogToolStripMenuItem_Click);
+            // 
+            // showCQueryLogToolStripMenuItem
+            // 
+            this.showCQueryLogToolStripMenuItem.Name = "showCQueryLogToolStripMenuItem";
+            this.showCQueryLogToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.showCQueryLogToolStripMenuItem.Text = "Show CQuery log";
+            this.showCQueryLogToolStripMenuItem.ToolTipText = "Shows the log of CQuery\r\n\r\n(see: https://github.com/cquery-project/cquery)";
+            this.showCQueryLogToolStripMenuItem.Click += new System.EventHandler(this.showCQueryLogToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(200, 6);
+            // 
             // lSPSpecificationToolStripMenuItem
             // 
             this.lSPSpecificationToolStripMenuItem.Name = "lSPSpecificationToolStripMenuItem";
-            this.lSPSpecificationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.lSPSpecificationToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
             this.lSPSpecificationToolStripMenuItem.Text = "LSP Specification";
             this.lSPSpecificationToolStripMenuItem.Click += new System.EventHandler(this.lSPSpecificationToolStripMenuItem_Click);
             // 
             // filterSpecificationToolStripMenuItem
             // 
             this.filterSpecificationToolStripMenuItem.Name = "filterSpecificationToolStripMenuItem";
-            this.filterSpecificationToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.filterSpecificationToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
             this.filterSpecificationToolStripMenuItem.Text = "Filter Specification";
             this.filterSpecificationToolStripMenuItem.Click += new System.EventHandler(this.filterSpecificationToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(200, 6);
             // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(171, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(203, 22);
             this.helpToolStripMenuItem1.Text = "Help";
             this.helpToolStripMenuItem1.ToolTipText = "Show Wiki";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
             // 
-            // txtWsCount
+            // txtState
             // 
-            this.txtWsCount.Location = new System.Drawing.Point(1, 4);
-            this.txtWsCount.Name = "txtWsCount";
-            this.txtWsCount.ReadOnly = true;
-            this.txtWsCount.Size = new System.Drawing.Size(62, 20);
-            this.txtWsCount.TabIndex = 2;
-            this.toolTip1.SetToolTip(this.txtWsCount, "The count of shown rows.");
-            // 
-            // btnCreateSSQLiteDB
-            // 
-            this.btnCreateSSQLiteDB.Location = new System.Drawing.Point(292, 3);
-            this.btnCreateSSQLiteDB.Name = "btnCreateSSQLiteDB";
-            this.btnCreateSSQLiteDB.Size = new System.Drawing.Size(75, 23);
-            this.btnCreateSSQLiteDB.TabIndex = 5;
-            this.btnCreateSSQLiteDB.Text = "CreateSQL DB";
-            this.btnCreateSSQLiteDB.UseVisualStyleBackColor = true;
-            this.btnCreateSSQLiteDB.Click += new System.EventHandler(this.btnCreateSSQLiteDB_Click);
+            this.txtState.Location = new System.Drawing.Point(3, 442);
+            this.txtState.Name = "txtState";
+            this.txtState.ReadOnly = true;
+            this.txtState.Size = new System.Drawing.Size(942, 20);
+            this.txtState.TabIndex = 12;
             // 
             // LspAnalyzer
             // 
@@ -1196,6 +1250,12 @@ namespace LspAnalyzer
         private System.Windows.Forms.Button btnGenerateSymbols;
         private System.Windows.Forms.TextBox txtWsCount;
         private System.Windows.Forms.Button btnCreateSSQLiteDB;
+        private System.Windows.Forms.ToolStripMenuItem cQueryCallersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showCFrameworkLogToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showCQueryLogToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.TextBox txtState;
     }
 }
 

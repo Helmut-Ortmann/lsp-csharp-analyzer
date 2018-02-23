@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETStandard,Version=v2.0/",
-    "signature": "025c777ccbd9de3dc6831211dd291349e6e8a602"
+    "signature": "ad28a074e20b1adac7bcb8e51de23cb18fdd4009"
   },
   "compilationOptions": {},
   "targets": {
@@ -103,25 +103,6 @@
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
           "Microsoft.NETCore.Targets": "1.1.0"
-        }
-      },
-      "Serilog/2.6.0": {
-        "dependencies": {
-          "Microsoft.CSharp": "4.3.0",
-          "System.Collections": "4.3.0",
-          "System.Collections.NonGeneric": "4.3.0",
-          "System.Dynamic.Runtime": "4.3.0",
-          "System.Globalization": "4.3.0",
-          "System.Linq": "4.3.0",
-          "System.Reflection": "4.3.0",
-          "System.Reflection.Extensions": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Text.RegularExpressions": "4.3.0",
-          "System.Threading": "4.3.0"
-        },
-        "runtime": {
-          "lib/netstandard1.3/Serilog.dll": {}
         }
       },
       "System.Collections/4.3.0": {
@@ -681,7 +662,6 @@
           "NETStandard.Library": "2.0.1",
           "Newtonsoft.Json": "10.0.3",
           "OmniSharp.Extensions.JsonRpc": "1.0.0",
-          "Serilog": "2.6.0",
           "System.ValueTuple": "4.4.0"
         },
         "runtime": {
@@ -758,13 +738,6 @@
       "sha512": "sha512-y0Jt67ynGsoNTREgXOK5a+qQONNha9n5sNJIIhYx8Dj4QJjmOAU9Fc0yKgb8eS2xQnzc7u+IoPs9P8FeFe43+w==",
       "path": "runtime.native.system/4.3.0",
       "hashPath": "runtime.native.system.4.3.0.nupkg.sha512"
-    },
-    "Serilog/2.6.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-hxHgHkza8ZowrvQ+jTEF2ypDWGP8NbNtxPQIx7ogTAM9fisDFo2+6kOaxCkleZLO8hiyq0kW5tDLkgm/dbj9uA==",
-      "path": "serilog/2.6.0",
-      "hashPath": "serilog.2.6.0.nupkg.sha512"
     },
     "System.Collections/4.3.0": {
       "type": "package",

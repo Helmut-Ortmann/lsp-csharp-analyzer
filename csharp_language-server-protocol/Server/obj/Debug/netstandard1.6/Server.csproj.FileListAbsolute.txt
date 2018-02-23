@@ -1,16 +1,3 @@
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\obj\Debug\netstandard1.6\Server.csprojResolveAssemblyReference.cache
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\obj\Debug\netstandard1.6\Server.csproj.CoreCompileInputs.cache
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\obj\Debug\netstandard1.6\Server.AssemblyInfoInputs.cache
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\obj\Debug\netstandard1.6\Server.AssemblyInfo.cs
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\bin\Debug\netstandard1.6\OmniSharp.Extensions.LanguageServer.deps.json
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\bin\Debug\netstandard1.6\OmniSharp.Extensions.LanguageServer.dll
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\bin\Debug\netstandard1.6\OmniSharp.Extensions.LanguageServer.pdb
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\bin\Debug\netstandard1.6\OmniSharp.Extensions.JsonRpc.dll
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\bin\Debug\netstandard1.6\OmniSharp.Extensions.LanguageProtocol.dll
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\bin\Debug\netstandard1.6\OmniSharp.Extensions.LanguageProtocol.pdb
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\bin\Debug\netstandard1.6\OmniSharp.Extensions.JsonRpc.pdb
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\obj\Debug\netstandard1.6\OmniSharp.Extensions.LanguageServer.dll
-D:\hoData\Development\GitHub\LSP\csharp-language-server-protocol\src\Server\obj\Debug\netstandard1.6\OmniSharp.Extensions.LanguageServer.pdb
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-protocol\Server\bin\Debug\netstandard1.6\OmniSharp.Extensions.LanguageServer.deps.json
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-protocol\Server\bin\Debug\netstandard1.6\OmniSharp.Extensions.LanguageServer.dll
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\csharp_language-server-protocol\Server\bin\Debug\netstandard1.6\OmniSharp.Extensions.LanguageServer.pdb

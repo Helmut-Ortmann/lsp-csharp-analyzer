@@ -49,7 +49,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client
         /// <summary>
         ///     The language server process.
         /// </summary>
-        ServerProcess _serverProcess;
+        ServerProcess _process;
 
         /// <summary>
         ///     The underlying LSP connection to the language server process.
@@ -81,17 +81,17 @@ namespace OmniSharp.Extensions.LanguageServer.Client
         /// <param name="loggerFactory">
         ///     The factory for loggers used by the client and its components.
         /// </param>
-        /// <param name="serverProcess">
+        /// <param name="process">
         ///     A <see cref="ServerProcess"/> used to start or connect to the server process.
         /// </param>
-        public LanguageClient(ILoggerFactory loggerFactory, ServerProcess serverProcess)
+        public LanguageClient(ILoggerFactory loggerFactory, ServerProcess process)
             : this(loggerFactory)
         {
-            if (serverProcess == null)
-                throw new ArgumentNullException(nameof(serverProcess));
+            if (process == null)
+                throw new ArgumentNullException(nameof(process));
 
-            _serverProcess = serverProcess;
-            _serverProcess.Exited += ServerProcess_Exit;
+            _process = process;
+            _process.Exited += ServerProcess_Exit;
         }
 
         /// <summary>
@@ -113,8 +113,6 @@ namespace OmniSharp.Extensions.LanguageServer.Client
 
             _dispatcher = new LspDispatcher(_serializer);
             _dispatcher.RegisterHandler(_dynamicRegistrationHandler);
-
-            
         }
 
         /// <summary>
@@ -125,7 +123,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client
             var connection = Interlocked.Exchange(ref _connection, null);
             connection?.Dispose();
 
-            var serverProcess = Interlocked.Exchange(ref _serverProcess, null);
+            var serverProcess = Interlocked.Exchange(ref _process, null);
             serverProcess?.Dispose();
         }
 
@@ -164,10 +162,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client
                 DidChangeConfiguration = new DidChangeConfigurationCapability
                 {
                     DynamicRegistration = false
-                },
-                Symbol = new WorkspaceSymbolCapability() {
-                     DynamicRegistration = false
-                },
+                }
             },
             TextDocument = new TextDocumentClientCapabilities
             {
@@ -176,14 +171,9 @@ namespace OmniSharp.Extensions.LanguageServer.Client
                     DidSave = true,
                     DynamicRegistration = false
                 },
-                DocumentSymbol = new DocumentSymbolCapability {
-                    DynamicRegistration = false
-                },
                 Hover = new HoverCapability
                 {
-                    DynamicRegistration = false,
-                    //ContentFormat = new Container<MarkupKind>() { }
-                    ContentFormat = new MarkupKind[] {MarkupKind.Plaintext}
+                    DynamicRegistration = false
                 },
                 Completion = new CompletionCapability
                 {
@@ -192,21 +182,8 @@ namespace OmniSharp.Extensions.LanguageServer.Client
                         SnippetSupport = false
                     },
                     DynamicRegistration = false
-                },
-                References = new Supports<ReferencesCapability> {
-                    IsSupported = true
-                
-                },
-                SignatureHelp = new Supports<SignatureHelpCapability> {
-                    
-                    IsSupported = true
-                    
-                    
-                    
                 }
-
             }
-            
         };
 
         /// <summary>
@@ -238,7 +215,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client
             {
                 return Task.WhenAll(
                     _connection.HasHasDisconnected,
-                    _serverProcess?.HasExited ?? Task.CompletedTask
+                    _process?.HasExited ?? Task.CompletedTask
                 );
             }
         }
@@ -266,20 +243,19 @@ namespace OmniSharp.Extensions.LanguageServer.Client
         public async Task Initialize(string workspaceRoot, object initializationOptions = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (IsInitialized)
-                throw new InvalidOperationException("Client has already been initialised.");
+                throw new InvalidOperationException(@"Client has already been initialised.");
 
             try
             {
-                await StartLanguageServer();
+                await Start();
 
                 var initializeParams = new InitializeParams
                 {
                     RootPath = workspaceRoot,
-                    RootUri = new Uri(workspaceRoot),
+                    RootUri = new Uri(workspaceRoot),  // ho changed
                     Capabilities = ClientCapabilities,
                     ProcessId = Process.GetCurrentProcess().Id,
-                    InitializationOptions = initializationOptions,
-                    Trace = InitializeTrace.Messages
+                    InitializationOptions = initializationOptions
                 };
 
                 Log.LogDebug("Sending 'initialize' message to language server...");
@@ -303,7 +279,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client
             }
             catch (Exception initializationError)
             {
-                // Capture the initialisation error so anyone awaiting IsReady will also see it.
+                // Capture the initialization error so anyone awaiting IsReady will also see it.
                 _readyCompletion.TrySetException(initializationError);
 
                 throw;
@@ -331,7 +307,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client
                 await connection.HasHasDisconnected;
             }
 
-            var serverProcess = _serverProcess;
+            var serverProcess = _process;
             if (serverProcess != null)
             {
                 if (serverProcess.IsRunning)
@@ -443,16 +419,16 @@ namespace OmniSharp.Extensions.LanguageServer.Client
         /// <returns>
         ///     A <see cref="Task"/> representing the operation.
         /// </returns>
-        async Task StartLanguageServer()
+        async Task Start()
         {
-            if (_serverProcess == null)
+            if (_process == null)
                 throw new ObjectDisposedException(GetType().Name);
 
-            if (!_serverProcess.IsRunning)
+            if (!_process.IsRunning)
             {
                 Log.LogDebug("Starting language server...");
 
-                await _serverProcess.Start();
+                await _process.Start();
 
                 Log.LogDebug("Language server is running.");
             }
@@ -460,7 +436,7 @@ namespace OmniSharp.Extensions.LanguageServer.Client
             Log.LogDebug("Opening connection to language server...");
 
             if (_connection == null)
-                _connection = new LspConnection(LoggerFactory, input: _serverProcess.OutputStream, output: _serverProcess.InputStream);
+                _connection = new LspConnection(LoggerFactory, input: _process.OutputStream, output: _process.InputStream);
 
             _connection.Connect(_dispatcher);
 

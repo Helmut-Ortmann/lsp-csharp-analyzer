@@ -67,6 +67,16 @@ The implementation of the language-server-protocol in C#.
 -  [CQuery C/C++ language server](https://github.com/cquery-project/cquery) is shipped inside solution
 -  see also: [Installation](../../wiki/Installation)
 
+## Development
+
+- Copy the current [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol) projects
+  - Client
+  - JsonRpc
+  - Protocol
+  - Server
+- Update the current [OmniSharp/csharp-language-server-protocol](https://github.com/OmniSharp/csharp-language-server-protocol) projects with
+  - LspAnalyzer\csharp_language-server-protocol\
+
 ## Thanks
 
 Great support by 

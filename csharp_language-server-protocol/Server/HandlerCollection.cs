@@ -13,6 +13,12 @@ namespace OmniSharp.Extensions.LanguageServer.Server
     class HandlerCollection : IHandlerCollection
     {
         internal readonly HashSet<HandlerDescriptor> _handlers = new HashSet<HandlerDescriptor>();
+        internal readonly HashSet<ITextDocumentSyncHandler> _documentSyncHandlers = new HashSet<ITextDocumentSyncHandler>();
+
+        public IEnumerable<ITextDocumentSyncHandler> TextDocumentSyncHandlers()
+        {
+            return _documentSyncHandlers;
+        }
 
         public IEnumerator<ILspHandlerDescriptor> GetEnumerator()
         {
@@ -50,9 +56,13 @@ namespace OmniSharp.Extensions.LanguageServer.Server
                 }
             }
 
-            foreach (var handler in descriptors)
+            foreach (var descriptor in descriptors)
             {
-                _handlers.Add(handler);
+                _handlers.Add(descriptor);
+                if (descriptor.Handler is ITextDocumentSyncHandler documentSyncHandler)
+                {
+                    _documentSyncHandlers.Add(documentSyncHandler);
+                }
             }
 
             return new ImmutableDisposable(descriptors);
@@ -71,12 +81,12 @@ namespace OmniSharp.Extensions.LanguageServer.Server
             }
 
             var key = "default";
-            if (handler is IRegistration<TextDocumentRegistrationOptions>)
+            // This protects against the case where class implements many, possibly conflicting, interfaces.
+            if (registration != null &&
+                typeof(TextDocumentRegistrationOptions).GetTypeInfo().IsAssignableFrom(registration) &&
+                handler is IRegistration<TextDocumentRegistrationOptions> handlerRegistration)
             {
-                if (GetTextDocumentRegistrationOptionsMethod
-                    .MakeGenericMethod(registration)
-                    .Invoke(handler, new object[] { handler }) is TextDocumentRegistrationOptions options)
-                    key = options.DocumentSelector;
+                key = handlerRegistration.GetRegistrationOptions()?.DocumentSelector ?? key;
             }
 
             return new HandlerDescriptor(
@@ -87,16 +97,10 @@ namespace OmniSharp.Extensions.LanguageServer.Server
                 @params,
                 registration,
                 capability,
-                () => _handlers.RemoveWhere(instance => instance.Handler == handler));
-        }
-
-        private static readonly MethodInfo GetTextDocumentRegistrationOptionsMethod = typeof(HandlerCollection).GetTypeInfo()
-            .GetMethod(nameof(GetTextDocumentRegistrationOptions), BindingFlags.Static | BindingFlags.NonPublic);
-
-        private static TextDocumentRegistrationOptions GetTextDocumentRegistrationOptions<T>(IRegistration<T> instance)
-            where T : TextDocumentRegistrationOptions
-        {
-            return instance.GetRegistrationOptions();
+                () => {
+                    _handlers.RemoveWhere(instance => instance.Handler == handler);
+                    _documentSyncHandlers.RemoveWhere(instance => instance == handler);
+                });
         }
 
         private Type UnwrapGenericType(Type genericType, Type type)

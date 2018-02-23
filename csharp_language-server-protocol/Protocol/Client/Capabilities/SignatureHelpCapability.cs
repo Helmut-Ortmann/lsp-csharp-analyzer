@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Serialization;
 
 namespace OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities
@@ -12,7 +11,5 @@ namespace OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities
         /// </summary>
         [Optional]
         public SignatureInformationCapability SignatureInformation { get; set; }
-
-        
     }
 }

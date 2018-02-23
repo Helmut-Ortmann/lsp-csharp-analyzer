@@ -6,7 +6,6 @@ using OmniSharp.Extensions.JsonRpc;
 using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Serialization.Converters;
-using Serilog;
 
 namespace OmniSharp.Extensions.LanguageServer.Protocol.Serialization
 {
@@ -88,18 +87,7 @@ namespace OmniSharp.Extensions.LanguageServer.Protocol.Serialization
 
         public string SerializeObject(object value)
         {
-            var s = "Error";
-            try
-            {
-                s =  JsonConvert.SerializeObject(value, Settings);
-            }
-            catch (Exception e)
-            {
-                Log.Error($"{e}", "Error Serialization");
-            }
-
-
-            return s;
+            return JsonConvert.SerializeObject(value, Settings);
         }
 
         public object DeserializeObject(string json, Type type)

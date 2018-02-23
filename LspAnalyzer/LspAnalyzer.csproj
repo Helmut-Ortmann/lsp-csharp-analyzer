@@ -123,6 +123,7 @@
     <Compile Include="Services\Linq.cs" />
     <Compile Include="Services\LspFile.cs" />
     <Compile Include="Services\Start.cs" />
+    <Compile Include="Services\TimeMeasurement.cs" />
     <EmbeddedResource Include="LspAnalyzer.resx">
       <DependentUpon>LspAnalyzer.cs</DependentUpon>
     </EmbeddedResource>
@@ -151,25 +152,29 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\csharp_language-server-protocol\Client\Client.csproj">
-      <Project>{6c2134d5-7704-44b7-adca-6409d6d70fcf}</Project>
+      <Project>{2d5c63bd-53f1-4b86-9346-0582936a938b}</Project>
       <Name>Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\csharp_language-server-protocol\JsonRpc\JsonRpc.csproj">
-      <Project>{c61bef81-ee9b-4c6a-84d2-f7b7b481d7e8}</Project>
+      <Project>{d46fb43f-3ab8-4e3a-8698-bdd2fe33b3bc}</Project>
       <Name>JsonRpc</Name>
     </ProjectReference>
     <ProjectReference Include="..\csharp_language-server-protocol\Protocol\Protocol.csproj">
-      <Project>{78c86f3f-7455-4b92-8a09-3ea36ea9635e}</Project>
+      <Project>{84b84ee2-bde7-43f2-b0c1-dee3f71a0f08}</Project>
       <Name>Protocol</Name>
     </ProjectReference>
     <ProjectReference Include="..\csharp_language-server-protocol\Server\Server.csproj">
-      <Project>{f26f2031-c084-46f4-9b82-a33874105947}</Project>
+      <Project>{250d09af-a1de-4783-9fd1-2a9ae6277fce}</Project>
       <Name>Server</Name>
     </ProjectReference>
     <ProjectReference Include="..\LspDb\LspDb\LspDb.csproj">
       <Project>{b9dacd94-d98b-4747-a67b-9b350e911922}</Project>
       <Name>LspDb</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="csharp_language-server-protocol\Client\Clients\" />
+    <Folder Include="csharp_language-server-protocol\Protocol\Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

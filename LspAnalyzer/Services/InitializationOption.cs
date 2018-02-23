@@ -30,15 +30,16 @@ namespace LspAnalyzer.Services
 	        string projectRoot)
 	    {
 	        ProjectRoot = projectRoot;
-	        CacheDirectory = @"d:/temp/cquery/cacheDirectory";
-             
-            // Using 'ExtraClangArguments' leads to clang AST error.
+	        CacheDirectory = cacheDirectory;
+	        ExtraClangArguments = new string[] {""};
+
+	        // Using 'ExtraClangArguments' leads to clang AST error.
 	        //ExtraClangArguments = new string[] {"clang++","-xc", "-std=c11", @"-Wno-unknown-warning-option"
-	            //"-resource-dir=d:/hoData/Development/GitHub/LSP/cquery1/build/release/bin/lib/LLVM-4.0.0-win64/lib/clang/5.0.1/",
-                //@"-working-directory=d:\hoData\Projects\00Current\ZF\Work\Source\"
-	            
+	        //"-resource-dir=d:/hoData/Development/GitHub/LSP/cquery1/build/release/bin/lib/LLVM-4.0.0-win64/lib/clang/5.0.1/",
+	        //@"-working-directory=d:\hoData\Projects\00Current\ZF\Work\Source\"
+
 	        //};
 
-		}
+	    }
 	}
 }

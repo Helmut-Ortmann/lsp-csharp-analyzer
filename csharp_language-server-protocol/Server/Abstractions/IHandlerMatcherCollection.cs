@@ -3,8 +3,13 @@ using System.Collections.Generic;
 
 namespace OmniSharp.Extensions.LanguageServer.Server.Abstractions
 {
-    public interface IHandlerMatcherCollection : IEnumerable<IHandlerMatcher>
+    public interface IHandlerMatcherCollection : IEnumerable<object>
     {
-        IDisposable Add(IHandlerMatcher handler);
+        IDisposable Add(object handler);
+        IEnumerable<IHandlerMatcher> ForHandlerMatchers();
+        IEnumerable<IHandlerPreProcessorMatcher> ForHandlerPreProcessorMatcher();
+        IEnumerable<IHandlerPreProcessor> ForHandlerPreProcessor();
+        IEnumerable<IHandlerPostProcessorMatcher> ForHandlerPostProcessorMatcher();
+        IEnumerable<IHandlerPostProcessor> ForHandlerPostProcessor();
     }
 }

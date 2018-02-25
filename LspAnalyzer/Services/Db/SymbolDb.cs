@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using DataModels.Symbols;
 using LinqToDB;
 using LinqToDB.DataProvider;
@@ -29,7 +28,7 @@ namespace LspAnalyzer.Services.Db
         public bool Create()
         {
             // Delete Symbol database
-            //DeleteOldDatabase();
+            DeleteOldDatabase();
  
 
             //// accessing with LINQ to SQL
@@ -83,6 +82,7 @@ namespace LspAnalyzer.Services.Db
                 db.Insert(new CodeItemKinds { Id = 24, Name = "Event" });
                 db.Insert(new CodeItemKinds { Id = 25, Name = "Operator" });
                 db.Insert(new CodeItemKinds { Id = 26, Name = "TypeParameter" });
+                db.Insert(new CodeItemKinds { Id = 255, Name = "Macro" });
 
                 MakeKindDictionary(db);
 
@@ -180,6 +180,7 @@ namespace LspAnalyzer.Services.Db
                     where i.Field<string>("Kind") != "File"
                     select new
                     {
+                        Signature = i.Field<string>("Intern"),
                         Name = i.Field<string>("Name"),
                         Kind = k.Id,
                         StartLine = i.Field<long>("StartLine"),
@@ -187,6 +188,11 @@ namespace LspAnalyzer.Services.Db
                         StartChar = i.Field<long>("StartChar"),
                         EndChar = i.Field<long>("EndChar"),
                         FileId = f.Id
+
+
+                        
+
+
                     };
                 db.BeginTransaction();
                 foreach (var i in items)
@@ -194,6 +200,7 @@ namespace LspAnalyzer.Services.Db
                     db.Insert<CodeItems>(new CodeItems
                     {
                         Name = i.Name,
+                        Signature = i.Signature,
                         Kind = i.Kind,
                         StartLine = (int)i.StartLine,
                         StartColumn = (int)i.StartChar,
@@ -205,6 +212,33 @@ namespace LspAnalyzer.Services.Db
                 }
                 db.CommitTransaction();
                 count = items.Count();
+            }
+
+            return count;
+
+        }
+
+        /// <summary>
+        /// Load function usage
+        /// </summary>
+        /// <param name="workspace"></param>
+        /// <param name="dt"></param>
+        public int LoadFunctionUsage(string workspace, DataTable dt)
+        {
+
+            int count = 0;
+            // create all files
+            using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
+
+            {
+                var functions = from f in db.CodeItems
+                    select new
+                    {
+                        FName = f.Name
+                    };
+
+
+
             }
 
             return count;

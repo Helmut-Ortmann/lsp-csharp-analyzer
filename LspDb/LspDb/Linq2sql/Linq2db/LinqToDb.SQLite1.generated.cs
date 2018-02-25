@@ -40,7 +40,7 @@ namespace DataModels.Symbols
 	[Table("code_item_kinds")]
 	public partial class CodeItemKinds
 	{
-		[Column("id"),   PrimaryKey,  NotNull] public int   Id   { get; set; } // integer, fixed values due to LSP protocoll
+		[Column("id"),   PrimaryKey,  NotNull] public int   Id   { get; set; } // integer, fixed values due to LSP protocol
 		[Column("name"),             NotNull] public string Name { get; set; } // text(max)
 	}
 
@@ -51,8 +51,9 @@ namespace DataModels.Symbols
 		[Column("file_id"),                        NotNull] public int   FileId          { get; set; } // int
 		[Column("parent_id"),                      NotNull] public int   ParentId        { get; set; } // int
 		[Column("kind"),                           NotNull] public int   Kind            { get; set; } // integer
+        [Column("signature"),                      NotNull] public string Signature      { get; set; } // The signature defined by LSP
 		[Column("name"),                           NotNull] public string Name            { get; set; } // text(max)
-		[Column("type"),                 Nullable         ] public string Type            { get; set; } // text(max)
+		[Column("type"),                           Nullable] public string Type            { get; set; } // text(max)
 		[Column("start_column"),                   NotNull] public int   StartColumn     { get; set; } // integer
 		[Column("start_line"),                     NotNull] public int   StartLine       { get; set; } // integer
 		[Column("end_column"),                     NotNull] public int   EndColumn       { get; set; } // integer

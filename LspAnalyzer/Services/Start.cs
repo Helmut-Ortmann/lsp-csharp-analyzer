@@ -84,7 +84,7 @@ namespace LspAnalyzer.Analyze
 
         public static void StartFile(string path)
         {
-            if (File.Exists(path))
+            if (File.Exists(path) || Directory.Exists(path) )
             {
                 try
                 {

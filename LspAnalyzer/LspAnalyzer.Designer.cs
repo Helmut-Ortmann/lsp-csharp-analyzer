@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -123,8 +123,9 @@ namespace LspAnalyzer
             this.filterSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.txtState = new System.Windows.Forms.TextBox();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.showCQueryCacheDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -211,14 +212,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle3;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -978,8 +979,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(922, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -1042,6 +1043,7 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showCFrameworkLogToolStripMenuItem,
             this.showCQueryLogToolStripMenuItem,
+            this.showCQueryCacheDirectoryToolStripMenuItem,
             this.toolStripSeparator3,
             this.lSPSpecificationToolStripMenuItem,
             this.filterSpecificationToolStripMenuItem,
@@ -1054,7 +1056,7 @@ namespace LspAnalyzer
             // showCFrameworkLogToolStripMenuItem
             // 
             this.showCFrameworkLogToolStripMenuItem.Name = "showCFrameworkLogToolStripMenuItem";
-            this.showCFrameworkLogToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.showCFrameworkLogToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.showCFrameworkLogToolStripMenuItem.Text = "Show C# Framework log";
             this.showCFrameworkLogToolStripMenuItem.ToolTipText = "Shows the log file of the C# Framework\r\n\r\n(see: https://github.com/OmniSharp/csha" +
     "rp-language-server-protocol)";
@@ -1063,7 +1065,7 @@ namespace LspAnalyzer
             // showCQueryLogToolStripMenuItem
             // 
             this.showCQueryLogToolStripMenuItem.Name = "showCQueryLogToolStripMenuItem";
-            this.showCQueryLogToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.showCQueryLogToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.showCQueryLogToolStripMenuItem.Text = "Show CQuery log";
             this.showCQueryLogToolStripMenuItem.ToolTipText = "Shows the log of CQuery\r\n\r\n(see: https://github.com/cquery-project/cquery)";
             this.showCQueryLogToolStripMenuItem.Click += new System.EventHandler(this.showCQueryLogToolStripMenuItem_Click);
@@ -1071,31 +1073,31 @@ namespace LspAnalyzer
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(200, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(230, 6);
             // 
             // lSPSpecificationToolStripMenuItem
             // 
             this.lSPSpecificationToolStripMenuItem.Name = "lSPSpecificationToolStripMenuItem";
-            this.lSPSpecificationToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.lSPSpecificationToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.lSPSpecificationToolStripMenuItem.Text = "LSP Specification";
             this.lSPSpecificationToolStripMenuItem.Click += new System.EventHandler(this.lSPSpecificationToolStripMenuItem_Click);
             // 
             // filterSpecificationToolStripMenuItem
             // 
             this.filterSpecificationToolStripMenuItem.Name = "filterSpecificationToolStripMenuItem";
-            this.filterSpecificationToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.filterSpecificationToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
             this.filterSpecificationToolStripMenuItem.Text = "Filter Specification";
             this.filterSpecificationToolStripMenuItem.Click += new System.EventHandler(this.filterSpecificationToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(200, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(230, 6);
             // 
             // helpToolStripMenuItem1
             // 
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
-            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(203, 22);
+            this.helpToolStripMenuItem1.Size = new System.Drawing.Size(233, 22);
             this.helpToolStripMenuItem1.Text = "Help";
             this.helpToolStripMenuItem1.ToolTipText = "Show Wiki";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
@@ -1107,6 +1109,13 @@ namespace LspAnalyzer
             this.txtState.ReadOnly = true;
             this.txtState.Size = new System.Drawing.Size(942, 20);
             this.txtState.TabIndex = 12;
+            // 
+            // showCQueryCacheDirectoryToolStripMenuItem
+            // 
+            this.showCQueryCacheDirectoryToolStripMenuItem.Name = "showCQueryCacheDirectoryToolStripMenuItem";
+            this.showCQueryCacheDirectoryToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.showCQueryCacheDirectoryToolStripMenuItem.Text = "Show CQuery Cache Directory";
+            this.showCQueryCacheDirectoryToolStripMenuItem.Click += new System.EventHandler(this.showCQueryCacheDirectoryToolStripMenuItem_Click);
             // 
             // LspAnalyzer
             // 
@@ -1256,6 +1265,7 @@ namespace LspAnalyzer
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.TextBox txtState;
+        private System.Windows.Forms.ToolStripMenuItem showCQueryCacheDirectoryToolStripMenuItem;
     }
 }
 

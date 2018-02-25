@@ -2,23 +2,45 @@
 
 namespace LspAnalyzer.Services
 {
+    /// <summary>
+    /// Features for time measurements like time difference.
+    /// </summary>
     public class TimeMeasurement
     {
         private readonly DateTime _startTime = DateTime.Now;
-        private TimeSpan _timeSpan;
+        private TimeSpan _span;
         public TimeMeasurement()
         {
-            _timeSpan = System.TimeSpan.MinValue;
+            _span = System.TimeSpan.MinValue;
         }
+
         /// <summary>
-        /// Returns the time difference in human readable form.
+        /// TimeSpan as <see cref="TimeSpan"/>
         /// </summary>
-        /// <returns></returns>
-        public string TimeSpan()
+        public TimeSpan Span
+        {
+            get => _span;
+        }
+
+        /// <summary>
+        /// Stops the timer and returns the time difference in human readable form.
+        /// </summary>
+        /// <returns>"{Span.Seconds}:{Span.Milliseconds} (ss:ms)"</returns>
+        public string TimeSpanAsString()
         {
 
-            _timeSpan = DateTime.Now.Subtract(_startTime);
-            return  $"{_timeSpan.Seconds}:{_timeSpan.Milliseconds} (ss:ms)";
+            _span = DateTime.Now.Subtract(_startTime);
+            return  $"{Span.Seconds}:{Span.Milliseconds} (ss:ms)";
+        }
+        /// <summary>
+        /// Stops the timer and returns the time difference.
+        /// </summary>
+        /// <returns></returns>
+        public TimeSpan TimeSpanStop()
+        {
+
+            _span = DateTime.Now.Subtract(_startTime);
+            return _span;
         }
         
         

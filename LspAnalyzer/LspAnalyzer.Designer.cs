@@ -118,6 +118,7 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCFrameworkLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCQueryLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showCQueryCacheDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.lSPSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filterSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,7 +126,6 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtState = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.showCQueryCacheDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -169,7 +169,7 @@ namespace LspAnalyzer
             // 
             // btnShutDown
             // 
-            this.btnShutDown.Location = new System.Drawing.Point(448, 1);
+            this.btnShutDown.Location = new System.Drawing.Point(489, 1);
             this.btnShutDown.Margin = new System.Windows.Forms.Padding(1);
             this.btnShutDown.Name = "btnShutDown";
             this.btnShutDown.Size = new System.Drawing.Size(75, 23);
@@ -272,7 +272,7 @@ namespace LspAnalyzer
             // 
             // txtSymbol
             // 
-            this.txtSymbol.Location = new System.Drawing.Point(599, 1);
+            this.txtSymbol.Location = new System.Drawing.Point(640, 1);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(1);
             this.txtSymbol.Name = "txtSymbol";
             this.txtSymbol.Size = new System.Drawing.Size(193, 20);
@@ -790,12 +790,12 @@ namespace LspAnalyzer
             // 
             // btnGenerateSymbols
             // 
-            this.btnGenerateSymbols.Location = new System.Drawing.Point(371, 1);
+            this.btnGenerateSymbols.Location = new System.Drawing.Point(392, 1);
             this.btnGenerateSymbols.Margin = new System.Windows.Forms.Padding(1);
             this.btnGenerateSymbols.Name = "btnGenerateSymbols";
-            this.btnGenerateSymbols.Size = new System.Drawing.Size(75, 23);
+            this.btnGenerateSymbols.Size = new System.Drawing.Size(95, 23);
             this.btnGenerateSymbols.TabIndex = 4;
-            this.btnGenerateSymbols.Text = "GenSymbolDb";
+            this.btnGenerateSymbols.Text = "Gen Symbol DB";
             this.toolTip1.SetToolTip(this.btnGenerateSymbols, "Generate Tooltip DB");
             this.btnGenerateSymbols.UseVisualStyleBackColor = true;
             this.btnGenerateSymbols.Click += new System.EventHandler(this.btnGenerateSymbols_Click);
@@ -860,9 +860,10 @@ namespace LspAnalyzer
             // 
             // btnCreateSSQLiteDB
             // 
-            this.btnCreateSSQLiteDB.Location = new System.Drawing.Point(292, 3);
+            this.btnCreateSSQLiteDB.Location = new System.Drawing.Point(290, 1);
+            this.btnCreateSSQLiteDB.Margin = new System.Windows.Forms.Padding(1);
             this.btnCreateSSQLiteDB.Name = "btnCreateSSQLiteDB";
-            this.btnCreateSSQLiteDB.Size = new System.Drawing.Size(75, 23);
+            this.btnCreateSSQLiteDB.Size = new System.Drawing.Size(100, 23);
             this.btnCreateSSQLiteDB.TabIndex = 5;
             this.btnCreateSSQLiteDB.Text = "CreateSQL DB";
             this.btnCreateSSQLiteDB.UseVisualStyleBackColor = true;
@@ -872,7 +873,7 @@ namespace LspAnalyzer
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(544, 2);
+            this.label13.Location = new System.Drawing.Point(585, 2);
             this.label13.Margin = new System.Windows.Forms.Padding(20, 2, 3, 2);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(51, 15);
@@ -1070,6 +1071,13 @@ namespace LspAnalyzer
             this.showCQueryLogToolStripMenuItem.ToolTipText = "Shows the log of CQuery\r\n\r\n(see: https://github.com/cquery-project/cquery)";
             this.showCQueryLogToolStripMenuItem.Click += new System.EventHandler(this.showCQueryLogToolStripMenuItem_Click);
             // 
+            // showCQueryCacheDirectoryToolStripMenuItem
+            // 
+            this.showCQueryCacheDirectoryToolStripMenuItem.Name = "showCQueryCacheDirectoryToolStripMenuItem";
+            this.showCQueryCacheDirectoryToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.showCQueryCacheDirectoryToolStripMenuItem.Text = "Show CQuery Cache Directory";
+            this.showCQueryCacheDirectoryToolStripMenuItem.Click += new System.EventHandler(this.showCQueryCacheDirectoryToolStripMenuItem_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -1109,13 +1117,6 @@ namespace LspAnalyzer
             this.txtState.ReadOnly = true;
             this.txtState.Size = new System.Drawing.Size(942, 20);
             this.txtState.TabIndex = 12;
-            // 
-            // showCQueryCacheDirectoryToolStripMenuItem
-            // 
-            this.showCQueryCacheDirectoryToolStripMenuItem.Name = "showCQueryCacheDirectoryToolStripMenuItem";
-            this.showCQueryCacheDirectoryToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
-            this.showCQueryCacheDirectoryToolStripMenuItem.Text = "Show CQuery Cache Directory";
-            this.showCQueryCacheDirectoryToolStripMenuItem.Click += new System.EventHandler(this.showCQueryCacheDirectoryToolStripMenuItem_Click);
             // 
             // LspAnalyzer
             // 

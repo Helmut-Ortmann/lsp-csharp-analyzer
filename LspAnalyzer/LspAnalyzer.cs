@@ -53,13 +53,13 @@ namespace LspAnalyzer
 
         
         private ProcessStartInfo _lspServerProcessStartInfo;
-        static string _lspServerPath = @"d:/hoData/Development/GitHub/LSP/cquery2/build/release/bin/cquery.exe";
+        static string _lspServerPath = @"d:/hoData/Development/GitHub/LSP/cquery1/build/release/bin/cquery.exe";
         static string _lspServerLogFile = @"d:\temp\CQuery.log";
         static string _lspClientLogFile = @"d:/temp/lspSampleClient.log";
 
         //string _workSpacePath = @"d:/hoData/Projects/00Current/ZF/Work/source";
-        string _workSpacePath = @"d:/hoData/Development/GitHub/LSP/Lsp_TestC";
-        //string _workSpacePath = @"d:\hoData\Projects\00Current\ZF\Work\source\";
+        //string _workSpacePath = @"d:/hoData/Development/GitHub/LSP/Lsp_TestC";
+        string _workSpacePath = @"d:\hoData\Projects\00Current\ZF\Work\source\";
 
         private string _lspServerCacheDirectory = @"d:/temp/cquery2/cacheDirectory";
 

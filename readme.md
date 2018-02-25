@@ -9,6 +9,8 @@ The concept is to use arbitrary language servers and to configure them by JSON a
 
 ![](../../wiki/images/LspAnalyzer.png)
 
+For details see the [WiKi]((../../wiki/home),
+
 ## Goals
 
 - Have a GUI to play with [LSP](https://microsoft.github.io/language-server-protocol/) and language servers
@@ -35,6 +37,8 @@ LSP Analyzer supports the following features:
   - Reference
   - Highlight
   - Hover
+  - CQuery/Callers
+  - Macros
 - Extensible
 
 ## Supported Servers

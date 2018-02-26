@@ -62,7 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Linq2sql\Linq2db\LinqToDb.SQLiteTest.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

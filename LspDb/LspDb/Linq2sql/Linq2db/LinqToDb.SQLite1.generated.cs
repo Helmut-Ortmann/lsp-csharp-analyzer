@@ -19,9 +19,10 @@ namespace DataModels.Symbols
 	/// </summary>
 	public partial class SYMBOLDB : LinqToDB.Data.DataConnection
 	{
-		public ITable<CodeItemKinds> CodeItemKinds { get { return this.GetTable<CodeItemKinds>(); } }
-		public ITable<CodeItems>     CodeItems     { get { return this.GetTable<CodeItems>(); } }
-		public ITable<File>          Files         { get { return this.GetTable<File>(); } }
+		public ITable<CodeItemKinds>    CodeItemKinds        { get { return this.GetTable<CodeItemKinds>(); } }
+		public ITable<CodeItems>        CodeItems            { get { return this.GetTable<CodeItems>(); } }
+		public ITable<File>             Files                { get { return this.GetTable<File>(); } }
+	    public ITable<CodeItemUsages>   CodeItemUsages       { get { return this.GetTable<CodeItemUsages>(); } }
 
 		public SYMBOLDB()
 		{
@@ -64,6 +65,19 @@ namespace DataModels.Symbols
 		[Column("name_end_line"),                  NotNull] public int   NameEndLine     { get; set; } // integer
 	}
 
+    [Table("code_item_usages")]
+    public partial class CodeItemUsages
+    {
+        [Column("id"),                PrimaryKey, Identity] public int   Id              { get; set; } // int
+        [Column("code_item_id"),                   NotNull] public int   CodeItemId      { get; set; } // int
+        [Column("file_id"),                        NotNull] public int   FileId          { get; set; } // int
+        [Column("signature"),                      NotNull] public string Signature      { get; set; } // The signature defined by LSP
+        [Column("start_column"),                   NotNull] public int   StartColumn     { get; set; } // integer
+        [Column("start_line"),                     NotNull] public int   StartLine       { get; set; } // integer
+        [Column("end_column"),                     NotNull] public int   EndColumn       { get; set; } // integer
+        [Column("end_line"),                       NotNull] public int   EndLine         { get; set; } // integer
+    }
+
 	[Table("files")]
 	public partial class File
 	{
@@ -73,6 +87,9 @@ namespace DataModels.Symbols
 		[Column("leaf_name"),             NotNull] public string LeafName  { get; set; } // text(max)
 	}
 
+    /// <summary>
+    /// Extension to check if the table exists
+    /// </summary>
 	public static partial class TableExtensions
 	{
 		public static CodeItemKinds Find(this ITable<CodeItemKinds> table, int Id)
@@ -86,6 +103,11 @@ namespace DataModels.Symbols
 			return table.FirstOrDefault(t =>
 				t.Id == Id);
 		}
+	    public static CodeItemUsages Find(this ITable<CodeItemUsages> table, int Id)
+	    {
+	        return table.FirstOrDefault(t =>
+	            t.Id == Id);
+	    }
 
 		public static File Find(this ITable<File> table, int Id)
 		{

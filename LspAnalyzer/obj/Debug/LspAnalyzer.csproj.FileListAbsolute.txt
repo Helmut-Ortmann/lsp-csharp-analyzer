@@ -156,3 +156,5 @@ D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\linq2
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Data.SQLite.dll
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Data.SQLite.xml
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\System.Data.SQLite.dll.config
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\LspServices.dll
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\LspServices.pdb

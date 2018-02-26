@@ -21,6 +21,8 @@ using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Serialization;
 using LspAnalyzer.Services.Db;
+using OmniSharp.Extensions.LanguageServer.Server;
+using LspAnalyzer.Services;
 
 
 // ReSharper disable once CheckNamespace
@@ -564,10 +566,10 @@ namespace LspAnalyzer
                 // estimate position of function name in Function symbol for functions
                 var symbolIntern = GetWsSymbolIntern(row);
 
-                var intern = LspFile.ReadLocation(document, startLine, startPosition, endLine, endPosition);
+                var signature = LspFile.ReadLocation(document, startLine, startPosition, endLine, endPosition);
 
                 // Determine start position of symbol
-                Position position = GetSymbolStartPosition(intern, symbolName, new Position{Line=startLine, Character = startPosition});
+                Position position = LspAnalyzerHelper.GetSymbolStartPosition(signature, symbolName, new Position{Line=startLine, Character = startPosition});
                 txtReferencesSymbolName.Text = symbolName;
 
                 // ReferenceParams: Request
@@ -623,10 +625,10 @@ namespace LspAnalyzer
                 // estimate position of function name in Function symbol for functions
                 var symbolIntern = GetWsSymbolIntern(row);
 
-                var intern = LspFile.ReadLocation(document, startLine, startPosition, endLine, endPosition);
+                var signature = LspFile.ReadLocation(document, startLine, startPosition, endLine, endPosition);
 
                 // Determine start position of symbol
-                Position position = GetSymbolStartPosition(intern, symbolName, new Position{Line=startLine, Character = startPosition});
+                Position position = LspAnalyzerHelper.GetSymbolStartPosition(signature, symbolName, new Position{Line=startLine, Character = startPosition});
                 txtReferencesSymbolName.Text = symbolName;
 
                 // ReferenceParams: Request
@@ -817,33 +819,7 @@ namespace LspAnalyzer
             }
 
         }
-        /// <summary>
-        /// Get symbol position in internal symbol. 
-        /// </summary>
-        /// <param name="internSymbol"></param>
-        /// <param name="symbol"></param>
-        /// <param name="position">Position of internal symbol</param>
-        /// <returns>Position of symbol</returns>
-        private static Position GetSymbolStartPosition(string internSymbol, string symbol, Position position)
-        {
-            var lines = 0;
-            foreach (var line in internSymbol.Split(new [] {"\r\n"},StringSplitOptions.None))
-            {
-                int pos = line.IndexOf(symbol);
-                if (pos > -1)
-                {
-                    position.Line = position.Line + lines;
-                    if (lines == 0) position.Character = position.Character + pos;
-                    else position.Character = pos;
-                    return position;
-                }
 
-                lines += 1;
-            }
-
-            return position; // nothing found
-        }
-        
         /// <summary>
         /// Get symbol name from LSP server returned symbol, named 'Intern'
         /// </summary>
@@ -1057,10 +1033,16 @@ namespace LspAnalyzer
         /// <param name="e"></param>
         private void btnGenerateSymbols_Click(object sender, EventArgs e)
         {
+            if (_client == null)
+            {
+                MessageBox.Show("LSP Server not initialized, break!");
+                return;
+            }
             Cursor.Current = Cursors.WaitCursor;
-            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath);
+            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath,_client);
             symbolDb.LoadFiles(_workSpacePath);
             var count = symbolDb.LoadItems(_workSpacePath, _dtSymbols);
+            symbolDb.LoadFunctionUsage();
             Cursor.Current = Cursors.Default;
 
             MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_workSpacePath}'\r\nLoaded symbols={count:N0}", "Symbols added from grid");
@@ -1068,9 +1050,14 @@ namespace LspAnalyzer
 
         private void btnCreateSSQLiteDB_Click(object sender, EventArgs e)
         {
+            if (_client == null)
+            {
+                MessageBox.Show("LSP Server not initialized, break!");
+                return;
+            }
             var timeMeasurement = new TimeMeasurement();
             Cursor.Current = Cursors.WaitCursor;
-            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath);
+            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath, _client);
             symbolDb.Create();
             Cursor.Current = Cursors.Default;
             MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nDuration: {timeMeasurement.TimeSpanAsString()}", "SymbolDB created");
@@ -1098,5 +1085,7 @@ namespace LspAnalyzer
         {
             Start.StartFile(_lspServerCacheDirectory);
         }
+
+       
     }
 }

@@ -171,6 +171,10 @@
       <Project>{b9dacd94-d98b-4747-a67b-9b350e911922}</Project>
       <Name>LspDb</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LspServices\LspServices.csproj">
+      <Project>{E2F9EF0D-9A8D-465D-9442-C088A724354A}</Project>
+      <Name>LspServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="csharp_language-server-protocol\Client\Clients\" />

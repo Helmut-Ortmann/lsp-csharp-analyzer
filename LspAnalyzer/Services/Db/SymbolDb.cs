@@ -7,24 +7,34 @@ using DataModels.Symbols;
 using LinqToDB;
 using LinqToDB.DataProvider;
 using LspDb.Linq2sql.LinqUtils;
+using OmniSharp.Extensions.LanguageServer.Client;
+using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using File = DataModels.Symbols.File;
 
 namespace LspAnalyzer.Services.Db
 {
     public class SymbolDb
     {
+        private readonly LanguageClient _client;
         readonly IDataProvider _dbProvider;
         private readonly string _dbPath;
         private readonly string _connectionString;
-        private Dictionary<int,string> _dicKind = new Dictionary<int,string>();
-        public SymbolDb(string dbPath)
+        // Performance optimization
+        private Dictionary<int,string> _dictKind = new Dictionary<int,string>();
+        private Dictionary<string, int> _dictFile = new Dictionary<string,int>();
+
+        public SymbolDb(string dbPath, LanguageClient client)
         {
             _dbPath = dbPath;
+            _client = client;
             _connectionString = LinqUtil.GetConnectionString(dbPath, out _dbProvider);
            
 
         }
-
+        /// <summary>
+        /// Create Database
+        /// </summary>
+        /// <returns></returns>
         public bool Create()
         {
             // Delete Symbol database
@@ -52,6 +62,10 @@ namespace LspAnalyzer.Services.Db
                 if (dbSchema.Tables.All(t => t.TableName != "code_items"))
                 {
                     db.CreateTable<CodeItems>();
+                }
+                if (dbSchema.Tables.All(t => t.TableName != "code_item_usages"))
+                {
+                    db.CreateTable<CodeItemUsages>();
                 }
 
                 db.GetTable<CodeItemKinds>()
@@ -88,6 +102,10 @@ namespace LspAnalyzer.Services.Db
 
                 db.GetTable<CodeItems>()
                     .Delete();
+                db.GetTable<File>()
+                    .Delete();
+                db.GetTable<CodeItemUsages>()
+                    .Delete();
                 db.CommitTransaction();
 
             }
@@ -109,7 +127,7 @@ namespace LspAnalyzer.Services.Db
             var kind = new Dictionary<int,string>();
             foreach (var k in lKind)
             {
-                _dicKind.Add((int)k.Id,
+                _dictKind.Add((int)k.Id,
                     k.Kind);
             }
         }
@@ -132,16 +150,18 @@ namespace LspAnalyzer.Services.Db
                     select f.ToLower().Replace(@"\" , "/");
 
                 db.BeginTransaction();
+
                 foreach (var file in files)
                 {
-                    db
-                        .Insert(
+                    long fid = (long)db
+                        .InsertWithIdentity(
                             new File
                             {
                                 Name = file,
                                 LeafName = Path.GetFileName(file)
                             });
-                        
+                    _dictFile.Add(file,(int)fid );
+
                 }
                 db.CommitTransaction();
             }
@@ -174,10 +194,17 @@ namespace LspAnalyzer.Services.Db
 
                 int itemsToDeleteCount = itemsToDelete.Rows.Count; 
                // all symbols
-               var items = from DataRow i in dt.Rows
-                    join f in db.Files on Path.Combine(workspace.ToLower().Replace(@"\","/"), i.Field<string>("File")).ToLower().Replace(@"\","/") equals f.Name
-                    join k in db.CodeItemKinds on i.Field<string>("Kind") equals k.Name 
+                var items = from DataRow i in dt.Rows
+                    join f in db.Files on Path.Combine(workspace.ToLower().Replace(@"\", "/"), i.Field<string>("File"))
+                        .ToLower().Replace(@"\", "/") equals f.Name
+                    join k in db.CodeItemKinds on i.Field<string>("Kind") equals k.Name
                     where i.Field<string>("Kind") != "File"
+                    let position = LspAnalyzerHelper.GetSymbolStartPosition(
+                        i.Field<string>("Intern"),
+                        i.Field<string>("Name"),
+                        new Position(i.Field<long>("StartLine"), i.Field<long>("StartChar")
+                        ))
+
                     select new
                     {
                         Signature = i.Field<string>("Intern"),
@@ -187,12 +214,9 @@ namespace LspAnalyzer.Services.Db
                         EndLine = i.Field<long>("EndLine"),
                         StartChar = i.Field<long>("StartChar"),
                         EndChar = i.Field<long>("EndChar"),
+                        NameStartLine = position.Line,
+                        NameStartChar = position.Character,
                         FileId = f.Id
-
-
-                        
-
-
                     };
                 db.BeginTransaction();
                 foreach (var i in items)
@@ -204,8 +228,10 @@ namespace LspAnalyzer.Services.Db
                         Kind = i.Kind,
                         StartLine = (int)i.StartLine,
                         StartColumn = (int)i.StartChar,
-                        EndLine = (int)i.StartLine,
-                        EndColumn = (int)i.StartChar,
+                        EndLine = (int)i.EndLine,
+                        EndColumn = (int)i.EndChar,
+                        NameStartLine = (int)i.NameStartLine,
+                        NameStartColumn = (int)i.NameStartChar,
                         FileId = i.FileId
 
                     });
@@ -221,27 +247,54 @@ namespace LspAnalyzer.Services.Db
         /// <summary>
         /// Load function usage
         /// </summary>
-        /// <param name="workspace"></param>
-        /// <param name="dt"></param>
-        public int LoadFunctionUsage(string workspace, DataTable dt)
+        public async void LoadFunctionUsage()
         {
 
-            int count = 0;
             // create all files
             using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
 
             {
-                var functions = from f in db.CodeItems
-                    select new
+                var functions = (from func in db.CodeItems
+                    join file in db.Files on func.FileId equals file.Id
+                    join kind in db.CodeItemKinds on func.Kind equals kind.Id
+                    where kind.Name == "Function"
+	
+                    select new 
                     {
-                        FName = f.Name
-                    };
+					    Id = func.Id,
+                        FunctionName = func.Name,
+                        FileName = file.Name,
+                        NameStartLine = func.NameStartLine,
+                        NameStartColumn = func.NameStartColumn
+						
+                    }).ToArray();
+                // write to Database
+                db.BeginTransaction();
+                foreach (var f in functions)
+                {
+                    var locations = await _client.TextDocument.CqueryCallers(f.FileName, f.NameStartLine, f.NameStartColumn);
+                    foreach (var l in locations)
+                    {
+                        string path = l.Uri.LocalPath.Substring(1).ToLower();
+                        db.Insert<CodeItemUsages>(new CodeItemUsages
+                        {
+                            CodeItemId  = f.Id,
+                            FileId = _dictFile[path],
+                            Signature = " ",
+                            StartColumn = (int)l.Range.Start.Character,
+                            StartLine = (int)l.Range.Start.Line,
+                            EndColumn = (int)l.Range.End.Character,
+                            EndLine = (int)l.Range.End.Line,
+      
 
-
+                        });
+                        
+                    }
+                }
+                db.CommitTransaction();
 
             }
 
-            return count;
 
         }
 

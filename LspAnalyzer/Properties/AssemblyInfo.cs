@@ -1,12 +1,11 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("LspAnalyzer")]
-[assembly: AssemblyDescription("C# GUI to work with language server like C#")]
+[assembly: AssemblyDescription("C# GUI to work with language server like CQuery")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ho")]
 [assembly: AssemblyProduct("LspAnalyzer")]

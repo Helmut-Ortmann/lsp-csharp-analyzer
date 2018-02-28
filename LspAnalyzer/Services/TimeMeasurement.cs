@@ -25,12 +25,12 @@ namespace LspAnalyzer.Services
         /// <summary>
         /// Stops the timer and returns the time difference in human readable form.
         /// </summary>
-        /// <returns>"{Span.Seconds}:{Span.Milliseconds} (ss:ms)"</returns>
+        /// <returns>"{Span.Seconds}:{Span.Milliseconds} (mm:ss:ms)"</returns>
         public string TimeSpanAsString()
         {
 
             _span = DateTime.Now.Subtract(_startTime);
-            return  $"{Span.Seconds}:{Span.Milliseconds} (ss:ms)";
+            return  $"{Span.Minutes}:{Span.Seconds}:{Span.Milliseconds} (mm:ss:ms)";
         }
         /// <summary>
         /// Stops the timer and returns the time difference.

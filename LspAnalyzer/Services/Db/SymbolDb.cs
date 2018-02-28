@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 using DataModels.Symbols;
 using LinqToDB;
 using LinqToDB.DataProvider;
@@ -21,7 +22,7 @@ namespace LspAnalyzer.Services.Db
         private readonly string _connectionString;
         // Performance optimization
         private Dictionary<int,string> _dictKind = new Dictionary<int,string>();
-        private Dictionary<string, int> _dictFile = new Dictionary<string,int>();
+        private readonly Dictionary<string, int> _dictFile = new Dictionary<string,int>();
 
         public SymbolDb(string dbPath, LanguageClient client)
         {
@@ -124,7 +125,6 @@ namespace LspAnalyzer.Services.Db
                     Id=  f.Id,
                     Kind = f.Name
                 };
-            var kind = new Dictionary<int,string>();
             foreach (var k in lKind)
             {
                 _dictKind.Add((int)k.Id,
@@ -174,7 +174,6 @@ namespace LspAnalyzer.Services.Db
         /// <param name="dt"></param>
         public int LoadItems(string workspace, DataTable dt)
         {
-
             int count = 0;
             // create all files
             using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
@@ -192,7 +191,6 @@ namespace LspAnalyzer.Services.Db
                         Id = i.Id
                     }).ToDataTable();
 
-                int itemsToDeleteCount = itemsToDelete.Rows.Count; 
                // all symbols
                 var items = from DataRow i in dt.Rows
                     join f in db.Files on Path.Combine(workspace.ToLower().Replace(@"\", "/"), i.Field<string>("File"))
@@ -219,6 +217,7 @@ namespace LspAnalyzer.Services.Db
                         FileId = f.Id
                     };
                 db.BeginTransaction();
+
                 foreach (var i in items)
                 {
                     db.Insert<CodeItems>(new CodeItems
@@ -235,9 +234,9 @@ namespace LspAnalyzer.Services.Db
                         FileId = i.FileId
 
                     });
+                    count += 1;
                 }
                 db.CommitTransaction();
-                count = items.Count();
             }
 
             return count;
@@ -254,25 +253,28 @@ namespace LspAnalyzer.Services.Db
             using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
 
             {
-                var functions = (from func in db.CodeItems
-                    join file in db.Files on func.FileId equals file.Id
-                    join kind in db.CodeItemKinds on func.Kind equals kind.Id
-                    where kind.Name == "Function"
+                var items = (from item in db.CodeItems
+                    join file in db.Files on item.FileId equals file.Id
+                    join kind in db.CodeItemKinds on item.Kind equals kind.Id
+                    where kind.Name == "Function" || 
+                          kind.Name == "Macro" || kind.Name == "Enum" || kind.Name == "Field" || kind.Name == "Field" ||kind.Name == "Constant" || kind.Name == "Property"
 	
                     select new 
                     {
-					    Id = func.Id,
-                        FunctionName = func.Name,
+					    Id = item.Id,
+                        ItemKind = kind.Name,
+                        ItemName = item.Name,
                         FileName = file.Name,
-                        NameStartLine = func.NameStartLine,
-                        NameStartColumn = func.NameStartColumn
+                        NameStartLine = item.NameStartLine,
+                        NameStartColumn = item.NameStartColumn
 						
                     }).ToArray();
                 // write to Database
                 db.BeginTransaction();
-                foreach (var f in functions)
+                foreach (var f in items)
                 {
-                    var locations = await _client.TextDocument.CqueryCallers(f.FileName, f.NameStartLine, f.NameStartColumn);
+                    string method = f.ItemKind == "Function" ? @"$cquery/callers" : @"$cquery/vars";
+                    var locations = await _client.TextDocument.Cquery(method, f.FileName, f.NameStartLine, f.NameStartColumn);
                     foreach (var l in locations)
                     {
                         string path = l.Uri.LocalPath.Substring(1).ToLower();
@@ -297,6 +299,48 @@ namespace LspAnalyzer.Services.Db
 
 
         }
+        /// <summary>
+        /// Output metrics of Code
+        /// </summary>
+        public void Metrics() {
+
+            using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
+            {
+                var itemMetrics = from func in db.CodeItems
+                    join kind in db.CodeItemKinds on func.Kind equals kind.Id
+                    orderby func.Name
+                    group kind by kind.Name
+                    into grp
+                    select
+                        $"{grp.Count(),7:N0}\t{grp.Max(x => x.Id)}\t{grp.Key}";
+                        //Kind = grp.Key,
+                        //Id = grp.Max(x => x.Id),
+                        //Count = grp.Count()
+
+                string part1 = String.Join("\r\n", itemMetrics);
+
+                var itemUsageMetrics = from func in db.CodeItems
+                    join k1 in db.CodeItemKinds on func.Kind equals k1.Id
+                    join u in db.CodeItemUsages on func.Id equals u.CodeItemId
+                    orderby func.Name
+                    group k1 by k1.Name
+                    into grp
+                    select $"{grp.Count(),7:N0}\t{grp.Max(x => x.Id)}\t{grp.Key}";
+                    //{
+                    //    Kind = grp.Key,
+                    //    Id = $"{grp.Max(x => x.Id)}",
+                    //    Count = $"{grp.Count(),1:N0}"
+                    //};
+                string part2 = String.Join("\r\n", itemUsageMetrics);
+
+                string text = $"  Kind\tId\tCount\r\n{part1}\r\n\r\n\t\tUsage Count\r\n{part2}";
+
+                MessageBox.Show(text, "Code Metrics, see also Clipboard");
+                Clipboard.SetText(text);
+
+            }
+        }
+    
 
         private bool DeleteOldDatabase()
         {

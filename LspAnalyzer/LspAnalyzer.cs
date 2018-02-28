@@ -21,8 +21,6 @@ using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Serialization;
 using LspAnalyzer.Services.Db;
-using OmniSharp.Extensions.LanguageServer.Server;
-using LspAnalyzer.Services;
 
 
 // ReSharper disable once CheckNamespace
@@ -59,8 +57,8 @@ namespace LspAnalyzer
         static string _lspServerLogFile = @"d:\temp\CQuery.log";
         static string _lspClientLogFile = @"d:/temp/lspSampleClient.log";
 
-        //string _workSpacePath = @"d:/hoData/Projects/00Current/ZF/Work/source";
-        string _workSpacePath = @"d:/hoData/Development/GitHub/LSP/Lsp_TestC";
+        string _workSpacePath = @"d:/hoData/Projects/00Current/ZF/Work/source";
+        //string _workSpacePath = @"d:/hoData/Development/GitHub/LSP/Lsp_TestC";
         //string _workSpacePath = @"d:\hoData\Projects\00Current\ZF\Work\source\";
 
         private string _lspServerCacheDirectory = @"d:/temp/cquery2/cacheDirectory";
@@ -224,6 +222,7 @@ namespace LspAnalyzer
 
             if (initialize)
             {
+                _workSpacePath = _workSpacePath.Replace(@"\", "/");
                 var initializationOptions = new InitializationOptions(_resourceDirectory, _lspServerCacheDirectory, _lspServerCompilationDatabaseDirectory, _workSpacePath);
                 await client.Initialize(_workSpacePath, initializationOptions);
             }
@@ -1086,6 +1085,11 @@ namespace LspAnalyzer
             Start.StartFile(_lspServerCacheDirectory);
         }
 
-       
+        private void sQLOverviewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath,_client);
+            symbolDb.Metrics();
+
+        }
     }
 }

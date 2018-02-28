@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -126,6 +126,8 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtState = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.doToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.codeMetricsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -212,14 +214,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle3;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -980,8 +982,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(922, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -1006,6 +1008,7 @@ namespace LspAnalyzer
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.doToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -1117,6 +1120,22 @@ namespace LspAnalyzer
             this.txtState.ReadOnly = true;
             this.txtState.Size = new System.Drawing.Size(942, 20);
             this.txtState.TabIndex = 12;
+            // 
+            // doToolStripMenuItem
+            // 
+            this.doToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.codeMetricsToolStripMenuItem});
+            this.doToolStripMenuItem.Name = "doToolStripMenuItem";
+            this.doToolStripMenuItem.Size = new System.Drawing.Size(34, 18);
+            this.doToolStripMenuItem.Text = "Do";
+            // 
+            // codeMetricsToolStripMenuItem
+            // 
+            this.codeMetricsToolStripMenuItem.Name = "codeMetricsToolStripMenuItem";
+            this.codeMetricsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.codeMetricsToolStripMenuItem.Text = "Code Metrics";
+            this.codeMetricsToolStripMenuItem.ToolTipText = "Some metrics about Code";
+            this.codeMetricsToolStripMenuItem.Click += new System.EventHandler(this.sQLOverviewToolStripMenuItem_Click);
             // 
             // LspAnalyzer
             // 
@@ -1267,6 +1286,8 @@ namespace LspAnalyzer
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.TextBox txtState;
         private System.Windows.Forms.ToolStripMenuItem showCQueryCacheDirectoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem doToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem codeMetricsToolStripMenuItem;
     }
 }
 

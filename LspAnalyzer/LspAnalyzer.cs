@@ -1030,7 +1030,7 @@ namespace LspAnalyzer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnGenerateSymbols_Click(object sender, EventArgs e)
+        private async void btnGenerateSymbols_Click(object sender, EventArgs e)
         {
             if (_client == null)
             {
@@ -1038,13 +1038,15 @@ namespace LspAnalyzer
                 return;
             }
             Cursor.Current = Cursors.WaitCursor;
+            btnGenerateSymbols.Enabled = false;
             SymbolDb symbolDb = new SymbolDb(_dbSymbolPath,_client);
             symbolDb.LoadFiles(_workSpacePath);
-            var count = symbolDb.LoadItems(_workSpacePath, _dtSymbols);
-            symbolDb.LoadFunctionUsage();
+            var countItems = symbolDb.LoadItems(_workSpacePath, _dtSymbols);
+            var countItemUsages = await symbolDb.LoadFunctionUsage();
+            btnGenerateSymbols.Enabled = true;
             Cursor.Current = Cursors.Default;
 
-            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_workSpacePath}'\r\nLoaded symbols={count:N0}", "Symbols added from grid");
+            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_workSpacePath}'\r\nLoaded symbols:\t{countItems:N0}\r\nLoaded usages:\t{countItemUsages}", "Symbols, usages wrote to SQL");
         }
 
         private void btnCreateSSQLiteDB_Click(object sender, EventArgs e)

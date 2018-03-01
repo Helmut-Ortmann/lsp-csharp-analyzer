@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using DataModels.Symbols;
 using LinqToDB;
 using LinqToDB.DataProvider;
@@ -246,10 +248,11 @@ namespace LspAnalyzer.Services.Db
         /// <summary>
         /// Load function usage
         /// </summary>
-        public async void LoadFunctionUsage()
+        public async Task<int> LoadFunctionUsage()
         {
 
             // create all files
+            int countUsages = 0;
             using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
 
             {
@@ -258,7 +261,6 @@ namespace LspAnalyzer.Services.Db
                     join kind in db.CodeItemKinds on item.Kind equals kind.Id
                     where kind.Name == "Function" || 
                           kind.Name == "Macro" || kind.Name == "Enum" || kind.Name == "Field" || kind.Name == "Field" ||kind.Name == "Constant" || kind.Name == "Property"
-	
                     select new 
                     {
 					    Id = item.Id,
@@ -271,32 +273,49 @@ namespace LspAnalyzer.Services.Db
                     }).ToArray();
                 // write to Database
                 db.BeginTransaction();
+
                 foreach (var f in items)
                 {
                     string method = f.ItemKind == "Function" ? @"$cquery/callers" : @"$cquery/vars";
                     var locations = await _client.TextDocument.Cquery(method, f.FileName, f.NameStartLine, f.NameStartColumn);
                     foreach (var l in locations)
                     {
-                        string path = l.Uri.LocalPath.Substring(1).ToLower();
-                        db.Insert<CodeItemUsages>(new CodeItemUsages
-                        {
-                            CodeItemId  = f.Id,
-                            FileId = _dictFile[path],
-                            Signature = " ",
-                            StartColumn = (int)l.Range.Start.Character,
-                            StartLine = (int)l.Range.Start.Line,
-                            EndColumn = (int)l.Range.End.Character,
-                            EndLine = (int)l.Range.End.Line,
-      
 
-                        });
-                        
+
+                        string path = l.Uri.LocalPath.Substring(1).ToLower();
+                        // only consider files with path in workspace
+                        if (f.FileName.Contains(path.ToLower()))
+                        {
+                            if (_dictFile.TryGetValue(path, out int fileId) == false)
+                            {
+                                MessageBox.Show(
+                                    $"path={path}\r\nmethod={method}\r\nkind={f.ItemKind}\r\nitem={f.ItemName}",
+                                    "Cant find file id");
+                                continue;
+                            }
+
+                            db.Insert<CodeItemUsages>(new CodeItemUsages
+                            {
+                                CodeItemId = f.Id,
+                                FileId = _dictFile[path],
+                                Signature = " ",
+                                StartColumn = (int) l.Range.Start.Character,
+                                StartLine = (int) l.Range.Start.Line,
+                                EndColumn = (int) l.Range.End.Character,
+                                EndLine = (int) l.Range.End.Line,
+
+
+                            });
+                            countUsages += 1;
+                        }
+
                     }
                 }
                 db.CommitTransaction();
 
             }
 
+            return countUsages;
 
         }
         /// <summary>

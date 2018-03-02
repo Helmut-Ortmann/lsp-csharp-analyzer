@@ -1046,7 +1046,7 @@ namespace LspAnalyzer
             btnGenerateSymbols.Enabled = true;
             Cursor.Current = Cursors.Default;
 
-            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_workSpacePath}'\r\nLoaded symbols:\t{countItems:N0}\r\nLoaded usages:\t{countItemUsages}", "Symbols, usages wrote to SQL");
+            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_workSpacePath}'\r\nLoaded symbols:\t{countItems,8:N0}\r\nLoaded usages:\t{countItemUsages,8:N0}", "Symbols, usages wrote to SQL");
         }
 
         private void btnCreateSSQLiteDB_Click(object sender, EventArgs e)

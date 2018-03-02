@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using DataModels.Symbols;
 using LinqToDB;
 using LinqToDB.DataProvider;

@@ -1,0 +1,15 @@
+﻿//
+// Settings LspAnalyzer
+{
+
+    "SqliteDatabas":                        "c:/temp/symbolDb.sqlite",
+    // CQuery parameters (same as used in VS Code)
+    "cquery.launch.args":                   ["--log-file", "d:\\temp\\CQueryDialog.log"],
+    "cquery.cacheDirectory":                "d:\\temp\\CQuery1\\",
+    "cquery.launch.workingDirectory":       "d:\\hoData\\Development\\GitHub\\LSP\\cquery1\\build\\",
+    "cquery.launch.command":                "release/bin/cquery",
+    "cquery.resourceDirectory" :             "../lib/LLVM-5.0.1-win64/lib/clang/5.0.1/" ,
+    "cquery.extraClangArguments" :           "" 
+
+
+}

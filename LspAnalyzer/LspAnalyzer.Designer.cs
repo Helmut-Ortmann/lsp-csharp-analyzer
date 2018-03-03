@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -95,11 +95,11 @@ namespace LspAnalyzer
             this.txtReferenceSymbol = new System.Windows.Forms.TextBox();
             this.grdReferences = new System.Windows.Forms.DataGridView();
             this.btnGenerateSymbols = new System.Windows.Forms.Button();
+            this.btnCreateSSQLiteDB = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tblGui = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnDocumentSymbol = new System.Windows.Forms.Button();
-            this.btnCreateSSQLiteDB = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.tabDocument = new System.Windows.Forms.TabControl();
             this.tabClientCapability = new System.Windows.Forms.TabPage();
@@ -128,6 +128,11 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtState = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.resetFactorySettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.settingsFacturyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -214,14 +219,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle11;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -803,6 +808,18 @@ namespace LspAnalyzer
             this.btnGenerateSymbols.UseVisualStyleBackColor = true;
             this.btnGenerateSymbols.Click += new System.EventHandler(this.btnGenerateSymbols_Click);
             // 
+            // btnCreateSSQLiteDB
+            // 
+            this.btnCreateSSQLiteDB.Location = new System.Drawing.Point(290, 1);
+            this.btnCreateSSQLiteDB.Margin = new System.Windows.Forms.Padding(1);
+            this.btnCreateSSQLiteDB.Name = "btnCreateSSQLiteDB";
+            this.btnCreateSSQLiteDB.Size = new System.Drawing.Size(100, 23);
+            this.btnCreateSSQLiteDB.TabIndex = 5;
+            this.btnCreateSSQLiteDB.Text = "CreateSQL DB";
+            this.toolTip1.SetToolTip(this.btnCreateSSQLiteDB, "Create your SQLite Database:\r\n- File\r\n- Symbols\r\n- Symbol kind\r\n- Symbol usage");
+            this.btnCreateSSQLiteDB.UseVisualStyleBackColor = true;
+            this.btnCreateSSQLiteDB.Click += new System.EventHandler(this.btnCreateSSQLiteDB_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -860,18 +877,6 @@ namespace LspAnalyzer
             this.btnDocumentSymbol.TabIndex = 1;
             this.btnDocumentSymbol.Text = "Document Symbol";
             this.btnDocumentSymbol.UseVisualStyleBackColor = true;
-            // 
-            // btnCreateSSQLiteDB
-            // 
-            this.btnCreateSSQLiteDB.Location = new System.Drawing.Point(290, 1);
-            this.btnCreateSSQLiteDB.Margin = new System.Windows.Forms.Padding(1);
-            this.btnCreateSSQLiteDB.Name = "btnCreateSSQLiteDB";
-            this.btnCreateSSQLiteDB.Size = new System.Drawing.Size(100, 23);
-            this.btnCreateSSQLiteDB.TabIndex = 5;
-            this.btnCreateSSQLiteDB.Text = "CreateSQL DB";
-            this.toolTip1.SetToolTip(this.btnCreateSSQLiteDB, "Create your SQLite Database:\r\n- File\r\n- Symbols\r\n- Symbol kind\r\n- Symbol usage");
-            this.btnCreateSSQLiteDB.UseVisualStyleBackColor = true;
-            this.btnCreateSSQLiteDB.Click += new System.EventHandler(this.btnCreateSSQLiteDB_Click);
             // 
             // label13
             // 
@@ -984,8 +989,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(922, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -1022,7 +1027,12 @@ namespace LspAnalyzer
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lpoadServerToolStripMenuItem,
-            this.defineCSourceToolStripMenuItem});
+            this.defineCSourceToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.settingsToolStripMenuItem,
+            this.settingsFacturyToolStripMenuItem,
+            this.toolStripSeparator6,
+            this.resetFactorySettingsToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 18);
             this.fileToolStripMenuItem.Text = "File";
@@ -1055,7 +1065,7 @@ namespace LspAnalyzer
             // codeMetricsToolStripMenuItem
             // 
             this.codeMetricsToolStripMenuItem.Name = "codeMetricsToolStripMenuItem";
-            this.codeMetricsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.codeMetricsToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.codeMetricsToolStripMenuItem.Text = "Code Metrics";
             this.codeMetricsToolStripMenuItem.ToolTipText = "Some metrics about Code\r\n- Symbols (from Functions to Macros)\r\n- Usage of Symbols" +
     "";
@@ -1139,6 +1149,42 @@ namespace LspAnalyzer
             this.txtState.ReadOnly = true;
             this.txtState.Size = new System.Drawing.Size(942, 20);
             this.txtState.TabIndex = 12;
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(195, 6);
+            // 
+            // resetFactorySettingsToolStripMenuItem
+            // 
+            this.resetFactorySettingsToolStripMenuItem.Name = "resetFactorySettingsToolStripMenuItem";
+            this.resetFactorySettingsToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.resetFactorySettingsToolStripMenuItem.Text = "Reset Factory settings";
+            this.resetFactorySettingsToolStripMenuItem.ToolTipText = "Reset the settings to the factury settings.\r\n\r\nNote: You have to restart LSP Anal" +
+    "yzer!";
+            this.resetFactorySettingsToolStripMenuItem.Click += new System.EventHandler(this.resetFactorySettingsToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.ToolTipText = "Edit the Settings.Json with the configureg json Editor.\r\n\r\nNote: You have to rest" +
+    "art LSP Analyzer!";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(195, 6);
+            // 
+            // settingsFacturyToolStripMenuItem
+            // 
+            this.settingsFacturyToolStripMenuItem.Name = "settingsFacturyToolStripMenuItem";
+            this.settingsFacturyToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.settingsFacturyToolStripMenuItem.Text = "Settings Factury";
+            this.settingsFacturyToolStripMenuItem.ToolTipText = "Show the Factury Settings.Json with the configureg json Editor";
+            this.settingsFacturyToolStripMenuItem.Click += new System.EventHandler(this.settingsFacturyToolStripMenuItem_Click);
             // 
             // LspAnalyzer
             // 
@@ -1291,6 +1337,11 @@ namespace LspAnalyzer
         private System.Windows.Forms.ToolStripMenuItem showCQueryCacheDirectoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem doToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem codeMetricsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem resetFactorySettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsFacturyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
     }
 }
 

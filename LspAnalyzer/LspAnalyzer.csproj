@@ -124,6 +124,8 @@
     <Compile Include="Services\LspFile.cs" />
     <Compile Include="Services\Start.cs" />
     <Compile Include="Services\TimeMeasurement.cs" />
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\SettingsItem.cs" />
     <EmbeddedResource Include="LspAnalyzer.resx">
       <DependentUpon>LspAnalyzer.cs</DependentUpon>
     </EmbeddedResource>
@@ -146,7 +148,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Settings.json" />
+    <None Include="Settings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

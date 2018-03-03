@@ -30,6 +30,7 @@ namespace LspAnalyzer
     {
         private StdioServerProcess _serverProcess;
         private LanguageClient _client;
+        private Settings.Settings _settings;
 
         private readonly ILoggerFactory _loggerFactory = new LoggerFactory();
         readonly BindingSource _bsServerCapabilities = new BindingSource();
@@ -43,6 +44,10 @@ namespace LspAnalyzer
         private AggregateGridFilter _aggregateFilterClientCapabilities;
 
 
+        private string _settingsBackup;
+        private string _settingsFactury;
+
+
         DataTable _dtServerCapabilities = new DataTable();
         DataTable _dtClientCapabilities = new DataTable();
         DataTable _dtSymbols = new DataTable();
@@ -53,19 +58,19 @@ namespace LspAnalyzer
 
         
         private ProcessStartInfo _lspServerProcessStartInfo;
-        static string _lspServerPath = @"d:/hoData/Development/GitHub/LSP/cquery2/build/release/bin/cquery.exe";
-        static string _lspServerLogFile = @"d:\temp\CQuery.log";
-        static string _lspClientLogFile = @"d:/temp/lspSampleClient.log";
+        //static string _lspServerPath = @"d:/hoData/Development/GitHub/LSP/cquery2/build/release/bin/cquery.exe";
+        //static string _lspServerLogFile = @"d:\temp\CQuery.log";
+        //static string _lspClientLogFile = @"d:/temp/lspSampleClient.log";
 
-        string _workSpacePath = @"d:/hoData/Projects/00Current/ZF/Work/source";
+        //string _workSpacePath = @"d:/hoData/Projects/00Current/ZF/Work/source";
         //string _workSpacePath = @"d:/hoData/Development/GitHub/LSP/Lsp_TestC";
         //string _workSpacePath = @"d:\hoData\Projects\00Current\ZF\Work\source\";
 
-        private string _lspServerCacheDirectory = @"d:/temp/cquery2/cacheDirectory";
+        //private string _lspServerCacheDirectory = @"d:/temp/cquery2/cacheDirectory";
 
 
-        private string _resourceDirectory = @"../lib/LLVM-5.0.1-win64/lib/clang/5.0.1/";
-        private readonly string _lspServerCompilationDatabaseDirectory = null;
+        //private string _resourceDirectory = @"../lib/LLVM-5.0.1-win64/lib/clang/5.0.1/";
+        //private readonly string _lspServerCompilationDatabaseDirectory = null;
         private ILogger<LspAnalyzer> _logger;
 
 
@@ -108,12 +113,25 @@ namespace LspAnalyzer
 
         private void Init()
         {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.Console()
-                .WriteTo.File(_lspClientLogFile, rollingInterval: RollingInterval.Day)
-                .CreateLogger();
-
+            // get settings
+            _settings = new Settings.Settings(); 
+            
+            // Client Logging
+            if (!String.IsNullOrWhiteSpace(_settings.SettingsItem.ClientLogFile))
+            {
+                Log.Logger = new LoggerConfiguration()
+                    .MinimumLevel.Debug()
+                    .WriteTo.Console()
+                    .WriteTo.File(_settings.SettingsItem.ClientLogFile, rollingInterval: RollingInterval.Day)
+                    .CreateLogger();
+            }
+            else
+            {
+                Log.Logger = new LoggerConfiguration()
+                    .MinimumLevel.Debug()
+                    .WriteTo.Console()
+                    .CreateLogger();               
+            }
             // Use Serilog
             _loggerFactory.AddSerilog();
             Log.Logger.Information($"Start logging LSP Sample Client PID={Process.GetCurrentProcess().Id}");
@@ -146,8 +164,8 @@ namespace LspAnalyzer
             var timeMeasurement = new TimeMeasurement();
             InitGui();
             btnRun.Enabled = false;
-            _workSpacePath = txtWorkspace.Text;
-            _lspServerPath = txtServerPath.Text;
+            _settings.SettingsItem.WorkspaceDirectory = txtWorkspace.Text;
+            _settings.SettingsItem.ServerPath = txtServerPath.Text;
 
             // Runs a separate threat
             await Task.Run(RequestServerInitialize);
@@ -187,10 +205,10 @@ namespace LspAnalyzer
         {
             
             // Connect via process and stdio connection
-            string par = _lspClientLogFile.Trim() == ""
+            string par = _settings.SettingsItem.ServerLogFile == ""
                 ? $"--language-server"
-                : $"--language-server --log-file {_lspServerLogFile}";
-            _lspServerProcessStartInfo = new ProcessStartInfo(_lspServerPath, par);
+                : $"--language-server --log-file {_settings.SettingsItem.ServerLogFile}";
+            _lspServerProcessStartInfo = new ProcessStartInfo(_settings.SettingsItem.ServerPath, par);
 
             _serverProcess = new StdioServerProcess(_loggerFactory, _lspServerProcessStartInfo);
 
@@ -222,9 +240,9 @@ namespace LspAnalyzer
 
             if (initialize)
             {
-                _workSpacePath = _workSpacePath.Replace(@"\", "/");
-                var initializationOptions = new InitializationOptions(_resourceDirectory, _lspServerCacheDirectory, _lspServerCompilationDatabaseDirectory, _workSpacePath);
-                await client.Initialize(_workSpacePath, initializationOptions);
+                var initializationOptions = new InitializationOptions(_settings.SettingsItem.CqueryResourceDirectory, 
+                    _settings.SettingsItem.CqueryCacheDirectory, _settings.SettingsItem.CqueryCompilationDatabaseDirectory,  _settings.SettingsItem.WorkspaceDirectory);
+                await client.Initialize(_settings.SettingsItem.WorkspaceDirectory, initializationOptions);
             }
 
             return client;
@@ -276,10 +294,10 @@ namespace LspAnalyzer
 
         private void LspManager_Load(object sender, EventArgs e)
         {
-            txtServerPath.Text = _lspServerPath;
-            txtWorkspace.Text = _workSpacePath;
+            txtServerPath.Text = _settings.SettingsItem.ServerPath;
+            txtWorkspace.Text =  _settings.SettingsItem.WorkspaceDirectory;
             
-            //txtDocument.Text = _documentPath.Replace(_workSpacePath, "").TrimStart('\\');
+            //txtDocument.Text = _documentPath.Replace(_settings.SettingsItem.WorkspaceDirectory, "").TrimStart('\\');
             txtServerState.Text = "";
             grdServerCapabilities.DataSource = _bsServerCapabilities;
             grdClientCapabilities.DataSource = _bsClientCapabilities;
@@ -378,7 +396,7 @@ namespace LspAnalyzer
                           Intern = rec.Name,
                           Name = GetSymbolNameFromSymbolIntern(rec.Kind.ToString(), rec.Name),
                           Kind = rec.Kind.ToString(),
-                          File = rec.Location.Uri.LocalPath.Replace(_workSpacePath,"").TrimStart('/'),
+                          File = rec.Location.Uri.LocalPath.Replace(_settings.SettingsItem.WorkspaceDirectory,"").TrimStart('/'),
                           StartLine = rec.Location.Range.Start.Line,
                           LineCount = rec.Location.Range.End.Line - rec.Location.Range.Start.Line +1,
                           StartChar = rec.Location.Range.Start.Character,
@@ -423,7 +441,7 @@ namespace LspAnalyzer
        /// <param name="e"></param>
         private void openFileInEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Start.StartCodeFile(sender, _workSpacePath, "File",  "StartLine", "StartChar" );
+            Start.StartCodeFile(sender, _settings.SettingsItem.WorkspaceDirectory, "File",  "StartLine", "StartChar" );
         }
         /// <summary>
         /// Copy the cell according to name of all selected rows to Clipboard
@@ -483,7 +501,7 @@ namespace LspAnalyzer
             {
                 var timeMeasurement = new TimeMeasurement();
                 var row = grdWorkspaceSymbols.SelectedRows[0];
-                string document = Path.Combine(_workSpacePath, row.Cells["File"].Value.ToString());
+                string document = Path.Combine(_settings.SettingsItem.WorkspaceDirectory, row.Cells["File"].Value.ToString());
                 int line = int.Parse(row.Cells["StartLine"].Value.ToString());
                 int position = int.Parse(row.Cells["StartChar"].Value.ToString());
                 Hover hover = await _client.TextDocument.Hover(document, line, position);
@@ -519,7 +537,7 @@ namespace LspAnalyzer
             if (grid.SelectedRows.Count > 0)
             {
                 var row = grdWorkspaceSymbols.SelectedRows[0];
-                string document = Path.Combine(_workSpacePath, row.Cells["File"].Value.ToString());
+                string document = Path.Combine(_settings.SettingsItem.WorkspaceDirectory, row.Cells["File"].Value.ToString());
                 int line = int.Parse(row.Cells["StartLine"].Value.ToString());
                 int position = int.Parse(row.Cells["StartChar"].Value.ToString());
                 var signature = await _client.TextDocument.SignatureHelp(document, line, position);
@@ -581,7 +599,7 @@ namespace LspAnalyzer
                     select new
                     {
 
-                        File = rec.Uri.LocalPath.Replace(_workSpacePath,"").TrimStart('/'),
+                        File = rec.Uri.LocalPath.Replace(_settings.SettingsItem.WorkspaceDirectory,"").TrimStart('/'),
                         StartLine = rec.Range.Start.Line,
                         StartChar = rec.Range.Start.Character,
                         EndLine = rec.Range.End.Line,
@@ -640,7 +658,7 @@ namespace LspAnalyzer
                     select new
                     {
 
-                        File = rec.Uri.LocalPath.Replace(_workSpacePath,"").TrimStart('/'),
+                        File = rec.Uri.LocalPath.Replace(_settings.SettingsItem.WorkspaceDirectory,"").TrimStart('/'),
                         StartLine = rec.Range.Start.Line,
                         StartChar = rec.Range.Start.Character,
                         EndLine = rec.Range.End.Line,
@@ -710,7 +728,7 @@ namespace LspAnalyzer
 
         private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
         {
-            Start.StartCodeFile(sender, _workSpacePath, "File",  "StartLine", "StartChar" );
+            Start.StartCodeFile(sender, _settings.SettingsItem.WorkspaceDirectory, "File",  "StartLine", "StartChar" );
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -918,7 +936,7 @@ namespace LspAnalyzer
         /// <returns></returns>
         private string GetWsDocument(DataGridViewRow row)
         {
-            return Path.Combine(_workSpacePath, row.Cells["File"].Value.ToString());
+            return Path.Combine(_settings.SettingsItem.WorkspaceDirectory, row.Cells["File"].Value.ToString());
         }
         /// <summary>
         /// Get Workspace symbol name of selected Row
@@ -937,7 +955,7 @@ namespace LspAnalyzer
         /// <returns></returns>
         private string GetReleativFilePath(string absoluteFilePath)
         {
-            return absoluteFilePath.Replace(_workSpacePath, "").Trim('\\').Trim('/');
+            return absoluteFilePath.Replace(_settings.SettingsItem.WorkspaceDirectory, "").Trim('\\').Trim('/');
         }
         /// <summary>
         /// Gets the absolute file path from a relative or an absolute file path
@@ -947,7 +965,7 @@ namespace LspAnalyzer
         private string GetAbsoluteFilePath(string filePath)
         {
             var relPath = GetReleativFilePath(filePath);
-            return Path.Combine(_workSpacePath,relPath);
+            return Path.Combine(_settings.SettingsItem.WorkspaceDirectory,relPath);
         }
 
 
@@ -991,8 +1009,8 @@ namespace LspAnalyzer
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    _workSpacePath = fbd.SelectedPath;
-                    txtWorkspace.Text = _workSpacePath;
+                    _settings.SettingsItem.WorkspaceDirectory = fbd.SelectedPath;
+                    txtWorkspace.Text = _settings.SettingsItem.WorkspaceDirectory;
 
                 }
             }
@@ -1013,8 +1031,8 @@ namespace LspAnalyzer
                 serverPathOpenDialog.Multiselect = false;
                 if (serverPathOpenDialog.ShowDialog() == DialogResult.OK)    
                 {     
-                    _lspServerPath = serverPathOpenDialog.FileName;
-                    txtServerPath.Text = _lspServerPath;
+                    _settings.SettingsItem.ServerPath = serverPathOpenDialog.FileName;
+                    txtServerPath.Text = _settings.SettingsItem.ServerPath;
 
                 }
             }
@@ -1040,13 +1058,13 @@ namespace LspAnalyzer
             Cursor.Current = Cursors.WaitCursor;
             btnGenerateSymbols.Enabled = false;
             SymbolDb symbolDb = new SymbolDb(_dbSymbolPath,_client);
-            symbolDb.LoadFiles(_workSpacePath);
-            var countItems = symbolDb.LoadItems(_workSpacePath, _dtSymbols);
+            symbolDb.LoadFiles(_settings.SettingsItem.WorkspaceDirectory);
+            var countItems = symbolDb.LoadItems(_settings.SettingsItem.WorkspaceDirectory, _dtSymbols);
             var countItemUsages = await symbolDb.LoadFunctionUsage();
             btnGenerateSymbols.Enabled = true;
             Cursor.Current = Cursors.Default;
 
-            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_workSpacePath}'\r\nLoaded symbols:\t{countItems,8:N0}\r\nLoaded usages:\t{countItemUsages,8:N0}", "Symbols, usages wrote to SQL");
+            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_settings.SettingsItem.WorkspaceDirectory}'\r\nLoaded symbols:\t{countItems,8:N0}\r\nLoaded usages:\t{countItemUsages,8:N0}", "Symbols, usages wrote to SQL");
         }
 
         private void btnCreateSSQLiteDB_Click(object sender, EventArgs e)
@@ -1067,16 +1085,16 @@ namespace LspAnalyzer
 
         private void showCQueryLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Start.StartFile(_lspServerLogFile);
+            Start.StartFile(_settings.SettingsItem.ServerLogFile);
         }
 
         private void showCFrameworkLogToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // get the log file
-            if (Path.GetDirectoryName(_lspClientLogFile) == null) return;
+            if (Path.GetDirectoryName(_settings.SettingsItem.ClientLogFile) == null) return;
             // ReSharper disable once AssignNullToNotNullAttribute
-            DirectoryInfo info = new DirectoryInfo(Path.GetDirectoryName(_lspClientLogFile));
-            string match = $"{Path.GetFileNameWithoutExtension(_lspClientLogFile)}*.log";
+            DirectoryInfo info = new DirectoryInfo(Path.GetDirectoryName(_settings.SettingsItem.ClientLogFile));
+            string match = $"{Path.GetFileNameWithoutExtension(_settings.SettingsItem.ClientLogFile)}*.log";
             var file = info.GetFiles(match, SearchOption.TopDirectoryOnly).OrderBy(p => p.CreationTime).FirstOrDefault();
             
             Start.StartFile(file.FullName);
@@ -1084,7 +1102,7 @@ namespace LspAnalyzer
 
         private void showCQueryCacheDirectoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Start.StartFile(_lspServerCacheDirectory);
+            Start.StartFile(_settings.SettingsItem.CqueryCacheDirectory);
         }
 
         private void sQLOverviewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1092,6 +1110,22 @@ namespace LspAnalyzer
             SymbolDb symbolDb = new SymbolDb(_dbSymbolPath,_client);
             symbolDb.Metrics();
 
+        }
+
+        private void resetFactorySettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _settings.JsonBackup();
+
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Start.StartFile(_settings.SettingsPath);
+        }
+
+        private void settingsFacturyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Start.StartFile(_settings.SettingsFacturyPath);
         }
     }
 }

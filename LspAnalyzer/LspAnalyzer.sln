@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{37
 	ProjectSection(SolutionItems) = preProject
 		..\BuildCQueryLanguageServer.bat = ..\BuildCQueryLanguageServer.bat
 		..\LICENSE = ..\LICENSE
+		..\Setup\Release\LspAnalyzer.msi = ..\Setup\Release\LspAnalyzer.msi
+		Tools\LspAnalyzerRemove.ps1 = Tools\LspAnalyzerRemove.ps1
 		..\readme.md = ..\readme.md
 	EndProjectSection
 EndProject
@@ -26,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "..\csharp_languag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LspServices", "..\LspServices\LspServices.csproj", "{E2F9EF0D-9A8D-465D-9442-C088A724354A}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "..\Setup\Setup.vdproj", "{3EB28B1D-1C86-4D18-B1EF-8CD28D625C81}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "LspAnalyzerSetup", "..\Setup\Setup.vdproj", "{3EB28B1D-1C86-4D18-B1EF-8CD28D625C81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +66,7 @@ Global
 		{E2F9EF0D-9A8D-465D-9442-C088A724354A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3EB28B1D-1C86-4D18-B1EF-8CD28D625C81}.Debug|Any CPU.ActiveCfg = Debug
 		{3EB28B1D-1C86-4D18-B1EF-8CD28D625C81}.Release|Any CPU.ActiveCfg = Release
+		{3EB28B1D-1C86-4D18-B1EF-8CD28D625C81}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

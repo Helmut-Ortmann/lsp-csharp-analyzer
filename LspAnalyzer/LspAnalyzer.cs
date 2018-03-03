@@ -153,6 +153,7 @@ namespace LspAnalyzer
             txtReferencesFilter.Text = "";
             txtReferencesSymbolName.Text = "";
             txtWsSymbolName.Text = "";
+            txtState.Text = "";
         }
         /// <summary>
         /// Initialize Server, receives the client capabilities and outputs the server capabilities
@@ -252,6 +253,7 @@ namespace LspAnalyzer
         
         private async void btnShutDown_Click(object sender, EventArgs e)
         {
+            txtState.Text = "";
             var timeMeasurement = new TimeMeasurement();
             // backgroundWorker1.RunWorkerAsync(RequestType.Shutdown);
             btnShutDown.Enabled = false;
@@ -384,6 +386,7 @@ namespace LspAnalyzer
         private async Task RequestSymbol(string symbol)
         {
             var timeMeasurement = new TimeMeasurement();
+            txtState.Text = "";
             btnWsSymbol.Enabled = false;
             
 
@@ -419,6 +422,8 @@ namespace LspAnalyzer
             //grdWorkspaceSymbols.Columns[6].Width = false;
             txtWsSymbolName.Text = $"*{txtSymbol.Text}";
             txtWsCount.Text = grdWorkspaceSymbols.RowCount.ToString("N0");
+
+
             txtState.Text = $"{txtWsCount.Text} symbols found. Duration: {timeMeasurement.TimeSpanAsString()}";
 
         }
@@ -496,6 +501,7 @@ namespace LspAnalyzer
 
         private async void Hover(object sender, EventArgs e)
         {
+            txtState.Text = "";
             DataGridView grid = Start.GetDataGridViewOfContextMenu(sender);
             if (grid.SelectedRows.Count > 0)
             {
@@ -533,6 +539,7 @@ namespace LspAnalyzer
         private async void Signature(object sender, EventArgs e)
         {
             var timeMeasurement = new TimeMeasurement();
+            txtState.Text = "";
             DataGridView grid = Start.GetDataGridViewOfContextMenu(sender);
             if (grid.SelectedRows.Count > 0)
             {
@@ -571,6 +578,7 @@ namespace LspAnalyzer
         {
             if (grdWorkspaceSymbols.SelectedRows.Count > 0)
             {
+                txtState.Text = "";
                 var timeMeasurement = new TimeMeasurement();
                 var row = grdWorkspaceSymbols.SelectedRows[0];
                 var document = GetWsDocument(row);
@@ -630,6 +638,7 @@ namespace LspAnalyzer
         {
             if (grdWorkspaceSymbols.SelectedRows.Count > 0)
             {
+                txtState.Text = "";
                 var timeMeasurement = new TimeMeasurement();
                 var row = grdWorkspaceSymbols.SelectedRows[0];
                 var document = GetWsDocument(row);
@@ -780,6 +789,7 @@ namespace LspAnalyzer
         {
             if (grdWorkspaceSymbols.SelectedRows.Count > 0)
             {
+                txtState.Text = "";
                 var timeMeasurement = new TimeMeasurement();
                 DataGridViewRow row = grdWorkspaceSymbols.SelectedRows[0];
                 string symbolName = GetWsSymbolName(row);
@@ -1057,14 +1067,19 @@ namespace LspAnalyzer
             }
             Cursor.Current = Cursors.WaitCursor;
             btnGenerateSymbols.Enabled = false;
+            txtState.Text = "";
+
+            var timeMeasurement = new TimeMeasurement();
             SymbolDb symbolDb = new SymbolDb(_dbSymbolPath,_client);
             symbolDb.LoadFiles(_settings.SettingsItem.WorkspaceDirectory);
             var countItems = symbolDb.LoadItems(_settings.SettingsItem.WorkspaceDirectory, _dtSymbols);
             var countItemUsages = await symbolDb.LoadFunctionUsage();
             btnGenerateSymbols.Enabled = true;
+            txtState.Text = $"Duration: {timeMeasurement.TimeSpanAsString()}, Loaded symbols: {countItems,8:N0}, Loaded usages: {countItemUsages,8:N0}";
             Cursor.Current = Cursors.Default;
 
-            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_settings.SettingsItem.WorkspaceDirectory}'\r\nLoaded symbols:\t{countItems,8:N0}\r\nLoaded usages:\t{countItemUsages,8:N0}", "Symbols, usages wrote to SQL");
+            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_settings.SettingsItem.WorkspaceDirectory}'\r\nLoaded symbols:\t{countItems,8:N0}\r\nLoaded usages:\t{countItemUsages,8:N0}\r\n\r\n in {timeMeasurement.TimeSpanAsString()}", 
+                "Symbols, usages wrote to SQL");
         }
 
         private void btnCreateSSQLiteDB_Click(object sender, EventArgs e)

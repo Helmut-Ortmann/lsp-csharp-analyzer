@@ -35,6 +35,8 @@ namespace OmniSharp.Extensions.LanguageServer.Protocol.Models
         Event = 24,
         Operator = 25,
         TypeParameter = 26,
+        TypeAlias = 253, 
+        StaticMethod = 254,
         Macro = 255
     }
 }

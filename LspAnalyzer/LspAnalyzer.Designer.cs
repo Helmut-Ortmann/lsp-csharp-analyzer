@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -133,6 +133,7 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtState = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.btnExampleFilter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -189,7 +190,7 @@ namespace LspAnalyzer
             // 
             this.txtServerPath.Location = new System.Drawing.Point(185, 4);
             this.txtServerPath.Name = "txtServerPath";
-            this.txtServerPath.Size = new System.Drawing.Size(747, 20);
+            this.txtServerPath.Size = new System.Drawing.Size(915, 20);
             this.txtServerPath.TabIndex = 1;
             this.toolTip1.SetToolTip(this.txtServerPath, "Full path of LSP server exe file.");
             // 
@@ -219,14 +220,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle5;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -241,7 +242,7 @@ namespace LspAnalyzer
             // 
             this.txtWorkspace.Location = new System.Drawing.Point(79, 30);
             this.txtWorkspace.Name = "txtWorkspace";
-            this.txtWorkspace.Size = new System.Drawing.Size(853, 20);
+            this.txtWorkspace.Size = new System.Drawing.Size(1021, 20);
             this.txtWorkspace.TabIndex = 5;
             this.toolTip1.SetToolTip(this.txtWorkspace, "Workspace  with e.g your C/C++ code.\r\n\r\nThe root directory of your thing to analy" +
         "ze by the specified language server.");
@@ -250,7 +251,7 @@ namespace LspAnalyzer
             // 
             this.txtDocument.Location = new System.Drawing.Point(79, 56);
             this.txtDocument.Name = "txtDocument";
-            this.txtDocument.Size = new System.Drawing.Size(853, 20);
+            this.txtDocument.Size = new System.Drawing.Size(1021, 20);
             this.txtDocument.TabIndex = 6;
             this.toolTip1.SetToolTip(this.txtDocument, "The document to handle.Depending of the context this field is input/output.");
             // 
@@ -370,7 +371,7 @@ namespace LspAnalyzer
             this.tabWsSymbol.Location = new System.Drawing.Point(4, 22);
             this.tabWsSymbol.Name = "tabWsSymbol";
             this.tabWsSymbol.Padding = new System.Windows.Forms.Padding(3);
-            this.tabWsSymbol.Size = new System.Drawing.Size(934, 275);
+            this.tabWsSymbol.Size = new System.Drawing.Size(1102, 275);
             this.tabWsSymbol.TabIndex = 1;
             this.tabWsSymbol.Text = "WS Symbols";
             this.toolTip1.SetToolTip(this.tabWsSymbol, "Workspaces Symbol occurences");
@@ -388,11 +389,12 @@ namespace LspAnalyzer
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(928, 269);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1096, 269);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnExampleFilter);
             this.panel2.Controls.Add(this.txtWsCount);
             this.panel2.Controls.Add(this.label12);
             this.panel2.Controls.Add(this.label10);
@@ -403,7 +405,7 @@ namespace LspAnalyzer
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(922, 24);
+            this.panel2.Size = new System.Drawing.Size(1090, 24);
             this.panel2.TabIndex = 1;
             // 
             // txtWsCount
@@ -419,7 +421,7 @@ namespace LspAnalyzer
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(629, 3);
+            this.label12.Location = new System.Drawing.Point(708, 5);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(30, 15);
             this.label12.TabIndex = 1;
@@ -429,7 +431,7 @@ namespace LspAnalyzer
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(285, 3);
+            this.label10.Location = new System.Drawing.Point(364, 4);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(35, 15);
             this.label10.TabIndex = 1;
@@ -448,7 +450,7 @@ namespace LspAnalyzer
             // 
             // txtWsSymbolKind
             // 
-            this.txtWsSymbolKind.Location = new System.Drawing.Point(326, 1);
+            this.txtWsSymbolKind.Location = new System.Drawing.Point(405, 3);
             this.txtWsSymbolKind.Name = "txtWsSymbolKind";
             this.txtWsSymbolKind.Size = new System.Drawing.Size(297, 20);
             this.txtWsSymbolKind.TabIndex = 0;
@@ -457,7 +459,7 @@ namespace LspAnalyzer
             // 
             // txtWsSymbolFile
             // 
-            this.txtWsSymbolFile.Location = new System.Drawing.Point(668, 1);
+            this.txtWsSymbolFile.Location = new System.Drawing.Point(753, 3);
             this.txtWsSymbolFile.Name = "txtWsSymbolFile";
             this.txtWsSymbolFile.Size = new System.Drawing.Size(251, 20);
             this.txtWsSymbolFile.TabIndex = 0;
@@ -466,7 +468,7 @@ namespace LspAnalyzer
             // 
             // txtWsSymbolName
             // 
-            this.txtWsSymbolName.Location = new System.Drawing.Point(116, 1);
+            this.txtWsSymbolName.Location = new System.Drawing.Point(195, 5);
             this.txtWsSymbolName.Name = "txtWsSymbolName";
             this.txtWsSymbolName.Size = new System.Drawing.Size(163, 20);
             this.txtWsSymbolName.TabIndex = 0;
@@ -485,7 +487,7 @@ namespace LspAnalyzer
             this.grdWorkspaceSymbols.Name = "grdWorkspaceSymbols";
             this.grdWorkspaceSymbols.RowHeadersVisible = false;
             this.grdWorkspaceSymbols.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdWorkspaceSymbols.Size = new System.Drawing.Size(922, 233);
+            this.grdWorkspaceSymbols.Size = new System.Drawing.Size(1090, 233);
             this.grdWorkspaceSymbols.TabIndex = 0;
             this.grdWorkspaceSymbols.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdInterfaces_CellMouseEnter);
             this.grdWorkspaceSymbols.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdWorkspaceSymbols_RowEnter);
@@ -848,7 +850,7 @@ namespace LspAnalyzer
             this.tblGui.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblGui.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tblGui.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tblGui.Size = new System.Drawing.Size(948, 459);
+            this.tblGui.Size = new System.Drawing.Size(1116, 459);
             this.tblGui.TabIndex = 8;
             // 
             // flowLayoutPanel1
@@ -865,7 +867,7 @@ namespace LspAnalyzer
             this.flowLayoutPanel1.Location = new System.Drawing.Point(2, 416);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(2);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(944, 21);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1112, 21);
             this.flowLayoutPanel1.TabIndex = 10;
             // 
             // btnDocumentSymbol
@@ -900,7 +902,7 @@ namespace LspAnalyzer
             this.tabDocument.Location = new System.Drawing.Point(3, 110);
             this.tabDocument.Name = "tabDocument";
             this.tabDocument.SelectedIndex = 0;
-            this.tabDocument.Size = new System.Drawing.Size(942, 301);
+            this.tabDocument.Size = new System.Drawing.Size(1110, 301);
             this.tabDocument.TabIndex = 3;
             // 
             // tabClientCapability
@@ -989,8 +991,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(922, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -1008,7 +1010,7 @@ namespace LspAnalyzer
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 25);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(942, 79);
+            this.panel1.Size = new System.Drawing.Size(1110, 79);
             this.panel1.TabIndex = 9;
             // 
             // menuStrip1
@@ -1019,7 +1021,7 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(948, 22);
+            this.menuStrip1.Size = new System.Drawing.Size(1116, 22);
             this.menuStrip1.TabIndex = 11;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1184,14 +1186,26 @@ namespace LspAnalyzer
             this.txtState.Location = new System.Drawing.Point(3, 442);
             this.txtState.Name = "txtState";
             this.txtState.ReadOnly = true;
-            this.txtState.Size = new System.Drawing.Size(942, 20);
+            this.txtState.Size = new System.Drawing.Size(1110, 20);
             this.txtState.TabIndex = 12;
+            // 
+            // btnExampleFilter
+            // 
+            this.btnExampleFilter.Location = new System.Drawing.Point(1010, 2);
+            this.btnExampleFilter.Name = "btnExampleFilter";
+            this.btnExampleFilter.Size = new System.Drawing.Size(29, 23);
+            this.btnExampleFilter.TabIndex = 3;
+            this.btnExampleFilter.Text = "Ex";
+            this.toolTip1.SetToolTip(this.btnExampleFilter, "Example filter.\r\n\r\nToggle to show/hide example filter to show how filters work.\r\n" +
+        "\r\nNote:\r\nTo activate the filter press enter inside one of the filter fileds.");
+            this.btnExampleFilter.UseVisualStyleBackColor = true;
+            this.btnExampleFilter.Click += new System.EventHandler(this.btnExampleFilter_Click);
             // 
             // LspAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(948, 459);
+            this.ClientSize = new System.Drawing.Size(1116, 459);
             this.Controls.Add(this.tblGui);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "LspAnalyzer";
@@ -1343,6 +1357,7 @@ namespace LspAnalyzer
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsFacturyToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.Button btnExampleFilter;
     }
 }
 

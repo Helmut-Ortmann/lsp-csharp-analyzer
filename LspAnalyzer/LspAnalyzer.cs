@@ -14,12 +14,9 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using OmniSharp.Extensions.LanguageServer.Client;
-using OmniSharp.Extensions.LanguageServer.Client.Dispatcher;
 using OmniSharp.Extensions.LanguageServer.Client.Processes;
 using OmniSharp.Extensions.LanguageServer.Client.Protocol;
-using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
-using OmniSharp.Extensions.LanguageServer.Protocol.Serialization;
 using LspAnalyzer.Services.Db;
 
 
@@ -44,68 +41,22 @@ namespace LspAnalyzer
         private AggregateGridFilter _aggregateFilterClientCapabilities;
 
 
-        private string _settingsBackup;
-        private string _settingsFactury;
-
 
         DataTable _dtServerCapabilities = new DataTable();
         DataTable _dtClientCapabilities = new DataTable();
         DataTable _dtSymbols = new DataTable();
-        DataTable _dtReferences = new DataTable();
+        readonly DataTable _dtReferences = new DataTable();
         DataTable _dtHighlight = new DataTable();
 
         private string _dbSymbolPath = @"c:\temp\DbSymbol.sqlite";
 
         
         private ProcessStartInfo _lspServerProcessStartInfo;
-        //static string _lspServerPath = @"d:/hoData/Development/GitHub/LSP/cquery2/build/release/bin/cquery.exe";
-        //static string _lspServerLogFile = @"d:\temp\CQuery.log";
-        //static string _lspClientLogFile = @"d:/temp/lspSampleClient.log";
-
-        //string _workSpacePath = @"d:/hoData/Projects/00Current/ZF/Work/source";
-        //string _workSpacePath = @"d:/hoData/Development/GitHub/LSP/Lsp_TestC";
-        //string _workSpacePath = @"d:\hoData\Projects\00Current\ZF\Work\source\";
-
-        //private string _lspServerCacheDirectory = @"d:/temp/cquery2/cacheDirectory";
-
-
-        //private string _resourceDirectory = @"../lib/LLVM-5.0.1-win64/lib/clang/5.0.1/";
-        //private readonly string _lspServerCompilationDatabaseDirectory = null;
+        // ReSharper disable once NotAccessedField.Local
         private ILogger<LspAnalyzer> _logger;
 
 
-        // CQuery
-        // The parameter for CQuery Language Server (https://github.com/jacobdufault/cquery)
-        // --language-server
-        //   Run as a language server. This implements the language server
-        //    spec over STDIN and STDOUT.
-        // --test-unit   Run unit tests.
-        // --test-index <opt_filter_path>
-        //     Run index tests. opt_filter_path can be used to specify which
-        // test to run. If not provided all tests are run.
-        // --log-stdin-stdout-to-stderr
-        //    Print stdin and stdout messages to stderr. This is a aid for
-        // developing new language clients, as it makes it easier to figure
-        // out how the client is interacting with cquery.
-        // --log-file <absoulte_path>
-        //    Emit diagnostic logging to the given path, which is taken
-        //    literally, ie, it will be relative to the current working
-        //    directory.
-        // --log-all-to-stderr
-        //    Write all log messages to STDERR.
-        // --clang-sanity-check
-        //    Run a simple index test. Verifies basic clang functionality.
-        //    Needs to be executed from the cquery root checkout directory.
-        // --wait-for-input
-        //    If true, cquery will wait for an '[Enter]' before exiting.
-        //    Useful on windows.
-        // --help        Print this help information.
-        //string _lspServerPath = @"d:\hoData\Development\GitHub\LSP\cquery\build\release\bin\cquery.exe";
-
-        
-        
-
-        public LspAnalyzer()
+       public LspAnalyzer()
         {
             InitializeComponent();
             Init();
@@ -183,7 +134,7 @@ namespace LspAnalyzer
             }
 
 
-            Log.Information($"Background initialite server ended");
+            Log.Information("Background initialite server ended");
 
             _bsServerCapabilities.DataSource = _dtServerCapabilities;
             _bsClientCapabilities.DataSource = _dtClientCapabilities;
@@ -207,7 +158,7 @@ namespace LspAnalyzer
             
             // Connect via process and stdio connection
             string par = _settings.SettingsItem.ServerLogFile == ""
-                ? $"--language-server"
+                ? "--language-server"
                 : $"--language-server --log-file {_settings.SettingsItem.ServerLogFile}";
             _lspServerProcessStartInfo = new ProcessStartInfo(_settings.SettingsItem.ServerPath, par);
 
@@ -235,14 +186,18 @@ namespace LspAnalyzer
         /// </summary>
         /// <param name="initialize"></param>
         /// <returns></returns>
-        protected async Task<LanguageClient> CreateClient( bool initialize = true)
+        private async Task<LanguageClient> CreateClient( bool initialize = true)
         {
             var client = new LanguageClient(_loggerFactory, _serverProcess);
 
             if (initialize)
             {
-                var initializationOptions = new InitializationOptions(_settings.SettingsItem.CqueryResourceDirectory, 
-                    _settings.SettingsItem.CqueryCacheDirectory, _settings.SettingsItem.CqueryCompilationDatabaseDirectory,  _settings.SettingsItem.WorkspaceDirectory);
+                var initializationOptions = new InitializationOptions(
+                    _settings.SettingsItem.CqueryResourceDirectory, 
+                    _settings.SettingsItem.CqueryCacheDirectory, 
+                    _settings.SettingsItem.CqueryCompilationDatabaseDirectory,  
+                    _settings.SettingsItem.WorkspaceDirectory,
+                    _settings.SettingsItem.CqueryExtraClangArguments);
                 await client.Initialize(_settings.SettingsItem.WorkspaceDirectory, initializationOptions);
             }
 
@@ -260,9 +215,7 @@ namespace LspAnalyzer
             _dtServerCapabilities.Clear();
             _dtClientCapabilities.Clear();
             await Task.Run(
-                () => {
-                    return RequestShutdown();
-                }
+                RequestShutdown
             );
             Log.Information($"Background Shutdown server ended");
             ServerProcessState(txtServerState);
@@ -335,9 +288,6 @@ namespace LspAnalyzer
                 new List<string>(){ "Kind"},
                 new List<TextBox>(new[] {txtDocumentKind})
             );
-
-            txtWsSymbolKind.Text = " (Kind = 'Variable' OR Kind = 'Function') ";
-            txtWsSymbolFile.Text = "((EndLine-StartLine >0) AND (File LIKE '*'))";
 
         }
         /// <summary>
@@ -754,13 +704,6 @@ namespace LspAnalyzer
         {
             Signature(sender, e);
         }
-        /// <summary>
-        ///     Create an <see cref="LspDispatcher"/> for use in tests.
-        /// </summary>
-        /// <returns>
-        ///     The <see cref="LspDispatcher"/>.
-        /// </returns>
-        LspDispatcher CreateDispatcher() => new LspDispatcher(new Serializer(ClientVersion.Lsp3));
 
         private void txtServerCapabilityName_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -1034,11 +977,14 @@ namespace LspAnalyzer
             }
             else
             {
-                OpenFileDialog serverPathOpenDialog = new OpenFileDialog();
-                serverPathOpenDialog.Filter = @"Exe Files (*.exe)|*.exe|All File (*.*)|*.*";
-                serverPathOpenDialog.FilterIndex = 1;
+                OpenFileDialog serverPathOpenDialog =
+                    new OpenFileDialog
+                    {
+                        Filter = @"Exe Files (*.exe)|*.exe|All File (*.*)|*.*",
+                        FilterIndex = 1,
+                        Multiselect = false
+                    };
 
-                serverPathOpenDialog.Multiselect = false;
                 if (serverPathOpenDialog.ShowDialog() == DialogResult.OK)    
                 {     
                     _settings.SettingsItem.ServerPath = serverPathOpenDialog.FileName;
@@ -1141,6 +1087,24 @@ namespace LspAnalyzer
         private void settingsFacturyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Start.StartFile(_settings.SettingsFacturyPath);
+        }
+
+        private void btnExampleFilter_Click(object sender, EventArgs e)
+        {
+            string defaulSymbolKindText = " (Kind = 'Variable' OR Kind = 'Function') ";
+            string defaulSymbolFileText = "((EndLine-StartLine >0) AND (File LIKE '*'))";
+
+            if (txtWsSymbolKind.Text.Trim() == "")
+            {
+                txtWsSymbolKind.Text = defaulSymbolKindText;
+                txtWsSymbolFile.Text = defaulSymbolFileText;
+            }
+            else
+            {
+                txtWsSymbolKind.Text = "";
+                txtWsSymbolFile.Text = "";
+            }
+
         }
     }
 }

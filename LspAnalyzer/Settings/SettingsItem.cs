@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Text;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 // ReSharper disable InconsistentNaming
 
@@ -48,7 +43,7 @@ namespace LspAnalyzer.Settings
         [JsonIgnore]
         public List<string> CqueryLaunchArgs
         {
-            get => _cqueryLaunchArgs;
+            get => _cqueryLaunchArgs ?? new List<string>() ;
             set => _cqueryLaunchArgs = value;
         }
         [JsonIgnore]
@@ -66,7 +61,7 @@ namespace LspAnalyzer.Settings
         [JsonIgnore]
         public List<string> CqueryExtraClangArguments
         {
-            get => _cqueryExtraClangArguments;
+            get => _cqueryExtraClangArguments ?? new List<string>() ;
             set => _cqueryExtraClangArguments = value;
         }
         [JsonIgnore]

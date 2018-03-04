@@ -1,6 +1,8 @@
 ﻿//
 // Settings LspAnalyzer Factory settings
+// History
 // - 3. March 2018
+// - 4. March 2018 extra clang arguments
 //
 // File-Path: you can use "\\" or "/"
 {
@@ -16,7 +18,7 @@
     "cquery.launch.args":                   ["--log-file"],
     "cquery.cacheDirectory":                "d:/temp/CQuery2/",
     "cquery.resourceDirectory" :             "../lib/LLVM-5.0.1-win64/lib/clang/5.0.1/" ,
-    "cquery.extraClangArguments" :           [""],
+    "cquery.extraClangArguments" :           ["%clang","%c -std=gnu11","%cpp -std=gnu++14","-xc"],
     "cquery.compilationDatabaseDirectory":   ""
 
 

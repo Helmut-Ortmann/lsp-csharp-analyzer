@@ -98,6 +98,111 @@ namespace LspAnalyzer.Services.Db
                 db.Insert(new CodeItemKinds { Id = 24, Name = "Event" });
                 db.Insert(new CodeItemKinds { Id = 25, Name = "Operator" });
                 db.Insert(new CodeItemKinds { Id = 26, Name = "TypeParameter" });
+
+
+                db.Insert(new CodeItemKinds { Id = 27, Name = "Type27" });
+                db.Insert(new CodeItemKinds { Id = 28, Name = "Type28" });
+                db.Insert(new CodeItemKinds { Id = 29, Name = "Type29" });
+
+                db.Insert(new CodeItemKinds { Id = 30, Name = "Type30" });
+                db.Insert(new CodeItemKinds { Id = 31, Name = "Type31" });
+                db.Insert(new CodeItemKinds { Id = 32, Name = "Type32" });
+                db.Insert(new CodeItemKinds { Id = 33, Name = "Type33" });
+                db.Insert(new CodeItemKinds { Id = 34, Name = "Type34" });
+                db.Insert(new CodeItemKinds { Id = 35, Name = "Type35" });
+                db.Insert(new CodeItemKinds { Id = 36, Name = "Type36" });
+                db.Insert(new CodeItemKinds { Id = 37, Name = "Type37" });
+                db.Insert(new CodeItemKinds { Id = 38, Name = "Type38" });
+                db.Insert(new CodeItemKinds { Id = 39, Name = "Type39" });
+
+                db.Insert(new CodeItemKinds { Id = 40, Name = "Type40" });
+                db.Insert(new CodeItemKinds { Id = 41, Name = "Type41" });
+                db.Insert(new CodeItemKinds { Id = 42, Name = "Type42" });
+                db.Insert(new CodeItemKinds { Id = 43, Name = "Type43" });
+                db.Insert(new CodeItemKinds { Id = 44, Name = "Type44" });
+                db.Insert(new CodeItemKinds { Id = 45, Name = "Type45" });
+                db.Insert(new CodeItemKinds { Id = 46, Name = "Type46" });
+                db.Insert(new CodeItemKinds { Id = 47, Name = "Type47" });
+                db.Insert(new CodeItemKinds { Id = 48, Name = "Type48" });
+                db.Insert(new CodeItemKinds { Id = 49, Name = "Type49" });
+
+                db.Insert(new CodeItemKinds { Id = 50, Name = "Type50" });
+                db.Insert(new CodeItemKinds { Id = 51, Name = "Type51" });
+                db.Insert(new CodeItemKinds { Id = 52, Name = "Type52" });
+                db.Insert(new CodeItemKinds { Id = 53, Name = "Type53" });
+                db.Insert(new CodeItemKinds { Id = 54, Name = "Type54" });
+                db.Insert(new CodeItemKinds { Id = 55, Name = "Type55" });
+                db.Insert(new CodeItemKinds { Id = 56, Name = "Type56" });
+                db.Insert(new CodeItemKinds { Id = 57, Name = "Type57" });
+                db.Insert(new CodeItemKinds { Id = 58, Name = "Type58" });
+                db.Insert(new CodeItemKinds { Id = 59, Name = "Type59" });
+
+
+
+
+
+                db.Insert(new CodeItemKinds { Id = 200, Name = "Type200" });
+                db.Insert(new CodeItemKinds { Id = 201, Name = "Type201" });
+                db.Insert(new CodeItemKinds { Id = 202, Name = "Type202" });
+                db.Insert(new CodeItemKinds { Id = 203, Name = "Type203" });
+                db.Insert(new CodeItemKinds { Id = 204, Name = "Type204" });
+                db.Insert(new CodeItemKinds { Id = 205, Name = "Type205" });
+                db.Insert(new CodeItemKinds { Id = 206, Name = "Type206" });
+                db.Insert(new CodeItemKinds { Id = 207, Name = "Type207" });
+                db.Insert(new CodeItemKinds { Id = 208, Name = "Type208" });
+                db.Insert(new CodeItemKinds { Id = 209, Name = "Type209" });
+
+                db.Insert(new CodeItemKinds { Id = 210, Name = "Type210" });
+                db.Insert(new CodeItemKinds { Id = 211, Name = "Type211" });
+                db.Insert(new CodeItemKinds { Id = 212, Name = "Type212" });
+                db.Insert(new CodeItemKinds { Id = 213, Name = "Type213" });
+                db.Insert(new CodeItemKinds { Id = 214, Name = "Type214" });
+                db.Insert(new CodeItemKinds { Id = 215, Name = "Type215" });
+                db.Insert(new CodeItemKinds { Id = 216, Name = "Type216" });
+                db.Insert(new CodeItemKinds { Id = 217, Name = "Type217" });
+                db.Insert(new CodeItemKinds { Id = 218, Name = "Type218" });
+                db.Insert(new CodeItemKinds { Id = 219, Name = "Type219" });
+                
+                
+                
+                db.Insert(new CodeItemKinds { Id = 220, Name = "Type220" });
+                db.Insert(new CodeItemKinds { Id = 221, Name = "Type221" });
+                db.Insert(new CodeItemKinds { Id = 222, Name = "Type222" });
+                db.Insert(new CodeItemKinds { Id = 223, Name = "Type223" });
+                db.Insert(new CodeItemKinds { Id = 224, Name = "Type224" });
+                db.Insert(new CodeItemKinds { Id = 225, Name = "Type225" });
+                db.Insert(new CodeItemKinds { Id = 226, Name = "Type226" });
+                db.Insert(new CodeItemKinds { Id = 227, Name = "Type227" });
+                db.Insert(new CodeItemKinds { Id = 228, Name = "Type228" });
+                db.Insert(new CodeItemKinds { Id = 229, Name = "Type229" });
+
+                db.Insert(new CodeItemKinds { Id = 230, Name = "Type230" });
+                db.Insert(new CodeItemKinds { Id = 231, Name = "Type231" });
+                db.Insert(new CodeItemKinds { Id = 232, Name = "Type232" });
+                db.Insert(new CodeItemKinds { Id = 233, Name = "Type233" });
+                db.Insert(new CodeItemKinds { Id = 234, Name = "Type234" });
+                db.Insert(new CodeItemKinds { Id = 235, Name = "Type235" });
+                db.Insert(new CodeItemKinds { Id = 236, Name = "Type236" });
+                db.Insert(new CodeItemKinds { Id = 237, Name = "Type237" });
+                db.Insert(new CodeItemKinds { Id = 238, Name = "Type238" });
+                db.Insert(new CodeItemKinds { Id = 239, Name = "Type239" });
+
+                db.Insert(new CodeItemKinds { Id = 240, Name = "Type240" });
+                db.Insert(new CodeItemKinds { Id = 241, Name = "Type241" });
+                db.Insert(new CodeItemKinds { Id = 242, Name = "Type242" });
+                db.Insert(new CodeItemKinds { Id = 243, Name = "Type243" });
+                db.Insert(new CodeItemKinds { Id = 244, Name = "Type244" });
+                db.Insert(new CodeItemKinds { Id = 245, Name = "Type245" });
+                db.Insert(new CodeItemKinds { Id = 246, Name = "Type246" });
+                db.Insert(new CodeItemKinds { Id = 247, Name = "Type247" });
+                db.Insert(new CodeItemKinds { Id = 248, Name = "Type248" });
+                db.Insert(new CodeItemKinds { Id = 249, Name = "Type249" });
+
+                db.Insert(new CodeItemKinds { Id = 250, Name = "Type250" });
+                db.Insert(new CodeItemKinds { Id = 251, Name = "Type251" });
+                db.Insert(new CodeItemKinds { Id = 252, Name = "Type252" });
+                db.Insert(new CodeItemKinds { Id = 253, Name = "TypeAlias" });
+                db.Insert(new CodeItemKinds { Id = 254, Name = "StaticMethod" });
                 db.Insert(new CodeItemKinds { Id = 255, Name = "Macro" });
 
                 MakeKindDictionary(db);
@@ -128,7 +233,7 @@ namespace LspAnalyzer.Services.Db
                 };
             foreach (var k in lKind)
             {
-                _dictKind.Add((int)k.Id,
+                _dictKind.Add(k.Id,
                     k.Kind);
             }
         }
@@ -285,6 +390,8 @@ namespace LspAnalyzer.Services.Db
                         // only consider files with path in workspace
                         if (f.FileName.Contains(path.ToLower()))
                         {
+                            // ReSharper disable once UnusedVariable
+                            // Check to use it in inser
                             if (_dictFile.TryGetValue(path, out int fileId) == false)
                             {
                                 MessageBox.Show(
@@ -368,7 +475,7 @@ namespace LspAnalyzer.Services.Db
                 {
                     System.IO.File.Delete(_dbPath);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return false;
                 }

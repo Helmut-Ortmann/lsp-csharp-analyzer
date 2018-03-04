@@ -159,3 +159,11 @@ D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\Syste
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\LspServices.dll
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\LspServices.pdb
 D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\Settings.json
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\Awesomium.Core.dll
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\Awesomium.Windows.Forms.dll
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\Awesomium.Core.xml
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\Awesomium.Windows.Forms.xml
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\en-US.dll
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\AwesomiumProcess
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\Awesomium.dll
+D:\hoData\Development\GitHub\LSP\lsp-csharp-analyzer\LspAnalyzer\bin\Debug\icudt42.dll

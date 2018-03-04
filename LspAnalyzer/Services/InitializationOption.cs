@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
 
@@ -26,19 +27,13 @@ namespace LspAnalyzer.Services
 	    /// <param name="cacheDirectory"></param>
 	    /// <param name="compilationDatabaseDirectory"></param>
 	    /// <param name="projectRoot"></param>
+	    /// <param name="extraClangArguments"></param>
 	    public InitializationOptions(string resourceDirectory, string cacheDirectory, string compilationDatabaseDirectory,
-	        string projectRoot)
+	        string projectRoot, List<string> extraClangArguments)
 	    {
 	        ProjectRoot = projectRoot;
 	        CacheDirectory = cacheDirectory;
-	        ExtraClangArguments = new string[] {""};
-
-	        // Using 'ExtraClangArguments' leads to clang AST error.
-	        //ExtraClangArguments = new string[] {"clang++","-xc", "-std=c11", @"-Wno-unknown-warning-option"
-	        //"-resource-dir=d:/hoData/Development/GitHub/LSP/cquery1/build/release/bin/lib/LLVM-4.0.0-win64/lib/clang/5.0.1/",
-	        //@"-working-directory=d:\hoData\Projects\00Current\ZF\Work\Source\"
-
-	        //};
+	        ExtraClangArguments = extraClangArguments.ToArray();
 
 	    }
 	}

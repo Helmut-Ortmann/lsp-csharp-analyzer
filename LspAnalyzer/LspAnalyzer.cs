@@ -155,12 +155,24 @@ namespace LspAnalyzer
         /// <returns></returns>
         private async Task RequestServerInitialize()
         {
+            // add parameters
+            string parameter = "--language-server ";
+            foreach (var p in _settings.SettingsItem.CqueryLaunchArgs)
+            {
+                string par = p.ToLower().Trim();
+                if (par == "--log-file" && _settings.SettingsItem.ServerLogFile != "")
+                {
+                    parameter = $"{parameter} --log-file {_settings.SettingsItem.ServerLogFile} ";
+                   
+                }
+                else
+                {
+                    parameter = $"{parameter}  {par}";
+                }
+            }
             
             // Connect via process and stdio connection
-            string par = _settings.SettingsItem.ServerLogFile == ""
-                ? "--language-server"
-                : $"--language-server --log-file {_settings.SettingsItem.ServerLogFile}";
-            _lspServerProcessStartInfo = new ProcessStartInfo(_settings.SettingsItem.ServerPath, par);
+            _lspServerProcessStartInfo = new ProcessStartInfo(_settings.SettingsItem.ServerPath, parameter);
 
             _serverProcess = new StdioServerProcess(_loggerFactory, _lspServerProcessStartInfo);
 

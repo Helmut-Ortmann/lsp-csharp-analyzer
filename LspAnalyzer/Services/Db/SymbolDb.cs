@@ -49,8 +49,16 @@ namespace LspAnalyzer.Services.Db
             { 
                 var sp = db.DataProvider.GetSchemaProvider();
                 var dbSchema = sp.GetSchema(db);
-
-                db.BeginTransaction();
+                try
+                {
+                    db.BeginTransaction();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"SQLite locked?\r\n\r\n{e}", "Can't begin transaction");
+                    return false;
+                }
+               
                 if (dbSchema.Tables.All(t => t.TableName != "code_item_kinds"))
                 {
                     db.CreateTable<CodeItemKinds>();

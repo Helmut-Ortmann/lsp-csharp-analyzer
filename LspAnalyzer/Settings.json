@@ -19,7 +19,8 @@
     "cquery.cacheDirectory":                "d:/temp/CQuery2/",
     "cquery.resourceDirectory" :             "../lib/LLVM-5.0.1-win64/lib/clang/5.0.1/" ,
     "cquery.extraClangArguments" :           ["%clang","%c -std=gnu11","%cpp -std=gnu++14","-xc"],
-    "cquery.compilationDatabaseDirectory":   ""
+    "cquery.compilationDatabaseDirectory":   "",
+    "cquery.workspaceSymbol":                 {"maxNum":500000, "sort":true}
 
 
 }

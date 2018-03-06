@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using LspAnalyzer.Services;
 using Newtonsoft.Json;
 // ReSharper disable InconsistentNaming
 
@@ -70,7 +71,15 @@ namespace LspAnalyzer.Settings
             get => _cqueryCompilationDatabaseDirectory;
             set => _cqueryCompilationDatabaseDirectory = value;
         }
-
+        [JsonIgnore]
+        public WorkspaceSymbol WorkspaceSymbol
+        {
+            get => _workspaceSymbol;
+            set => _workspaceSymbol = value;
+        }
+        
+        [JsonProperty("WorkspaceSymbol")]
+        private WorkspaceSymbol _workspaceSymbol;
 
 
         [JsonProperty("WorkspaceDirectory")]

@@ -54,6 +54,7 @@ namespace LspAnalyzer
             this.tabWsSymbol = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnExampleFilter = new System.Windows.Forms.Button();
             this.txtWsCount = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -133,7 +134,7 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.txtState = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.btnExampleFilter = new System.Windows.Forms.Button();
+            this.usagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -234,7 +235,7 @@ namespace LspAnalyzer
             this.grdServerCapabilities.Name = "grdServerCapabilities";
             this.grdServerCapabilities.RowHeadersVisible = false;
             this.grdServerCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdServerCapabilities.Size = new System.Drawing.Size(922, 233);
+            this.grdServerCapabilities.Size = new System.Drawing.Size(1090, 233);
             this.grdServerCapabilities.TabIndex = 4;
             this.grdServerCapabilities.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdInterfaces_CellMouseEnter);
             // 
@@ -295,7 +296,7 @@ namespace LspAnalyzer
             this.tabCapabilities.Location = new System.Drawing.Point(4, 22);
             this.tabCapabilities.Name = "tabCapabilities";
             this.tabCapabilities.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCapabilities.Size = new System.Drawing.Size(934, 275);
+            this.tabCapabilities.Size = new System.Drawing.Size(1102, 275);
             this.tabCapabilities.TabIndex = 0;
             this.tabCapabilities.Text = "Server Capability";
             this.toolTip1.SetToolTip(this.tabCapabilities, "Server Capabilities");
@@ -314,7 +315,7 @@ namespace LspAnalyzer
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(928, 269);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1096, 269);
             this.tableLayoutPanel3.TabIndex = 5;
             // 
             // panel4
@@ -326,7 +327,7 @@ namespace LspAnalyzer
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(922, 24);
+            this.panel4.Size = new System.Drawing.Size(1090, 24);
             this.panel4.TabIndex = 5;
             // 
             // label6
@@ -407,6 +408,18 @@ namespace LspAnalyzer
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1090, 24);
             this.panel2.TabIndex = 1;
+            // 
+            // btnExampleFilter
+            // 
+            this.btnExampleFilter.Location = new System.Drawing.Point(1010, 2);
+            this.btnExampleFilter.Name = "btnExampleFilter";
+            this.btnExampleFilter.Size = new System.Drawing.Size(29, 23);
+            this.btnExampleFilter.TabIndex = 3;
+            this.btnExampleFilter.Text = "Ex";
+            this.toolTip1.SetToolTip(this.btnExampleFilter, "Example filter.\r\n\r\nToggle to show/hide example filter to show how filters work.\r\n" +
+        "\r\nNote:\r\nTo activate the filter press enter inside one of the filter fileds.");
+            this.btnExampleFilter.UseVisualStyleBackColor = true;
+            this.btnExampleFilter.Click += new System.EventHandler(this.btnExampleFilter_Click);
             // 
             // txtWsCount
             // 
@@ -501,10 +514,11 @@ namespace LspAnalyzer
             this.hoverToolStripMenuItem,
             this.signitureToolStripMenuItem,
             this.referencesToolStripMenuItem,
-            this.highlightInDocumentToolStripMenuItem,
-            this.cQueryCallersToolStripMenuItem});
+            this.cQueryCallersToolStripMenuItem,
+            this.usagesToolStripMenuItem,
+            this.highlightInDocumentToolStripMenuItem});
             this.contextMenuStripSymbol.Name = "contextMenuStrip1";
-            this.contextMenuStripSymbol.Size = new System.Drawing.Size(212, 164);
+            this.contextMenuStripSymbol.Size = new System.Drawing.Size(212, 208);
             this.toolTip1.SetToolTip(this.contextMenuStripSymbol, "Select the wanted names and Click on Copy Names to Clipboard.\r\n\r\nLSP Manger copie" +
         "s the ordered names to clipboard.");
             // 
@@ -561,7 +575,7 @@ namespace LspAnalyzer
             // 
             this.cQueryCallersToolStripMenuItem.Name = "cQueryCallersToolStripMenuItem";
             this.cQueryCallersToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.cQueryCallersToolStripMenuItem.Text = "CQuery/Callers";
+            this.cQueryCallersToolStripMenuItem.Text = "Usage:  Callers/Vars";
             this.cQueryCallersToolStripMenuItem.Click += new System.EventHandler(this.callersToolStripMenuItem_Click);
             // 
             // tabDocumentSymbol
@@ -570,7 +584,7 @@ namespace LspAnalyzer
             this.tabDocumentSymbol.Location = new System.Drawing.Point(4, 22);
             this.tabDocumentSymbol.Name = "tabDocumentSymbol";
             this.tabDocumentSymbol.Padding = new System.Windows.Forms.Padding(3);
-            this.tabDocumentSymbol.Size = new System.Drawing.Size(934, 275);
+            this.tabDocumentSymbol.Size = new System.Drawing.Size(1102, 275);
             this.tabDocumentSymbol.TabIndex = 2;
             this.tabDocumentSymbol.Text = "Document Symbol";
             this.toolTip1.SetToolTip(this.tabDocumentSymbol, "The Symbols of the docuement");
@@ -588,7 +602,7 @@ namespace LspAnalyzer
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(928, 269);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(1096, 269);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // panel6
@@ -601,7 +615,7 @@ namespace LspAnalyzer
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(3, 3);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(922, 24);
+            this.panel6.Size = new System.Drawing.Size(1090, 24);
             this.panel6.TabIndex = 0;
             // 
             // label11
@@ -658,7 +672,7 @@ namespace LspAnalyzer
             this.grdDocument.Name = "grdDocument";
             this.grdDocument.ReadOnly = true;
             this.grdDocument.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdDocument.Size = new System.Drawing.Size(922, 233);
+            this.grdDocument.Size = new System.Drawing.Size(1090, 233);
             this.grdDocument.TabIndex = 0;
             this.grdDocument.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdInterfaces_CellMouseEnter);
             // 
@@ -715,7 +729,7 @@ namespace LspAnalyzer
             this.tabReferences.Location = new System.Drawing.Point(4, 22);
             this.tabReferences.Name = "tabReferences";
             this.tabReferences.Padding = new System.Windows.Forms.Padding(3);
-            this.tabReferences.Size = new System.Drawing.Size(934, 275);
+            this.tabReferences.Size = new System.Drawing.Size(1102, 275);
             this.tabReferences.TabIndex = 3;
             this.tabReferences.Text = "References";
             this.toolTip1.SetToolTip(this.tabReferences, "Shows the references of a symbol in the whole workspace.");
@@ -734,7 +748,7 @@ namespace LspAnalyzer
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(928, 269);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1096, 269);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // panel3
@@ -746,7 +760,7 @@ namespace LspAnalyzer
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(922, 24);
+            this.panel3.Size = new System.Drawing.Size(1090, 24);
             this.panel3.TabIndex = 0;
             // 
             // label4
@@ -793,7 +807,7 @@ namespace LspAnalyzer
             this.grdReferences.Name = "grdReferences";
             this.grdReferences.RowHeadersVisible = false;
             this.grdReferences.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdReferences.Size = new System.Drawing.Size(922, 233);
+            this.grdReferences.Size = new System.Drawing.Size(1090, 233);
             this.grdReferences.TabIndex = 1;
             this.grdReferences.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdInterfaces_CellMouseEnter);
             // 
@@ -911,7 +925,7 @@ namespace LspAnalyzer
             this.tabClientCapability.Location = new System.Drawing.Point(4, 22);
             this.tabClientCapability.Name = "tabClientCapability";
             this.tabClientCapability.Padding = new System.Windows.Forms.Padding(3);
-            this.tabClientCapability.Size = new System.Drawing.Size(934, 275);
+            this.tabClientCapability.Size = new System.Drawing.Size(1102, 275);
             this.tabClientCapability.TabIndex = 4;
             this.tabClientCapability.Text = "Client Capability";
             this.tabClientCapability.UseVisualStyleBackColor = true;
@@ -929,7 +943,7 @@ namespace LspAnalyzer
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(928, 269);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1096, 269);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
             // panel5
@@ -941,7 +955,7 @@ namespace LspAnalyzer
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(3, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(922, 24);
+            this.panel5.Size = new System.Drawing.Size(1090, 24);
             this.panel5.TabIndex = 0;
             // 
             // label8
@@ -994,7 +1008,7 @@ namespace LspAnalyzer
             dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdClientCapabilities.Size = new System.Drawing.Size(922, 233);
+            this.grdClientCapabilities.Size = new System.Drawing.Size(1090, 233);
             this.grdClientCapabilities.TabIndex = 1;
             this.grdClientCapabilities.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdInterfaces_CellMouseEnter);
             // 
@@ -1189,17 +1203,13 @@ namespace LspAnalyzer
             this.txtState.Size = new System.Drawing.Size(1110, 20);
             this.txtState.TabIndex = 12;
             // 
-            // btnExampleFilter
+            // usagesToolStripMenuItem
             // 
-            this.btnExampleFilter.Location = new System.Drawing.Point(1010, 2);
-            this.btnExampleFilter.Name = "btnExampleFilter";
-            this.btnExampleFilter.Size = new System.Drawing.Size(29, 23);
-            this.btnExampleFilter.TabIndex = 3;
-            this.btnExampleFilter.Text = "Ex";
-            this.toolTip1.SetToolTip(this.btnExampleFilter, "Example filter.\r\n\r\nToggle to show/hide example filter to show how filters work.\r\n" +
-        "\r\nNote:\r\nTo activate the filter press enter inside one of the filter fileds.");
-            this.btnExampleFilter.UseVisualStyleBackColor = true;
-            this.btnExampleFilter.Click += new System.EventHandler(this.btnExampleFilter_Click);
+            this.usagesToolStripMenuItem.Name = "usagesToolStripMenuItem";
+            this.usagesToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.usagesToolStripMenuItem.Text = "Usages";
+            this.usagesToolStripMenuItem.ToolTipText = "Show the usages of:\r\n\r\n- Function\r\n- Variable";
+            this.usagesToolStripMenuItem.Click += new System.EventHandler(this.usagesToolStripMenuItem_Click);
             // 
             // LspAnalyzer
             // 
@@ -1358,6 +1368,7 @@ namespace LspAnalyzer
         private System.Windows.Forms.ToolStripMenuItem settingsFacturyToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.Button btnExampleFilter;
+        private System.Windows.Forms.ToolStripMenuItem usagesToolStripMenuItem;
     }
 }
 

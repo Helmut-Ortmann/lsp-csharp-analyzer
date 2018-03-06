@@ -209,7 +209,8 @@ namespace LspAnalyzer
                     _settings.SettingsItem.CqueryCacheDirectory, 
                     _settings.SettingsItem.CqueryCompilationDatabaseDirectory,  
                     _settings.SettingsItem.WorkspaceDirectory,
-                    _settings.SettingsItem.CqueryExtraClangArguments);
+                    _settings.SettingsItem.CqueryExtraClangArguments,
+                    _settings.SettingsItem.WorkspaceSymbol);
                 await client.Initialize(_settings.SettingsItem.WorkspaceDirectory, initializationOptions);
             }
 
@@ -327,15 +328,8 @@ namespace LspAnalyzer
                 MessageBox.Show("Client not initialized, Break");
                 return;
             }
-            // Empty string should be allowed to show all possible symbols
-            if (txtSymbol.Text.Trim() == "xxxxxxxxx")
-            {
-                MessageBox.Show("No symbol to search for defined, Break");
-                return;
-            }
-
-
-            await RequestSymbol(txtSymbol.Text);
+           
+            await RequestSymbol(txtSymbol.Text, true);
 
 
 
@@ -345,7 +339,7 @@ namespace LspAnalyzer
         /// Requests the symbols
         /// </summary>
         /// <returns></returns>
-        private async Task RequestSymbol(string symbol)
+        private async Task RequestSymbol(string symbol, bool withUsage = false)
         {
             var timeMeasurement = new TimeMeasurement();
             txtState.Text = "";
@@ -362,6 +356,7 @@ namespace LspAnalyzer
                           Name = GetSymbolNameFromSymbolIntern(rec.Kind.ToString(), rec.Name),
                           Kind = rec.Kind.ToString(),
                           File = rec.Location.Uri.LocalPath.Replace(_settings.SettingsItem.WorkspaceDirectory,"").TrimStart('/'),
+                          Usage = 0,
                           StartLine = rec.Location.Range.Start.Line,
                           LineCount = rec.Location.Range.End.Line - rec.Location.Range.Start.Line +1,
                           StartChar = rec.Location.Range.Start.Character,
@@ -379,11 +374,24 @@ namespace LspAnalyzer
             grdWorkspaceSymbols.Columns[1].Width = 300;  // Name
             grdWorkspaceSymbols.Columns[2].Width = 70; // Kind
             grdWorkspaceSymbols.Columns[3].Width = 350; // File
+            grdWorkspaceSymbols.Columns["Usage"].Visible = withUsage; 
+            grdWorkspaceSymbols.Columns["Usage"].Width = 50; // Usage of Function, Variable
             //grdWorkspaceSymbols.Columns[4].Width = true;
             //grdWorkspaceSymbols.Columns[5].Width = true;
             //grdWorkspaceSymbols.Columns[6].Width = false;
             txtWsSymbolName.Text = $"*{txtSymbol.Text}";
             txtWsCount.Text = grdWorkspaceSymbols.RowCount.ToString("N0");
+
+            if (withUsage)
+            {
+                int rowNumber = 0;
+                foreach (DataGridViewRow row in grdWorkspaceSymbols.Rows)
+                {
+                    var locations = await GetCallersOrVarsFromRow(row);
+                    _dtSymbols.Rows[rowNumber]["Usage"] = locations.Count();
+                    rowNumber += 1;
+                }
+            }
 
 
             txtState.Text = $"{txtWsCount.Text} symbols found. Duration: {timeMeasurement.TimeSpanAsString()}";
@@ -603,27 +611,11 @@ namespace LspAnalyzer
                 txtState.Text = "";
                 var timeMeasurement = new TimeMeasurement();
                 var row = grdWorkspaceSymbols.SelectedRows[0];
-                var document = GetWsDocument(row);
-                var symbolName = GetWsSymbolName(row);
-                var startLine = GetWsStartLine(row);
-                var startPosition = GetWsStartPosition(row);
-                var endLine = GetWsEndLine(row);
-                var endPosition = GetWsEndPosition(row);
-
                 // estimate position of function name in Function symbol for functions
                 var symbolIntern = GetWsSymbolIntern(row);
+                var locations = await GetCallersOrVarsFromRow(row);
 
-                var signature = LspFile.ReadLocation(document, startLine, startPosition, endLine, endPosition);
 
-                // Determine start position of symbol
-                Position position = LspAnalyzerHelper.GetSymbolStartPosition(signature, symbolName, new Position{Line=startLine, Character = startPosition});
-                txtReferencesSymbolName.Text = symbolName;
-
-                // ReferenceParams: Request
-                // Response: LocationContainer
-                var locations = await _client.TextDocument.CqueryCallers(document, (int)position.Line, (int)position.Character);
-
-                
                 var dtCallers = (from rec in locations
                     orderby rec.Uri.AbsolutePath,  rec.Range.Start.Line
                     select new
@@ -656,6 +648,47 @@ namespace LspAnalyzer
 
             }
 
+        }
+        /// <summary>
+        /// Get Callers or Vars for current grid row
+        /// </summary>
+        /// <param name="row"></param>
+        /// <returns></returns>
+        private async Task<LocationContainer> GetCallersOrVarsFromRow(DataGridViewRow row)
+        {
+            var document = GetWsDocument(row);
+            var symbolName = GetWsSymbolName(row);
+            var startLine = GetWsStartLine(row);
+            var startPosition = GetWsStartPosition(row);
+            var endLine = GetWsEndLine(row);
+            var endPosition = GetWsEndPosition(row);
+
+            
+
+            var signature = LspFile.ReadLocation(document, startLine, startPosition, endLine, endPosition);
+
+            // Determine start position of symbol
+            Position position = LspAnalyzerHelper.GetSymbolStartPosition(signature, symbolName,
+                new Position {Line = startLine, Character = startPosition});
+            txtReferencesSymbolName.Text = symbolName;
+
+            // ReferenceParams: Request
+            // Response: LocationContainer
+            LocationContainer locations;
+            if (GetWsSymbolKind(row) == "Function")
+            {
+                locations =
+                    await _client.TextDocument.Cquery(@"$cquery/callers", document, (int) position.Line,
+                        (int) position.Character);
+            }
+            else
+            {
+                locations =
+                    await _client.TextDocument.Cquery(@"$cquery/vars", document, (int) position.Line,
+                        (int) position.Character);
+            }
+
+            return locations;
         }
 
 
@@ -913,6 +946,7 @@ namespace LspAnalyzer
             return row.Cells["Name"].Value.ToString();
         }
 
+       
         /// <summary>
         /// Gets the relative file patch from an absolute or relative path
         /// </summary>
@@ -1103,19 +1137,28 @@ namespace LspAnalyzer
 
         private void btnExampleFilter_Click(object sender, EventArgs e)
         {
+
             string defaulSymbolKindText = " (Kind = 'Variable' OR Kind = 'Function') ";
             string defaulSymbolFileText = "((EndLine-StartLine >0) AND (File LIKE '*'))";
 
             if (txtWsSymbolKind.Text.Trim() == "")
             {
+                txtWsSymbolName.Text = "";
                 txtWsSymbolKind.Text = defaulSymbolKindText;
                 txtWsSymbolFile.Text = defaulSymbolFileText;
             }
             else
             {
+
+                txtWsSymbolName.Text = "";
                 txtWsSymbolKind.Text = "";
                 txtWsSymbolFile.Text = "";
             }
+
+        }
+
+        private void usagesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
         }
     }

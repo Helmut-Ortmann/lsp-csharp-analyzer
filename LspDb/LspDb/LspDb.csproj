@@ -75,6 +75,11 @@
     <Compile Include="Linq2sql\Linq2db\SymbolDb.cs" />
     <Compile Include="Linq2sql\LinqUtils\hoLinqSqlUtils.cs" />
     <Compile Include="Linq2sql\LinqUtils\Linq2dbSettings.cs" />
+    <Compile Include="LinqToDB.Templates\LinqToDb.SQLite.tt.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LinqToDb.SQLite.tt.txt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

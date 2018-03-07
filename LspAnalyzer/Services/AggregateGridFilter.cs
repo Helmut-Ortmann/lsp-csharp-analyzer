@@ -23,6 +23,11 @@ namespace LspAnalyzer.Analyze
             _columnName = columnName;
             _control = control;
         }
+
+        public void FilterReset()
+        {
+            _bs.Filter = null;
+        }
         /// <summary>
         /// Filter the form
         /// </summary>

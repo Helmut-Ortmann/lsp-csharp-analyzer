@@ -33,8 +33,8 @@ namespace LspAnalyzer
         readonly BindingSource _bsServerCapabilities = new BindingSource();
         readonly BindingSource _bsClientCapabilities = new BindingSource();
         readonly BindingSource _bsServerSymbols = new BindingSource();
-        readonly BindingSource _bsReferences  = new BindingSource();
-        readonly BindingSource _bsHighlight  = new BindingSource();
+        readonly BindingSource _bsReferences = new BindingSource();
+        readonly BindingSource _bsHighlight = new BindingSource();
 
         private AggregateGridFilter _aggregateFilterSymbol;
         private AggregateGridFilter _aggregateFilterServerCapabilities;
@@ -50,13 +50,14 @@ namespace LspAnalyzer
 
         private string _dbSymbolPath = @"c:\temp\DbSymbol.sqlite";
 
-        
+
         private ProcessStartInfo _lspServerProcessStartInfo;
+
         // ReSharper disable once NotAccessedField.Local
         private ILogger<LspAnalyzer> _logger;
 
 
-       public LspAnalyzer()
+        public LspAnalyzer()
         {
             InitializeComponent();
             Init();
@@ -65,8 +66,8 @@ namespace LspAnalyzer
         private void Init()
         {
             // get settings
-            _settings = new Settings.Settings(); 
-            
+            _settings = new Settings.Settings();
+
             // Client Logging
             if (!String.IsNullOrWhiteSpace(_settings.SettingsItem.ClientLogFile))
             {
@@ -81,14 +82,16 @@ namespace LspAnalyzer
                 Log.Logger = new LoggerConfiguration()
                     .MinimumLevel.Debug()
                     .WriteTo.Console()
-                    .CreateLogger();               
+                    .CreateLogger();
             }
+
             // Use Serilog
             _loggerFactory.AddSerilog();
             Log.Logger.Information($"Start logging LSP Sample Client PID={Process.GetCurrentProcess().Id}");
             _logger = _loggerFactory.CreateLogger<LspAnalyzer>();
 
         }
+
         /// <summary>
         /// Initialize GUI fields
         /// </summary>
@@ -106,6 +109,7 @@ namespace LspAnalyzer
             txtWsSymbolName.Text = "";
             txtState.Text = "";
         }
+
         /// <summary>
         /// Initialize Server, receives the client capabilities and outputs the server capabilities
         /// </summary>
@@ -127,6 +131,7 @@ namespace LspAnalyzer
                 var serverCapabilities = JObject.FromObject(_client.ServerCapabilities);
                 _dtServerCapabilities = JsonUtility.JObjectToDataTable(serverCapabilities);
             }
+
             if (_client?.ClientCapabilities != null)
             {
                 var clientCapabilities = JObject.FromObject(_client.ClientCapabilities);
@@ -144,9 +149,9 @@ namespace LspAnalyzer
 
 
             txtState.Text = $"Duration: {timeMeasurement.TimeSpanAsString()}";
-            
- 
- 
+
+
+
         }
 
         /// <summary>
@@ -163,14 +168,14 @@ namespace LspAnalyzer
                 if (par == "--log-file" && _settings.SettingsItem.ServerLogFile != "")
                 {
                     parameter = $"{parameter} --log-file {_settings.SettingsItem.ServerLogFile} ";
-                   
+
                 }
                 else
                 {
                     parameter = $"{parameter}  {par}";
                 }
             }
-            
+
             // Connect via process and stdio connection
             _lspServerProcessStartInfo = new ProcessStartInfo(_settings.SettingsItem.ServerPath, parameter);
 
@@ -178,6 +183,7 @@ namespace LspAnalyzer
 
             _client = await CreateClient(initialize: true);
         }
+
         /// <summary>
         /// Start Sever and create server connection for *.exe with stdin/stdout
         /// </summary>
@@ -189,25 +195,27 @@ namespace LspAnalyzer
 
             await _serverProcess.HasStarted;
 
-            var connection = new LspConnection(_loggerFactory, input: _serverProcess.OutputStream, output: _serverProcess.InputStream);
+            var connection = new LspConnection(_loggerFactory, input: _serverProcess.OutputStream,
+                output: _serverProcess.InputStream);
 
             return connection;
         }
+
         /// <summary>
         /// Initialize Client with current workspace
         /// </summary>
         /// <param name="initialize"></param>
         /// <returns></returns>
-        private async Task<LanguageClient> CreateClient( bool initialize = true)
+        private async Task<LanguageClient> CreateClient(bool initialize = true)
         {
             var client = new LanguageClient(_loggerFactory, _serverProcess);
 
             if (initialize)
             {
                 var initializationOptions = new InitializationOptions(
-                    _settings.SettingsItem.CqueryResourceDirectory, 
-                    _settings.SettingsItem.CqueryCacheDirectory, 
-                    _settings.SettingsItem.CqueryCompilationDatabaseDirectory,  
+                    _settings.SettingsItem.CqueryResourceDirectory,
+                    _settings.SettingsItem.CqueryCacheDirectory,
+                    _settings.SettingsItem.CqueryCompilationDatabaseDirectory,
                     _settings.SettingsItem.WorkspaceDirectory,
                     _settings.SettingsItem.CqueryExtraClangArguments,
                     _settings.SettingsItem.WorkspaceSymbol);
@@ -217,8 +225,8 @@ namespace LspAnalyzer
             return client;
         }
 
-        
-        
+
+
         private async void btnShutDown_Click(object sender, EventArgs e)
         {
             txtState.Text = "";
@@ -239,12 +247,13 @@ namespace LspAnalyzer
 
         private async Task RequestShutdown()
         {
-            if (_client != null) 
-                    await _client.Shutdown();
+            if (_client != null)
+                await _client.Shutdown();
             _client = null;
 
 
         }
+
         /// <summary>
         /// Set the Server Process state in GUI
         /// </summary>
@@ -257,14 +266,15 @@ namespace LspAnalyzer
             {
                 serverState = _serverProcess.IsRunning ? "running" : "stop";
             }
+
             txtBox.Text = serverState;
         }
 
         private void LspManager_Load(object sender, EventArgs e)
         {
             txtServerPath.Text = _settings.SettingsItem.ServerPath;
-            txtWorkspace.Text =  _settings.SettingsItem.WorkspaceDirectory;
-            
+            txtWorkspace.Text = _settings.SettingsItem.WorkspaceDirectory;
+
             //txtDocument.Text = _documentPath.Replace(_settings.SettingsItem.WorkspaceDirectory, "").TrimStart('\\');
             txtServerState.Text = "";
             grdServerCapabilities.DataSource = _bsServerCapabilities;
@@ -282,27 +292,28 @@ namespace LspAnalyzer
             // Make an Aggregate filters 
             _aggregateFilterSymbol = new AggregateGridFilter(
                 _bsServerSymbols,
-                new List<string>(){ "Name", "File", "Kind" },
+                new List<string>() {"Name", "File", "Kind"},
                 new List<TextBox>(new[] {txtWsSymbolName, txtWsSymbolFile, txtWsSymbolKind})
-                );
+            );
             // Make an Aggregate filters 
             _aggregateFilterServerCapabilities = new AggregateGridFilter(
                 _bsServerCapabilities,
-                new List<string>(){ "Name", "Value" },
+                new List<string>() {"Name", "Value"},
                 new List<TextBox>(new[] {txtServerCapabilitiesName, txtServerCapabilitiesValue})
             );
             _aggregateFilterClientCapabilities = new AggregateGridFilter(
                 _bsClientCapabilities,
-                new List<string>(){ "Name", "Value" },
+                new List<string>() {"Name", "Value"},
                 new List<TextBox>(new[] {txtClientCapabilitiesName, txtClientCapabilitiesValue})
             );
             new AggregateGridFilter(
                 _bsHighlight,
-                new List<string>(){ "Kind"},
+                new List<string>() {"Kind"},
                 new List<TextBox>(new[] {txtDocumentKind})
             );
 
         }
+
         /// <summary>
         /// Form closed
         /// </summary>
@@ -311,11 +322,10 @@ namespace LspAnalyzer
         private async void LspManager_FormClosed(object sender, FormClosedEventArgs e)
         {
             await Task.Run(
-                () => {
-                    return RequestShutdown();
-                }
+                RequestShutdown
             );
         }
+
         /// <summary>
         /// Get and show Workspace Symbols
         /// </summary>
@@ -328,15 +338,15 @@ namespace LspAnalyzer
                 MessageBox.Show("Client not initialized, Break");
                 return;
             }
-           
-            await RequestSymbol(txtSymbol.Text, true);
 
+            await RequestSymbol(txtSymbol.Text, false);
+            
 
 
         }
 
         /// <summary>
-        /// Requests the symbols
+        /// Requests the symbols and resets the filter
         /// </summary>
         /// <returns></returns>
         private async Task RequestSymbol(string symbol, bool withUsage = false)
@@ -344,52 +354,66 @@ namespace LspAnalyzer
             var timeMeasurement = new TimeMeasurement();
             txtState.Text = "";
             btnWsSymbol.Enabled = false;
-            
+            _aggregateFilterSymbol.FilterReset();
+
+            // reset any filter
+
+
 
             // Request Symbol from server
-            SymbolInformationContainer symbols = await  _client.Workspace.Symbol(symbol);
+            SymbolInformationContainer symbols = await _client.Workspace.Symbol(symbol);
             _dtSymbols = (from rec in symbols
-                      orderby rec.Name, rec.Location.Uri.AbsolutePath, rec.Location.Range.Start.Line
-                      select new
-                      {
-                          Intern = rec.Name,
-                          Name = GetSymbolNameFromSymbolIntern(rec.Kind.ToString(), rec.Name),
-                          Kind = rec.Kind.ToString(),
-                          File = rec.Location.Uri.LocalPath.Replace(_settings.SettingsItem.WorkspaceDirectory,"").TrimStart('/'),
-                          Usage = 0,
-                          StartLine = rec.Location.Range.Start.Line,
-                          LineCount = rec.Location.Range.End.Line - rec.Location.Range.Start.Line +1,
-                          StartChar = rec.Location.Range.Start.Character,
-                          EndLine = rec.Location.Range.End.Line,
-                          EndChar = rec.Location.Range.End.Character,
-                          ContainerName = rec.ContainerName
+                    orderby rec.Name, rec.Location.Uri.AbsolutePath, rec.Location.Range.Start.Line
+                    select new
+                    {
+                        Intern = rec.Name,
+                        Name = GetSymbolNameFromSymbolIntern(rec.Kind.ToString(), rec.Name),
+                        Kind = rec.Kind.ToString(),
+                        File = rec.Location.Uri.LocalPath.Replace(_settings.SettingsItem.WorkspaceDirectory, "")
+                            .TrimStart('/'),
+                        Usage = -1,
+                        StartLine = rec.Location.Range.Start.Line,
+                        LineCount = rec.Location.Range.End.Line - rec.Location.Range.Start.Line + 1,
+                        StartChar = rec.Location.Range.Start.Character,
+                        EndLine = rec.Location.Range.End.Line,
+                        EndChar = rec.Location.Range.End.Character,
+                        ContainerName = rec.ContainerName
 
-                      }
-                      ).ToDataTable();
+                    }
+                ).ToDataTable();
 
             _bsServerSymbols.DataSource = _dtSymbols;
             btnWsSymbol.Enabled = true;
             tabDocument.SelectedTab = tabWsSymbol;
             grdWorkspaceSymbols.Columns[0].Width = 200; // Intern
-            grdWorkspaceSymbols.Columns[1].Width = 300;  // Name
+            grdWorkspaceSymbols.Columns[1].Width = 300; // Name
             grdWorkspaceSymbols.Columns[2].Width = 70; // Kind
             grdWorkspaceSymbols.Columns[3].Width = 350; // File
-            grdWorkspaceSymbols.Columns["Usage"].Visible = withUsage; 
+            grdWorkspaceSymbols.Columns["Usage"].Visible = withUsage;
             grdWorkspaceSymbols.Columns["Usage"].Width = 50; // Usage of Function, Variable
             //grdWorkspaceSymbols.Columns[4].Width = true;
             //grdWorkspaceSymbols.Columns[5].Width = true;
             //grdWorkspaceSymbols.Columns[6].Width = false;
+            if (txtSymbol.Text.Trim() != "")
             txtWsSymbolName.Text = $"*{txtSymbol.Text}";
             txtWsCount.Text = grdWorkspaceSymbols.RowCount.ToString("N0");
 
             if (withUsage)
             {
+                int rowCount = _dtSymbols.Rows.Count;
                 int rowNumber = 0;
                 foreach (DataGridViewRow row in grdWorkspaceSymbols.Rows)
                 {
                     var locations = await GetCallersOrVarsFromRow(row);
                     _dtSymbols.Rows[rowNumber]["Usage"] = locations.Count();
                     rowNumber += 1;
+                    if (rowNumber % 50 == 0)
+                    {
+                        txtState.Text =
+                            $"{timeMeasurement.TimeSpanAsString()}:   {rowNumber:N0} of {rowCount:N0} rows updated with usage.";
+                        grdWorkspaceSymbols.Rows[rowNumber].Selected = true;
+                        grdWorkspaceSymbols.FirstDisplayedScrollingRowIndex =  rowNumber; 
+                    }
                 }
             }
 
@@ -398,10 +422,10 @@ namespace LspAnalyzer
 
         }
 
-        
+
         private void txtWsSymbol_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.KeyChar == (char) Keys.Enter)
             {
                 _aggregateFilterSymbol.FilterGrid();
                 txtWsCount.Text = grdWorkspaceSymbols.RowCount.ToString("N0");
@@ -409,15 +433,16 @@ namespace LspAnalyzer
             }
         }
 
-       /// <summary>
-       /// Open file in Editor. 
-       /// </summary>
-       /// <param name="sender"></param>
-       /// <param name="e"></param>
+        /// <summary>
+        /// Open file in Editor. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openFileInEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Start.StartCodeFile(sender, _settings.SettingsItem.WorkspaceDirectory, "File",  "StartLine", "StartChar" );
+            Start.StartCodeFile(sender, _settings.SettingsItem.WorkspaceDirectory, "File", "StartLine", "StartChar");
         }
+
         /// <summary>
         /// Copy the cell according to name of all selected rows to Clipboard
         /// </summary>
@@ -439,12 +464,14 @@ namespace LspAnalyzer
                 text = $"{text}{delimiter}{function}";
                 delimiter = "\r\n";
             }
+
             Clipboard.SetText(text);
         }
 
         private void filterSpecificationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start("https://msdn.microsoft.com/en-us/library/system.data.datacolumn.expression%28v=vs.110%29.aspx?f=255&MSPPError=-2147217396");
+            Process.Start(
+                "https://msdn.microsoft.com/en-us/library/system.data.datacolumn.expression%28v=vs.110%29.aspx?f=255&MSPPError=-2147217396");
         }
 
         private void lSPSpecificationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -460,7 +487,7 @@ namespace LspAnalyzer
         private void grdWorkspaceSymbols_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             int indexNextRow = e.RowIndex;
-            txtDocument.Text = grdWorkspaceSymbols["File",indexNextRow].Value.ToString(); 
+            txtDocument.Text = grdWorkspaceSymbols["File", indexNextRow].Value.ToString();
 
         }
 
@@ -477,7 +504,8 @@ namespace LspAnalyzer
             {
                 var timeMeasurement = new TimeMeasurement();
                 var row = grdWorkspaceSymbols.SelectedRows[0];
-                string document = Path.Combine(_settings.SettingsItem.WorkspaceDirectory, row.Cells["File"].Value.ToString());
+                string document = Path.Combine(_settings.SettingsItem.WorkspaceDirectory,
+                    row.Cells["File"].Value.ToString());
                 int line = int.Parse(row.Cells["StartLine"].Value.ToString());
                 int position = int.Parse(row.Cells["StartChar"].Value.ToString());
                 Hover hover = await _client.TextDocument.Hover(document, line, position);
@@ -492,7 +520,7 @@ namespace LspAnalyzer
 
                 try
                 {
-                    var hoverValue= JsonConvert.SerializeObject(hover.Contents, Formatting.Indented);
+                    var hoverValue = JsonConvert.SerializeObject(hover.Contents, Formatting.Indented);
                     //var hoverValue = (hover.Contents.MarkedStrings.Select(
                     //    markedString => $"Language: {markedString.Language.ToUpper()}\r\n {markedString.Value}")).ToArray();
                     txtState.Text = $"Duration: {timeMeasurement.TimeSpanAsString()}";
@@ -506,6 +534,7 @@ namespace LspAnalyzer
             }
 
         }
+
         private async void Signature(object sender, EventArgs e)
         {
             var timeMeasurement = new TimeMeasurement();
@@ -514,7 +543,8 @@ namespace LspAnalyzer
             if (grid.SelectedRows.Count > 0)
             {
                 var row = grdWorkspaceSymbols.SelectedRows[0];
-                string document = Path.Combine(_settings.SettingsItem.WorkspaceDirectory, row.Cells["File"].Value.ToString());
+                string document = Path.Combine(_settings.SettingsItem.WorkspaceDirectory,
+                    row.Cells["File"].Value.ToString());
                 int line = int.Parse(row.Cells["StartLine"].Value.ToString());
                 int position = int.Parse(row.Cells["StartChar"].Value.ToString());
                 var signature = await _client.TextDocument.SignatureHelp(document, line, position);
@@ -525,13 +555,14 @@ namespace LspAnalyzer
                     MessageBox.Show($"Signature doesn't return result for symbol", "Signature doesn't return result");
                     return;
                 }
+
                 try
                 {
 
-                // Make a linefeed separated string
-                var signatureValue = JsonConvert.SerializeObject(signature);
-                txtState.Text = $"Duration: {timeMeasurement.TimeSpanAsString()}";
-                MessageBox.Show(signatureValue, "Signature Help content");
+                    // Make a linefeed separated string
+                    var signatureValue = JsonConvert.SerializeObject(signature);
+                    txtState.Text = $"Duration: {timeMeasurement.TimeSpanAsString()}";
+                    MessageBox.Show(signatureValue, "Signature Help content");
                 }
                 catch (Exception exception)
                 {
@@ -564,27 +595,30 @@ namespace LspAnalyzer
                 var signature = LspFile.ReadLocation(document, startLine, startPosition, endLine, endPosition);
 
                 // Determine start position of symbol
-                Position position = LspAnalyzerHelper.GetSymbolStartPosition(signature, symbolName, new Position{Line=startLine, Character = startPosition});
+                Position position = LspAnalyzerHelper.GetSymbolStartPosition(signature, symbolName,
+                    new Position {Line = startLine, Character = startPosition});
                 txtReferencesSymbolName.Text = symbolName;
 
                 // ReferenceParams: Request
                 // Response: LocationContainer
-                var locations = await _client.TextDocument.References(document, (int)position.Line, (int)position.Character, includeDeclaration: true);
+                var locations = await _client.TextDocument.References(document, (int) position.Line,
+                    (int) position.Character, includeDeclaration: true);
 
-                
+
                 var dtReference = (from rec in locations
-                    orderby rec.Uri.AbsolutePath,  rec.Range.Start.Line
-                    select new
-                    {
+                        orderby rec.Uri.AbsolutePath, rec.Range.Start.Line
+                        select new
+                        {
 
-                        File = rec.Uri.LocalPath.Replace(_settings.SettingsItem.WorkspaceDirectory,"").TrimStart('/'),
-                        StartLine = rec.Range.Start.Line,
-                        StartChar = rec.Range.Start.Character,
-                        EndLine = rec.Range.End.Line,
-                        EndChar = rec.Range.End.Character
+                            File = rec.Uri.LocalPath.Replace(_settings.SettingsItem.WorkspaceDirectory, "")
+                                .TrimStart('/'),
+                            StartLine = rec.Range.Start.Line,
+                            StartChar = rec.Range.Start.Character,
+                            EndLine = rec.Range.End.Line,
+                            EndChar = rec.Range.End.Character
 
-                    }
-                ).ToDataTable();
+                        }
+                    ).ToDataTable();
 
 
 
@@ -592,7 +626,7 @@ namespace LspAnalyzer
                 grdReferences.DataSource = _bsReferences;
                 tabDocument.SelectedTab = tabReferences;
                 grdReferences.Columns[0].Width = 400; // Name
-                grdReferences.Columns[1].Width = 45;  // Kind
+                grdReferences.Columns[1].Width = 45; // Kind
                 grdReferences.Columns[2].Width = 350; // File
                 grdReferences.Columns[3].Visible = true;
 
@@ -604,7 +638,8 @@ namespace LspAnalyzer
             }
 
         }
-         private async void callersToolStripMenuItem_Click(object sender, EventArgs e)
+
+        private async void callersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (grdWorkspaceSymbols.SelectedRows.Count > 0)
             {
@@ -617,18 +652,19 @@ namespace LspAnalyzer
 
 
                 var dtCallers = (from rec in locations
-                    orderby rec.Uri.AbsolutePath,  rec.Range.Start.Line
-                    select new
-                    {
+                        orderby rec.Uri.AbsolutePath, rec.Range.Start.Line
+                        select new
+                        {
 
-                        File = rec.Uri.LocalPath.Replace(_settings.SettingsItem.WorkspaceDirectory,"").TrimStart('/'),
-                        StartLine = rec.Range.Start.Line,
-                        StartChar = rec.Range.Start.Character,
-                        EndLine = rec.Range.End.Line,
-                        EndChar = rec.Range.End.Character
+                            File = rec.Uri.LocalPath.Replace(_settings.SettingsItem.WorkspaceDirectory, "")
+                                .TrimStart('/'),
+                            StartLine = rec.Range.Start.Line,
+                            StartChar = rec.Range.Start.Character,
+                            EndLine = rec.Range.End.Line,
+                            EndChar = rec.Range.End.Character
 
-                    }
-                ).ToDataTable();
+                        }
+                    ).ToDataTable();
 
 
 
@@ -636,7 +672,7 @@ namespace LspAnalyzer
                 grdReferences.DataSource = _bsReferences;
                 tabDocument.SelectedTab = tabReferences;
                 grdReferences.Columns[0].Width = 400; // Name
-                grdReferences.Columns[1].Width = 45;  // Kind
+                grdReferences.Columns[1].Width = 45; // Kind
                 grdReferences.Columns[2].Width = 350; // File
                 grdReferences.Columns[3].Visible = true;
 
@@ -644,11 +680,12 @@ namespace LspAnalyzer
                 txtReferencesFilter.Text = "";
 
                 txtState.Text = $"Duration: {timeMeasurement.TimeSpanAsString()}";
-               
+
 
             }
 
         }
+
         /// <summary>
         /// Get Callers or Vars for current grid row
         /// </summary>
@@ -663,7 +700,7 @@ namespace LspAnalyzer
             var endLine = GetWsEndLine(row);
             var endPosition = GetWsEndPosition(row);
 
-            
+
 
             var signature = LspFile.ReadLocation(document, startLine, startPosition, endLine, endPosition);
 
@@ -699,6 +736,7 @@ namespace LspAnalyzer
                 MessageBox.Show("Client not initialized, Break");
                 return;
             }
+
             if (txtSymbol.Text.Trim() == "")
             {
                 MessageBox.Show("No symbol to search for defined, Break");
@@ -711,7 +749,7 @@ namespace LspAnalyzer
 
         private async void txtSymbol_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.KeyChar == (char) Keys.Enter)
             {
                 if (_client == null)
                 {
@@ -719,12 +757,14 @@ namespace LspAnalyzer
                     e.Handled = true;
                     return;
                 }
+
                 if (txtSymbol.Text.Trim() == "xxxxxx")
                 {
                     MessageBox.Show("No symbol to search for defined, Break");
                     e.Handled = true;
                     return;
                 }
+
                 e.Handled = true;
                 await RequestSymbol(txtSymbol.Text);
             }
@@ -732,7 +772,7 @@ namespace LspAnalyzer
 
         private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
         {
-            Start.StartCodeFile(sender, _settings.SettingsItem.WorkspaceDirectory, "File",  "StartLine", "StartChar" );
+            Start.StartCodeFile(sender, _settings.SettingsItem.WorkspaceDirectory, "File", "StartLine", "StartChar");
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
@@ -768,6 +808,7 @@ namespace LspAnalyzer
             }
 
         }
+
         /// <summary>
         /// Highlights the 
         /// </summary>
@@ -793,27 +834,30 @@ namespace LspAnalyzer
 
                 // ReferenceParams: Request
                 // Response: LocationContainer
-                DocumentHighlightContainer locations = await _client.TextDocument.Highlight(document, startLine, startPosition);
+                DocumentHighlightContainer locations =
+                    await _client.TextDocument.Highlight(document, startLine, startPosition);
 
                 try
                 {
                     _dtHighlight = (from rec in locations
-                        orderby rec.Range.Start.Line, rec.Range.Start.Character,   rec.Kind
-                        select new
-                        {
-                            Name = LspFile.ReadLocation(document,(int)rec.Range.Start.Line,(int)rec.Range.Start.Character,(int)rec.Range.End.Line,(int)rec.Range.End.Character),
-                            Kind =rec.Kind.ToString(),
-                            StartLine = rec.Range.Start.Line,
-                            StartChar = rec.Range.Start.Character,
-                            EndLine = rec.Range.End.Line,
-                            EndChar = rec.Range.End.Character,
-                            File = GetReleativFilePath(document)
-                        }
-                    ).ToDataTable();
+                            orderby rec.Range.Start.Line, rec.Range.Start.Character, rec.Kind
+                            select new
+                            {
+                                Name = LspFile.ReadLocation(document, (int) rec.Range.Start.Line,
+                                    (int) rec.Range.Start.Character, (int) rec.Range.End.Line,
+                                    (int) rec.Range.End.Character),
+                                Kind = rec.Kind.ToString(),
+                                StartLine = rec.Range.Start.Line,
+                                StartChar = rec.Range.Start.Character,
+                                EndLine = rec.Range.End.Line,
+                                EndChar = rec.Range.End.Character,
+                                File = GetReleativFilePath(document)
+                            }
+                        ).ToDataTable();
                 }
                 catch (Exception exception)
                 {
-                    MessageBox.Show($"{exception}",@"Can't deserialize Symbols with LINQ");
+                    MessageBox.Show($"{exception}", @"Can't deserialize Symbols with LINQ");
                 }
 
 
@@ -822,9 +866,9 @@ namespace LspAnalyzer
                 grdDocument.DataSource = _bsHighlight;
                 tabDocument.SelectedTab = tabDocumentSymbol;
                 grdDocument.Columns[0].Width = 200; // Name
-                grdDocument.Columns[1].Width = 100;  // Kind
-                grdDocument.Columns[2].Width = 100;  // Start
-                grdDocument.Columns[3].Width = 100;  // Start
+                grdDocument.Columns[1].Width = 100; // Kind
+                grdDocument.Columns[2].Width = 100; // Start
+                grdDocument.Columns[3].Width = 100; // Start
 
 
                 txtDocumentSymbolName.Text = $"{symbolIntern}";
@@ -853,15 +897,17 @@ namespace LspAnalyzer
                     {
                         symbolName = match.Groups[2].Value;
                     }
+
                     break;
 
                 case "Variable":
                     var rxVariableName = new Regex(@"\w*$");
                     var matchVariable = rxVariableName.Match(symbolIntern);
-                    if (matchVariable.Success )
+                    if (matchVariable.Success)
                     {
                         symbolName = matchVariable.Groups[0].Value;
                     }
+
                     break;
                 case "File":
                     symbolName = Path.GetFileName(symbolIntern);
@@ -870,6 +916,7 @@ namespace LspAnalyzer
                     symbolName = symbolIntern;
                     break;
             }
+
             return symbolName;
         }
 
@@ -906,6 +953,7 @@ namespace LspAnalyzer
         {
             return int.Parse(row.Cells["StartLine"].Value.ToString());
         }
+
         /// <summary>
         /// Get Workspace start Position
         /// </summary>
@@ -936,6 +984,7 @@ namespace LspAnalyzer
         {
             return Path.Combine(_settings.SettingsItem.WorkspaceDirectory, row.Cells["File"].Value.ToString());
         }
+
         /// <summary>
         /// Get Workspace symbol name of selected Row
         /// </summary>
@@ -946,7 +995,7 @@ namespace LspAnalyzer
             return row.Cells["Name"].Value.ToString();
         }
 
-       
+
         /// <summary>
         /// Gets the relative file patch from an absolute or relative path
         /// </summary>
@@ -956,6 +1005,7 @@ namespace LspAnalyzer
         {
             return absoluteFilePath.Replace(_settings.SettingsItem.WorkspaceDirectory, "").Trim('\\').Trim('/');
         }
+
         /// <summary>
         /// Gets the absolute file path from a relative or an absolute file path
         /// </summary>
@@ -964,19 +1014,20 @@ namespace LspAnalyzer
         private string GetAbsoluteFilePath(string filePath)
         {
             var relPath = GetReleativFilePath(filePath);
-            return Path.Combine(_settings.SettingsItem.WorkspaceDirectory,relPath);
+            return Path.Combine(_settings.SettingsItem.WorkspaceDirectory, relPath);
         }
 
 
         private void txtDocumentKind_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.KeyChar == (char) Keys.Enter)
             {
                 _aggregateFilterSymbol.FilterGrid();
                 e.Handled = true;
             }
 
         }
+
         /// <summary>
         /// Output the Column Header/Technical name as Tooltip. It uses the data column of the associated data source. 
         /// Disable Tooltip in the grid (ShowCellToolTips = false;).
@@ -1002,7 +1053,7 @@ namespace LspAnalyzer
 
         private void defineCSourceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using(var fbd = new FolderBrowserDialog())
+            using (var fbd = new FolderBrowserDialog())
             {
                 DialogResult result = fbd.ShowDialog();
 
@@ -1031,8 +1082,8 @@ namespace LspAnalyzer
                         Multiselect = false
                     };
 
-                if (serverPathOpenDialog.ShowDialog() == DialogResult.OK)    
-                {     
+                if (serverPathOpenDialog.ShowDialog() == DialogResult.OK)
+                {
                     _settings.SettingsItem.ServerPath = serverPathOpenDialog.FileName;
                     txtServerPath.Text = _settings.SettingsItem.ServerPath;
 
@@ -1045,6 +1096,7 @@ namespace LspAnalyzer
         {
             Process.Start("https://github.com/Helmut-Ortmann/lsp-csharp-analyzer/wiki");
         }
+
         /// <summary>
         /// Generate Symbol DB
         /// </summary>
@@ -1057,20 +1109,23 @@ namespace LspAnalyzer
                 MessageBox.Show("LSP Server not initialized, break!");
                 return;
             }
+
             Cursor.Current = Cursors.WaitCursor;
             btnGenerateSymbols.Enabled = false;
             txtState.Text = "";
 
             var timeMeasurement = new TimeMeasurement();
-            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath,_client);
+            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath, _client);
             symbolDb.LoadFiles(_settings.SettingsItem.WorkspaceDirectory);
             var countItems = symbolDb.LoadItems(_settings.SettingsItem.WorkspaceDirectory, _dtSymbols);
             var countItemUsages = await symbolDb.LoadFunctionUsage();
             btnGenerateSymbols.Enabled = true;
-            txtState.Text = $"Duration: {timeMeasurement.TimeSpanAsString()}, Loaded symbols: {countItems,8:N0}, Loaded usages: {countItemUsages,8:N0}";
+            txtState.Text =
+                $"Duration: {timeMeasurement.TimeSpanAsString()}, Loaded symbols: {countItems,8:N0}, Loaded usages: {countItemUsages,8:N0}";
             Cursor.Current = Cursors.Default;
 
-            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_settings.SettingsItem.WorkspaceDirectory}'\r\nLoaded symbols:\t{countItems,8:N0}\r\nLoaded usages:\t{countItemUsages,8:N0}\r\n\r\n in {timeMeasurement.TimeSpanAsString()}", 
+            MessageBox.Show(
+                $"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_settings.SettingsItem.WorkspaceDirectory}'\r\nLoaded symbols:\t{countItems,8:N0}\r\nLoaded usages:\t{countItemUsages,8:N0}\r\n\r\n in {timeMeasurement.TimeSpanAsString()}",
                 "Symbols, usages wrote to SQL");
         }
 
@@ -1081,12 +1136,14 @@ namespace LspAnalyzer
                 MessageBox.Show("LSP Server not initialized, break!");
                 return;
             }
+
             var timeMeasurement = new TimeMeasurement();
             Cursor.Current = Cursors.WaitCursor;
             SymbolDb symbolDb = new SymbolDb(_dbSymbolPath, _client);
             symbolDb.Create();
             Cursor.Current = Cursors.Default;
-            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nDuration: {timeMeasurement.TimeSpanAsString()}", "SymbolDB created");
+            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nDuration: {timeMeasurement.TimeSpanAsString()}",
+                "SymbolDB created");
 
         }
 
@@ -1102,8 +1159,9 @@ namespace LspAnalyzer
             // ReSharper disable once AssignNullToNotNullAttribute
             DirectoryInfo info = new DirectoryInfo(Path.GetDirectoryName(_settings.SettingsItem.ClientLogFile));
             string match = $"{Path.GetFileNameWithoutExtension(_settings.SettingsItem.ClientLogFile)}*.log";
-            var file = info.GetFiles(match, SearchOption.TopDirectoryOnly).OrderBy(p => p.CreationTime).FirstOrDefault();
-            
+            var file = info.GetFiles(match, SearchOption.TopDirectoryOnly).OrderBy(p => p.CreationTime)
+                .FirstOrDefault();
+
             Start.StartFile(file.FullName);
         }
 
@@ -1114,7 +1172,7 @@ namespace LspAnalyzer
 
         private void sQLOverviewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath,_client);
+            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath, _client);
             symbolDb.Metrics();
 
         }
@@ -1160,6 +1218,18 @@ namespace LspAnalyzer
         private void usagesToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+
+        }
+
+        private async void workspacesWithUsagesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_client == null)
+            {
+                MessageBox.Show("Client not initialized, Break");
+                return;
+            }
+
+            await RequestSymbol(txtSymbol.Text, true);
         }
     }
 }

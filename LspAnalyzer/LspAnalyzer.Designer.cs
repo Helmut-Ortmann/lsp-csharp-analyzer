@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -135,6 +135,7 @@ namespace LspAnalyzer
             this.txtState = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.usagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.workspacesWithUsagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -221,14 +222,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle11;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -275,7 +276,8 @@ namespace LspAnalyzer
             this.btnWsSymbol.Size = new System.Drawing.Size(75, 23);
             this.btnWsSymbol.TabIndex = 1;
             this.btnWsSymbol.Text = "WS Symbol";
-            this.toolTip1.SetToolTip(this.btnWsSymbol, "Reade all symbols for a parrticular symbol");
+            this.toolTip1.SetToolTip(this.btnWsSymbol, "Reade all symbols for a parrticular symbol.\r\n\r\nThis function doesn\'t capture the " +
+        "amount of usages for the symbols.");
             this.btnWsSymbol.UseVisualStyleBackColor = true;
             this.btnWsSymbol.Click += new System.EventHandler(this.btnWsSymbol_Click);
             // 
@@ -516,7 +518,8 @@ namespace LspAnalyzer
             this.referencesToolStripMenuItem,
             this.cQueryCallersToolStripMenuItem,
             this.usagesToolStripMenuItem,
-            this.highlightInDocumentToolStripMenuItem});
+            this.highlightInDocumentToolStripMenuItem,
+            this.workspacesWithUsagesToolStripMenuItem});
             this.contextMenuStripSymbol.Name = "contextMenuStrip1";
             this.contextMenuStripSymbol.Size = new System.Drawing.Size(212, 208);
             this.toolTip1.SetToolTip(this.contextMenuStripSymbol, "Select the wanted names and Click on Copy Names to Clipboard.\r\n\r\nLSP Manger copie" +
@@ -1005,8 +1008,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle12;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(1090, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -1211,6 +1214,16 @@ namespace LspAnalyzer
             this.usagesToolStripMenuItem.ToolTipText = "Show the usages of:\r\n\r\n- Function\r\n- Variable";
             this.usagesToolStripMenuItem.Click += new System.EventHandler(this.usagesToolStripMenuItem_Click);
             // 
+            // workspacesWithUsagesToolStripMenuItem
+            // 
+            this.workspacesWithUsagesToolStripMenuItem.Name = "workspacesWithUsagesToolStripMenuItem";
+            this.workspacesWithUsagesToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.workspacesWithUsagesToolStripMenuItem.Text = "Workspaces with Usages";
+            this.workspacesWithUsagesToolStripMenuItem.ToolTipText = "Capture all symbols from the Server and in case of CQUery\r\ninquire the count of u" +
+    "sages for every symbol.\r\n\r\nNote:\r\n\r\nThis takes some time for large amount of sym" +
+    "bols.";
+            this.workspacesWithUsagesToolStripMenuItem.Click += new System.EventHandler(this.workspacesWithUsagesToolStripMenuItem_Click);
+            // 
             // LspAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1369,6 +1382,7 @@ namespace LspAnalyzer
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.Button btnExampleFilter;
         private System.Windows.Forms.ToolStripMenuItem usagesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem workspacesWithUsagesToolStripMenuItem;
     }
 }
 

@@ -362,10 +362,13 @@ namespace LspAnalyzer
 
             // Request Symbol from server
             SymbolInformationContainer symbols = await _client.Workspace.Symbol(symbol);
+            int i  = 0;
             _dtSymbols = (from rec in symbols
                     orderby rec.Name, rec.Location.Uri.AbsolutePath, rec.Location.Range.Start.Line
+                    let Rank = i++
                     select new
                     {
+                        No = Rank.ToString("N0"),
                         Intern = rec.Name,
                         Name = GetSymbolNameFromSymbolIntern(rec.Kind.ToString(), rec.Name),
                         Kind = rec.Kind.ToString(),
@@ -385,10 +388,11 @@ namespace LspAnalyzer
             _bsServerSymbols.DataSource = _dtSymbols;
             btnWsSymbol.Enabled = true;
             tabDocument.SelectedTab = tabWsSymbol;
-            grdWorkspaceSymbols.Columns[0].Width = 200; // Intern
-            grdWorkspaceSymbols.Columns[1].Width = 300; // Name
-            grdWorkspaceSymbols.Columns[2].Width = 70; // Kind
-            grdWorkspaceSymbols.Columns[3].Width = 350; // File
+            grdWorkspaceSymbols.Columns[0].Width = 45; // Intern
+            grdWorkspaceSymbols.Columns[1].Width = 200; // Intern
+            grdWorkspaceSymbols.Columns[2].Width = 300; // Name
+            grdWorkspaceSymbols.Columns[3].Width = 70; // Kind
+            grdWorkspaceSymbols.Columns[4].Width = 350; // File
             grdWorkspaceSymbols.Columns["Usage"].Visible = withUsage;
             grdWorkspaceSymbols.Columns["Usage"].Width = 50; // Usage of Function, Variable
             //grdWorkspaceSymbols.Columns[4].Width = true;

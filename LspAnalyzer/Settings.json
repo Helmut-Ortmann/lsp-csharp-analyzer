@@ -3,6 +3,7 @@
 // History
 // - 3. March 2018
 // - 4. March 2018 extra clang arguments
+// - 8. March 2018, workspaceSymbol, XRef
 //
 // File-Path: you can use "\\" or "/"
 {
@@ -15,12 +16,14 @@
     "ClientLogFile" :                        "d:/temp/lspSampleClient.log", 
     //
     // CQuery parameters (same as used in VS Code, no calculated parameters)
+    // see: CQuery config.h and in the wiki (https://github.com/cquery-project/cquery/wiki)
     "cquery.launch.args":                   ["--log-file"],
     "cquery.cacheDirectory":                "d:/temp/CQuery2/",
     "cquery.resourceDirectory" :             "../lib/LLVM-5.0.1-win64/lib/clang/5.0.1/" ,
     "cquery.extraClangArguments" :           ["%clang","%c -std=gnu11","%cpp -std=gnu++14","-xc"],
     "cquery.compilationDatabaseDirectory":   "",
-    "cquery.workspaceSymbol":                 {"maxNum":500000, "sort":true}
+    "cquery.workspaceSymbol":                 {"maxNum":500000, "sort":true},
+    "Xref":{"container" : false, "maxNum":100}
 
 
 }

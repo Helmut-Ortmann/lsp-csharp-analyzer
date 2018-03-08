@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -70,8 +70,11 @@ namespace LspAnalyzer
             this.hoverToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signitureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.referencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.highlightInDocumentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cQueryCallersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.usagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.highlightInDocumentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.workspacesWithUsagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabDocumentSymbol = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -132,10 +135,9 @@ namespace LspAnalyzer
             this.filterSpecificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtState = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.usagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.workspacesWithUsagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -222,14 +224,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle1;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -519,16 +521,17 @@ namespace LspAnalyzer
             this.cQueryCallersToolStripMenuItem,
             this.usagesToolStripMenuItem,
             this.highlightInDocumentToolStripMenuItem,
+            this.toolStripSeparator7,
             this.workspacesWithUsagesToolStripMenuItem});
             this.contextMenuStripSymbol.Name = "contextMenuStrip1";
-            this.contextMenuStripSymbol.Size = new System.Drawing.Size(212, 208);
+            this.contextMenuStripSymbol.Size = new System.Drawing.Size(250, 214);
             this.toolTip1.SetToolTip(this.contextMenuStripSymbol, "Select the wanted names and Click on Copy Names to Clipboard.\r\n\r\nLSP Manger copie" +
         "s the ordered names to clipboard.");
             // 
             // openImplementationToolStripMenuItem
             // 
             this.openImplementationToolStripMenuItem.Name = "openImplementationToolStripMenuItem";
-            this.openImplementationToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.openImplementationToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.openImplementationToolStripMenuItem.Text = "Open Implementation";
             this.openImplementationToolStripMenuItem.ToolTipText = resources.GetString("openImplementationToolStripMenuItem.ToolTipText");
             this.openImplementationToolStripMenuItem.Click += new System.EventHandler(this.openFileInEditorToolStripMenuItem_Click);
@@ -536,50 +539,72 @@ namespace LspAnalyzer
             // copyFilePathToolStripMenuItem
             // 
             this.copyFilePathToolStripMenuItem.Name = "copyFilePathToolStripMenuItem";
-            this.copyFilePathToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.copyFilePathToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.copyFilePathToolStripMenuItem.Text = "Copy Names to Clipboard";
             this.copyFilePathToolStripMenuItem.Click += new System.EventHandler(this.copyFilePathToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(246, 6);
             // 
             // hoverToolStripMenuItem
             // 
             this.hoverToolStripMenuItem.Name = "hoverToolStripMenuItem";
-            this.hoverToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.hoverToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.hoverToolStripMenuItem.Text = "Hover";
             this.hoverToolStripMenuItem.Click += new System.EventHandler(this.hoverToolStripMenuItem_Click);
             // 
             // signitureToolStripMenuItem
             // 
             this.signitureToolStripMenuItem.Name = "signitureToolStripMenuItem";
-            this.signitureToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.signitureToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.signitureToolStripMenuItem.Text = "Signature";
             this.signitureToolStripMenuItem.Click += new System.EventHandler(this.signitureToolStripMenuItem_Click);
             // 
             // referencesToolStripMenuItem
             // 
             this.referencesToolStripMenuItem.Name = "referencesToolStripMenuItem";
-            this.referencesToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.referencesToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.referencesToolStripMenuItem.Text = "References Global";
             this.referencesToolStripMenuItem.ToolTipText = "Visualize the references of the current symbol";
             this.referencesToolStripMenuItem.Click += new System.EventHandler(this.referencesToolStripMenuItem_Click);
             // 
-            // highlightInDocumentToolStripMenuItem
-            // 
-            this.highlightInDocumentToolStripMenuItem.Name = "highlightInDocumentToolStripMenuItem";
-            this.highlightInDocumentToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.highlightInDocumentToolStripMenuItem.Text = "Highlight in Document";
-            this.highlightInDocumentToolStripMenuItem.Click += new System.EventHandler(this.highlightInDocumentToolStripMenuItem_Click);
-            // 
             // cQueryCallersToolStripMenuItem
             // 
             this.cQueryCallersToolStripMenuItem.Name = "cQueryCallersToolStripMenuItem";
-            this.cQueryCallersToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.cQueryCallersToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
             this.cQueryCallersToolStripMenuItem.Text = "Usage:  Callers/Vars";
             this.cQueryCallersToolStripMenuItem.Click += new System.EventHandler(this.callersToolStripMenuItem_Click);
+            // 
+            // usagesToolStripMenuItem
+            // 
+            this.usagesToolStripMenuItem.Name = "usagesToolStripMenuItem";
+            this.usagesToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.usagesToolStripMenuItem.Text = "Usages";
+            this.usagesToolStripMenuItem.ToolTipText = "Show the usages of:\r\n\r\n- Function\r\n- Variable";
+            this.usagesToolStripMenuItem.Click += new System.EventHandler(this.usagesToolStripMenuItem_Click);
+            // 
+            // highlightInDocumentToolStripMenuItem
+            // 
+            this.highlightInDocumentToolStripMenuItem.Name = "highlightInDocumentToolStripMenuItem";
+            this.highlightInDocumentToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.highlightInDocumentToolStripMenuItem.Text = "Highlight in Document";
+            this.highlightInDocumentToolStripMenuItem.Click += new System.EventHandler(this.highlightInDocumentToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(246, 6);
+            // 
+            // workspacesWithUsagesToolStripMenuItem
+            // 
+            this.workspacesWithUsagesToolStripMenuItem.Name = "workspacesWithUsagesToolStripMenuItem";
+            this.workspacesWithUsagesToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.workspacesWithUsagesToolStripMenuItem.Text = "Workspace Symbols  with Usages";
+            this.workspacesWithUsagesToolStripMenuItem.ToolTipText = "Capture all workspace symbols from the Server. It also captures the count of usag" +
+    "es for every symbol.\r\n\r\nThis takes some time for large amount of symbols.";
+            this.workspacesWithUsagesToolStripMenuItem.Click += new System.EventHandler(this.workspacesWithUsagesToolStripMenuItem_Click);
             // 
             // tabDocumentSymbol
             // 
@@ -1008,8 +1033,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(1090, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -1136,7 +1161,8 @@ namespace LspAnalyzer
             this.lSPSpecificationToolStripMenuItem,
             this.filterSpecificationToolStripMenuItem,
             this.toolStripSeparator4,
-            this.helpToolStripMenuItem1});
+            this.helpToolStripMenuItem1,
+            this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 18);
             this.helpToolStripMenuItem.Text = "Help";
@@ -1197,6 +1223,14 @@ namespace LspAnalyzer
             this.helpToolStripMenuItem1.ToolTipText = "Show Wiki";
             this.helpToolStripMenuItem1.Click += new System.EventHandler(this.helpToolStripMenuItem1_Click);
             // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(233, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.ToolTipText = "About information";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
             // txtState
             // 
             this.txtState.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1205,24 +1239,6 @@ namespace LspAnalyzer
             this.txtState.ReadOnly = true;
             this.txtState.Size = new System.Drawing.Size(1110, 20);
             this.txtState.TabIndex = 12;
-            // 
-            // usagesToolStripMenuItem
-            // 
-            this.usagesToolStripMenuItem.Name = "usagesToolStripMenuItem";
-            this.usagesToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.usagesToolStripMenuItem.Text = "Usages";
-            this.usagesToolStripMenuItem.ToolTipText = "Show the usages of:\r\n\r\n- Function\r\n- Variable";
-            this.usagesToolStripMenuItem.Click += new System.EventHandler(this.usagesToolStripMenuItem_Click);
-            // 
-            // workspacesWithUsagesToolStripMenuItem
-            // 
-            this.workspacesWithUsagesToolStripMenuItem.Name = "workspacesWithUsagesToolStripMenuItem";
-            this.workspacesWithUsagesToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
-            this.workspacesWithUsagesToolStripMenuItem.Text = "Workspaces with Usages";
-            this.workspacesWithUsagesToolStripMenuItem.ToolTipText = "Capture all symbols from the Server and in case of CQUery\r\ninquire the count of u" +
-    "sages for every symbol.\r\n\r\nNote:\r\n\r\nThis takes some time for large amount of sym" +
-    "bols.";
-            this.workspacesWithUsagesToolStripMenuItem.Click += new System.EventHandler(this.workspacesWithUsagesToolStripMenuItem_Click);
             // 
             // LspAnalyzer
             // 
@@ -1383,6 +1399,8 @@ namespace LspAnalyzer
         private System.Windows.Forms.Button btnExampleFilter;
         private System.Windows.Forms.ToolStripMenuItem usagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem workspacesWithUsagesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
 

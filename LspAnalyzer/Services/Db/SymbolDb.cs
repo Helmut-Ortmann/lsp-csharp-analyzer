@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DataModels.Symbols;
@@ -282,7 +283,8 @@ namespace LspAnalyzer.Services.Db
         }
 
         /// <summary>
-        /// Load items from data table
+        /// Load items from data table.
+        /// - Only for Header or C-File
         /// </summary>
         /// <param name="workspace"></param>
         /// <param name="dt"></param>
@@ -294,23 +296,15 @@ namespace LspAnalyzer.Services.Db
 
             {
 
-                // delete all items that are part of the input symbol table
-                var itemsToDelete = (from DataRow g in dt.Rows
-                    //join k in db.CodeItemKinds on g.Field<string>("Kind") equals k.Name
-                    join i in db.CodeItems on g.Field<string>("Name").Trim() equals i.Name.Trim()
-                    where g.Field<string>("Kind") != "File"
-                    select new
-                    {
-                        Name = i.Name,
-                        Id = i.Id
-                    }).ToDataTable();
-
                // all symbols
+               // - kind = files
+               // - only for C/H files
                 var items = from DataRow i in dt.Rows
                     join f in db.Files on Path.Combine(workspace.ToLower().Replace(@"\", "/"), i.Field<string>("File"))
                         .ToLower().Replace(@"\", "/") equals f.Name
                     join k in db.CodeItemKinds on i.Field<string>("Kind") equals k.Name
                     where i.Field<string>("Kind") != "File"
+                    where IsCFile(f.LeafName) || IsHFile(f.LeafName)  // only header and C-Files
                     let position = LspAnalyzerHelper.GetSymbolStartPosition(
                         i.Field<string>("Intern"),
                         i.Field<string>("Name"),
@@ -358,9 +352,9 @@ namespace LspAnalyzer.Services.Db
         }
 
         /// <summary>
-        /// Load function usage
+        /// Load usage for variable and functions
         /// </summary>
-        public async Task<int> LoadFunctionUsage()
+        public async Task<int> LoadUsage()
         {
 
             // create all files
@@ -371,8 +365,6 @@ namespace LspAnalyzer.Services.Db
                 var items = (from item in db.CodeItems
                     join file in db.Files on item.FileId equals file.Id
                     join kind in db.CodeItemKinds on item.Kind equals kind.Id
-                    where kind.Name == "Function" || 
-                          kind.Name == "Macro" || kind.Name == "Enum" || kind.Name == "Field" || kind.Name == "Field" ||kind.Name == "Constant" || kind.Name == "Property"
                     select new 
                     {
 					    Id = item.Id,
@@ -388,41 +380,46 @@ namespace LspAnalyzer.Services.Db
 
                 foreach (var f in items)
                 {
-                    string method = f.ItemKind == "Function" ? @"$cquery/callers" : @"$cquery/vars";
-                    var locations = await _client.TextDocument.Cquery(method, f.FileName, f.NameStartLine, f.NameStartColumn);
-                    foreach (var l in locations)
+                    if (IsCallable(f.ItemKind) ||
+                        IsVars(f.ItemKind))
                     {
-
-
-                        string path = l.Uri.LocalPath.Substring(1).ToLower();
-                        // only consider files with path in workspace
-                        if (f.FileName.Contains(path.ToLower()))
+                        string method = IsCallable(f.ItemKind) ? @"$cquery/callers" : @"$cquery/vars";
+                        var locations =
+                            await _client.TextDocument.Cquery(method, f.FileName, f.NameStartLine, f.NameStartColumn);
+                        foreach (var l in locations)
                         {
-                            // ReSharper disable once UnusedVariable
-                            // Check to use it in inser
-                            if (_dictFile.TryGetValue(path, out int fileId) == false)
+
+
+                            string path = l.Uri.LocalPath.Substring(1).ToLower();
+                            // only consider files with path in workspace
+                            if (f.FileName.Contains(path.ToLower()))
                             {
-                                MessageBox.Show(
-                                    $"path={path}\r\nmethod={method}\r\nkind={f.ItemKind}\r\nitem={f.ItemName}",
-                                    "Cant find file id");
-                                continue;
+                                // ReSharper disable once UnusedVariable
+                                // Check to use it in insert
+                                if (_dictFile.TryGetValue(path, out int fileId) == false)
+                                {
+                                    MessageBox.Show(
+                                        $"path={path}\r\nmethod={method}\r\nkind={f.ItemKind}\r\nitem={f.ItemName}",
+                                        "Cant find file id");
+                                    continue;
+                                }
+
+                                db.Insert<CodeItemUsages>(new CodeItemUsages
+                                {
+                                    CodeItemId = f.Id,
+                                    FileId = _dictFile[path],
+                                    Signature = " ",
+                                    StartColumn = (int) l.Range.Start.Character,
+                                    StartLine = (int) l.Range.Start.Line,
+                                    EndColumn = (int) l.Range.End.Character,
+                                    EndLine = (int) l.Range.End.Line,
+
+
+                                });
+                                countUsages += 1;
                             }
 
-                            db.Insert<CodeItemUsages>(new CodeItemUsages
-                            {
-                                CodeItemId = f.Id,
-                                FileId = _dictFile[path],
-                                Signature = " ",
-                                StartColumn = (int) l.Range.Start.Character,
-                                StartLine = (int) l.Range.Start.Line,
-                                EndColumn = (int) l.Range.End.Character,
-                                EndLine = (int) l.Range.End.Line,
-
-
-                            });
-                            countUsages += 1;
                         }
-
                     }
                 }
                 db.CommitTransaction();
@@ -472,6 +469,38 @@ namespace LspAnalyzer.Services.Db
                 Clipboard.SetText(text);
 
             }
+        }
+        /// <summary>
+        /// Returns true if header file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static bool IsHFile(string file)
+        {
+
+            return Regex.IsMatch(file, @"\.[hp+]*$",RegexOptions.IgnoreCase|RegexOptions.Multiline);
+        }
+        /// <summary>
+        /// Returns true if C/C++ file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static bool IsCFile(string file)
+        {
+
+            return Regex.IsMatch(file, @"\.[cp+]*$",RegexOptions.IgnoreCase|RegexOptions.Multiline);
+        }
+
+
+        public static bool IsCallable(string kind) 
+        {
+           string[] callable = {"Function", "Method","StaticMethod","Constructor"};
+           return  Array.IndexOf(callable, kind) > -1;
+        }
+        public static bool IsVars(string kind) 
+        {
+            string[] vars = {"Enum","EnumMember", "Field","Property","Macro"};
+            return  Array.IndexOf(vars, kind) > -1;
         }
     
 

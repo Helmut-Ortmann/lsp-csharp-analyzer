@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{37
 		BuildCQueryLanguageServer.bat = BuildCQueryLanguageServer.bat
 		LICENSE = LICENSE
 		Setup\Release\LspAnalyzer.msi = Setup\Release\LspAnalyzer.msi
-		Tools\LspAnalyzerRemove.ps1 = Tools\LspAnalyzerRemove.ps1
+		LspAnalyzer\Tools\LspAnalyzerRemove.ps1 = LspAnalyzer\Tools\LspAnalyzerRemove.ps1
 		readme.md = readme.md
 	EndProjectSection
 EndProject

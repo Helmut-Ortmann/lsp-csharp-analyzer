@@ -85,6 +85,18 @@ namespace LspAnalyzer.Settings
         [JsonProperty("WorkspaceDirectory")]
         private string _workspaceDirectory;
 
+        [JsonIgnore]
+        public Xref Xref
+        {
+            get => _xref;
+            set => _xref = value;
+        }
+
+        [JsonProperty(@"Xref")]
+        private Xref _xref;
+
+
+
         [JsonProperty(@"ServerPath")]
         private string _serverPath { get; set; }
 

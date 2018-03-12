@@ -354,11 +354,12 @@ namespace LspAnalyzer.Services.Db
         /// <summary>
         /// Load usage for variable and functions
         /// </summary>
-        public async Task<int> LoadUsage()
+        public async Task<int> LoadUsage(string workspace)
         {
 
-            // create all files
+            // create all usages
             int countUsages = 0;
+            int countIgnoredUsages = 0;
             using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
 
             {
@@ -367,7 +368,7 @@ namespace LspAnalyzer.Services.Db
                     join kind in db.CodeItemKinds on item.Kind equals kind.Id
                     select new 
                     {
-					    Id = item.Id,
+					    ItemId = item.Id,
                         ItemKind = kind.Name,
                         ItemName = item.Name,
                         FileName = file.Name,
@@ -391,22 +392,22 @@ namespace LspAnalyzer.Services.Db
 
 
                             string path = l.Uri.LocalPath.Substring(1).ToLower();
-                            // only consider files with path in workspace
-                            if (f.FileName.Contains(path.ToLower()))
+                            // only consider files with path in workspace and which are C-Files
+                            if (path.Contains(workspace.ToLower()) & IsCFile(path))    // || IsHFile(path)))
                             {
                                 // ReSharper disable once UnusedVariable
                                 // Check to use it in insert
                                 if (_dictFile.TryGetValue(path, out int fileId) == false)
                                 {
                                     MessageBox.Show(
-                                        $"path={path}\r\nmethod={method}\r\nkind={f.ItemKind}\r\nitem={f.ItemName}",
+                                        $"path='{path}'\r\n\r\nmethod='{method}'\r\nkind='{f.ItemKind}'\r\nitem='{f.ItemName}'",
                                         "Cant find file id");
                                     continue;
                                 }
 
                                 db.Insert<CodeItemUsages>(new CodeItemUsages
                                 {
-                                    CodeItemId = f.Id,
+                                    CodeItemId = f.ItemId,
                                     FileId = _dictFile[path],
                                     Signature = " ",
                                     StartColumn = (int) l.Range.Start.Character,
@@ -417,8 +418,8 @@ namespace LspAnalyzer.Services.Db
 
                                 });
                                 countUsages += 1;
-                            }
-
+                            } else
+                                countIgnoredUsages += 1;
                         }
                     }
                 }
@@ -447,7 +448,7 @@ namespace LspAnalyzer.Services.Db
                         //Id = grp.Max(x => x.Id),
                         //Count = grp.Count()
 
-                string part1 = String.Join("\r\n", itemMetrics);
+                string metricSymbols = String.Join("\r\n", itemMetrics);
 
                 var itemUsageMetrics = from func in db.CodeItems
                     join k1 in db.CodeItemKinds on func.Kind equals k1.Id
@@ -461,9 +462,9 @@ namespace LspAnalyzer.Services.Db
                     //    Id = $"{grp.Max(x => x.Id)}",
                     //    Count = $"{grp.Count(),1:N0}"
                     //};
-                string part2 = String.Join("\r\n", itemUsageMetrics);
+                string metricUsage = String.Join("\r\n", itemUsageMetrics);
 
-                string text = $"  Kind\tId\tCount\r\n{part1}\r\n\r\n\t\tUsage Count\r\n{part2}";
+                string text = $"  Count\tId\tKind\r\n{metricSymbols}\r\n\r\n\t\tUsage Count\r\n{metricUsage}";
 
                 MessageBox.Show(text, "Code Metrics, see also Clipboard");
                 Clipboard.SetText(text);

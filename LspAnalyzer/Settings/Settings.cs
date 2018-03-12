@@ -92,4 +92,5 @@ You find a backup of the current settings in: '{_settingsBackupPath}':
             set => _settingsBackupPath = value;
         }
     }
+
 }

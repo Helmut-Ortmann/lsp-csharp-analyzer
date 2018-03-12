@@ -1129,10 +1129,12 @@ namespace LspAnalyzer
             txtState.Text = "";
 
             var timeMeasurement = new TimeMeasurement();
+
             SymbolDb symbolDb = new SymbolDb(_dbSymbolPath, _client);
+            symbolDb.Create();
             symbolDb.LoadFiles(_settings.SettingsItem.WorkspaceDirectory);
             var countItems = symbolDb.LoadItems(_settings.SettingsItem.WorkspaceDirectory, _dtSymbols);
-            var countItemUsages = await symbolDb.LoadUsage();
+            var countItemUsages = await symbolDb.LoadUsage(_settings.SettingsItem.WorkspaceDirectory);
             btnGenerateSymbols.Enabled = true;
             txtState.Text =
                 $"Duration: {timeMeasurement.TimeSpanAsString()}, Loaded symbols: {countItems,8:N0}, Loaded usages: {countItemUsages,8:N0}";

@@ -19,7 +19,8 @@
     // see: CQuery config.h and in the wiki (https://github.com/cquery-project/cquery/wiki)
     "cquery.launch.args":                   ["--log-file"],
     "cquery.cacheDirectory":                "d:/temp/CQuery2/",
-    "cquery.resourceDirectory" :             "../lib/LLVM-5.0.1-win64/lib/clang/5.0.1/" ,
+    //"cquery.resourceDirectory" :             "../lib/LLVM-5.0.1-win64/lib/clang/5.0.1/" ,
+    "cquery.resourceDirectory" :             "../lib/LLVM-6.0.0-win64/lib/clang/6.0.0/" ,
     "cquery.extraClangArguments" :           ["%clang","%c -std=gnu11","%cpp -std=gnu++14","-xc"],
     "cquery.compilationDatabaseDirectory":   "",
     "cquery.workspaceSymbol":                 {"maxNum":500000, "sort":true},

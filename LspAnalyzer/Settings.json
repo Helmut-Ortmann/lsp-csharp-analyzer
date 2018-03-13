@@ -14,6 +14,11 @@
     "ServerPath" :                           "d:/hoData/Development/GitHub/LSP/cquery2/build/release/bin/cquery.exe",
     "ServerLogFile" :                        "d:/temp/CQuery.log", 
     "ClientLogFile" :                        "d:/temp/lspSampleClient.log", 
+    "SymbolKindList" :                       ["File","Module","Namespace","Package","Class","Method","Property","Field","Constructor",
+                                             "Enum","Method","Function","Variable","Constant","String","Number","Boolean",
+                                              "Array","Object","Key","Null","EnumMember", "Struct","Event","Operator","TypeParameter",
+                                              "TypeAlias", "StaticMethod", "Macro"
+                                             ],
     //
     // CQuery parameters (same as used in VS Code, no calculated parameters)
     // see: CQuery config.h and in the wiki (https://github.com/cquery-project/cquery/wiki)
@@ -25,6 +30,9 @@
     "cquery.compilationDatabaseDirectory":   "",
     "cquery.workspaceSymbol":                 {"maxNum":500000, "sort":true},
     "Xref":{"container" : false, "maxNum":100}
+
+
+   
 
 
 }

@@ -66,6 +66,12 @@ namespace LspAnalyzer.Settings
             set => _cqueryExtraClangArguments = value;
         }
         [JsonIgnore]
+        public List<string> SymbolKindList
+        {
+            get => _symbolKindList ?? new List<string>() ;
+            set => _symbolKindList = value;
+        }
+        [JsonIgnore]
         public string CqueryCompilationDatabaseDirectory
         {
             get => _cqueryCompilationDatabaseDirectory;
@@ -104,6 +110,8 @@ namespace LspAnalyzer.Settings
         private string _serverLogFile { get; set; }
         [JsonProperty(@"ClientLogFile")]
         private string _clientLogFile { get; set; }
+        [JsonProperty(@"SymbolKindList")]
+        private List<string> _symbolKindList { get; set; }
 
         // Cquery specific
         [JsonProperty(@"cquery.launch.args")]

@@ -362,13 +362,12 @@ namespace LspAnalyzer
 
             // reset any filter
 
-
-
             // Request Symbol from server
             SymbolInformationContainer symbols = await _client.Workspace.Symbol(symbol);
 
             int i  = 0;
             _dtSymbols = (from rec in symbols
+                    join s in _settings.SettingsItem.SymbolKindList on rec.Kind.ToString() equals s
                     where  rec.Location.Uri.LocalPath.ToLower().Contains(_settings.SettingsItem.WorkspaceDirectory.ToLower()) // only symbols of the workspace
                     where  SymbolDb.IsCFile(rec.Location.Uri.LocalPath) || SymbolDb.IsHFile(rec.Location.Uri.LocalPath)
                           

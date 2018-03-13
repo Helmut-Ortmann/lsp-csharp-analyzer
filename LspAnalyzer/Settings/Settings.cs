@@ -85,7 +85,6 @@ You find a backup of the current settings in: '{_settingsBackupPath}':
             get => _settingsFacturyPath;
             set => _settingsFacturyPath = value;
         }
-
         public string SettingsBackUpPath
         {
             get => _settingsBackupPath;

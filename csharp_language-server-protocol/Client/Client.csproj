@@ -2,9 +2,10 @@
 
   <PropertyGroup>
         <TargetFrameworks>netstandard2.0</TargetFrameworks>
-        <PlatformTarget>AnyCPU</PlatformTarget>
+        <PlatformTarget>x64</PlatformTarget>
         <AssemblyName>OmniSharp.Extensions.LanguageClient</AssemblyName>
         <RootNamespace>OmniSharp.Extensions.LanguageServer.Client</RootNamespace>
+        <Platforms>AnyCPU;x64</Platforms>
     </PropertyGroup>
 
     <ItemGroup>

@@ -120,9 +120,6 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>181, 17</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>181, 17</value>
-  </metadata>
   <data name="label3.ToolTip" xml:space="preserve">
     <value>Filter "Name" of Symbol:
 - 'myNameFilter'
@@ -204,6 +201,16 @@ For VS Code:
   <metadata name="contextMenuReference.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>583, 17</value>
   </metadata>
+  <data name="label13.ToolTip" xml:space="preserve">
+    <value>The symbol to load from Workspaceor
+Path to estimate the Interfaces (Provided/Required).
+
+Path for Provided/Required Interface:
+Full path or the relative path in workspace.
+
+Symbol:
+The part of the symbol you want to search for</value>
+  </data>
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>278, 17</value>
   </metadata>

@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -100,11 +100,11 @@ namespace LspAnalyzer
             this.grdReferences = new System.Windows.Forms.DataGridView();
             this.btnGenerateSymbols = new System.Windows.Forms.Button();
             this.btnCreateSSQLiteDB = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.btnInterface = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tblGui = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.btnDocumentSymbol = new System.Windows.Forms.Button();
-            this.label13 = new System.Windows.Forms.Label();
             this.tabDocument = new System.Windows.Forms.TabControl();
             this.tabClientCapability = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -114,6 +114,14 @@ namespace LspAnalyzer
             this.txtClientCapabilitiesValue = new System.Windows.Forms.TextBox();
             this.txtClientCapabilitiesName = new System.Windows.Forms.TextBox();
             this.grdClientCapabilities = new System.Windows.Forms.DataGridView();
+            this.tabProvided = new System.Windows.Forms.TabPage();
+            this.tableLayoutProvided = new System.Windows.Forms.TableLayoutPanel();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.grdProvidedFeatures = new System.Windows.Forms.DataGridView();
+            this.tabRequired = new System.Windows.Forms.TabPage();
+            this.tableLayoutRequired = new System.Windows.Forms.TableLayoutPanel();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.grdRequiredFeatures = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -138,15 +146,6 @@ namespace LspAnalyzer
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtState = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.tabProvided = new System.Windows.Forms.TabPage();
-            this.tabRequired = new System.Windows.Forms.TabPage();
-            this.tableLayoutProvided = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutRequired = new System.Windows.Forms.TableLayoutPanel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.gridProvided = new System.Windows.Forms.DataGridView();
-            this.gridRequired = new System.Windows.Forms.DataGridView();
-            this.btnInterface = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -172,14 +171,14 @@ namespace LspAnalyzer
             this.tableLayoutPanel4.SuspendLayout();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdClientCapabilities)).BeginInit();
+            this.tabProvided.SuspendLayout();
+            this.tableLayoutProvided.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdProvidedFeatures)).BeginInit();
+            this.tabRequired.SuspendLayout();
+            this.tableLayoutRequired.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdRequiredFeatures)).BeginInit();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.tabProvided.SuspendLayout();
-            this.tabRequired.SuspendLayout();
-            this.tableLayoutProvided.SuspendLayout();
-            this.tableLayoutRequired.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridProvided)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridRequired)).BeginInit();
             this.SuspendLayout();
             // 
             // btnRun
@@ -196,7 +195,7 @@ namespace LspAnalyzer
             // 
             // btnShutDown
             // 
-            this.btnShutDown.Location = new System.Drawing.Point(449, 1);
+            this.btnShutDown.Location = new System.Drawing.Point(332, 1);
             this.btnShutDown.Margin = new System.Windows.Forms.Padding(1);
             this.btnShutDown.Name = "btnShutDown";
             this.btnShutDown.Size = new System.Drawing.Size(75, 23);
@@ -239,14 +238,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle3;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -300,7 +299,7 @@ namespace LspAnalyzer
             // 
             // txtSymbol
             // 
-            this.txtSymbol.Location = new System.Drawing.Point(628, 1);
+            this.txtSymbol.Location = new System.Drawing.Point(511, 1);
             this.txtSymbol.Margin = new System.Windows.Forms.Padding(1);
             this.txtSymbol.Name = "txtSymbol";
             this.txtSymbol.Size = new System.Drawing.Size(473, 20);
@@ -856,7 +855,7 @@ namespace LspAnalyzer
             // 
             // btnGenerateSymbols
             // 
-            this.btnGenerateSymbols.Location = new System.Drawing.Point(302, 1);
+            this.btnGenerateSymbols.Location = new System.Drawing.Point(189, 1);
             this.btnGenerateSymbols.Margin = new System.Windows.Forms.Padding(1);
             this.btnGenerateSymbols.Name = "btnGenerateSymbols";
             this.btnGenerateSymbols.Size = new System.Drawing.Size(64, 23);
@@ -869,7 +868,7 @@ namespace LspAnalyzer
             // 
             // btnCreateSSQLiteDB
             // 
-            this.btnCreateSSQLiteDB.Location = new System.Drawing.Point(290, 1);
+            this.btnCreateSSQLiteDB.Location = new System.Drawing.Point(177, 1);
             this.btnCreateSSQLiteDB.Margin = new System.Windows.Forms.Padding(1);
             this.btnCreateSSQLiteDB.Name = "btnCreateSSQLiteDB";
             this.btnCreateSSQLiteDB.Size = new System.Drawing.Size(10, 23);
@@ -879,6 +878,31 @@ namespace LspAnalyzer
             this.btnCreateSSQLiteDB.UseVisualStyleBackColor = true;
             this.btnCreateSSQLiteDB.Visible = false;
             this.btnCreateSSQLiteDB.Click += new System.EventHandler(this.btnCreateSSQLiteDB_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(428, 2);
+            this.label13.Margin = new System.Windows.Forms.Padding(20, 2, 3, 2);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(79, 15);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "Symbol/Path:";
+            this.toolTip1.SetToolTip(this.label13, resources.GetString("label13.ToolTip"));
+            // 
+            // btnInterface
+            // 
+            this.btnInterface.Location = new System.Drawing.Point(255, 1);
+            this.btnInterface.Margin = new System.Windows.Forms.Padding(1);
+            this.btnInterface.Name = "btnInterface";
+            this.btnInterface.Size = new System.Drawing.Size(75, 23);
+            this.btnInterface.TabIndex = 6;
+            this.btnInterface.Text = "Features";
+            this.toolTip1.SetToolTip(this.btnInterface, "Show the Features of the Path:\r\n- Provided\r\n- Required\r\n\r\nYou can see the the Fea" +
+        "tures (provided/required) of e.g. a Component.");
+            this.btnInterface.UseVisualStyleBackColor = true;
+            this.btnInterface.Click += new System.EventHandler(this.btnFeature_Click);
             // 
             // label2
             // 
@@ -915,7 +939,6 @@ namespace LspAnalyzer
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnRun);
             this.flowLayoutPanel1.Controls.Add(this.btnWsSymbol);
-            this.flowLayoutPanel1.Controls.Add(this.btnDocumentSymbol);
             this.flowLayoutPanel1.Controls.Add(this.btnCreateSSQLiteDB);
             this.flowLayoutPanel1.Controls.Add(this.btnGenerateSymbols);
             this.flowLayoutPanel1.Controls.Add(this.btnInterface);
@@ -928,28 +951,6 @@ namespace LspAnalyzer
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1112, 21);
             this.flowLayoutPanel1.TabIndex = 10;
-            // 
-            // btnDocumentSymbol
-            // 
-            this.btnDocumentSymbol.Location = new System.Drawing.Point(177, 1);
-            this.btnDocumentSymbol.Margin = new System.Windows.Forms.Padding(1);
-            this.btnDocumentSymbol.Name = "btnDocumentSymbol";
-            this.btnDocumentSymbol.Size = new System.Drawing.Size(111, 23);
-            this.btnDocumentSymbol.TabIndex = 1;
-            this.btnDocumentSymbol.Text = "Document Symbol";
-            this.btnDocumentSymbol.UseVisualStyleBackColor = true;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(545, 2);
-            this.label13.Margin = new System.Windows.Forms.Padding(20, 2, 3, 2);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(79, 15);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "Symbol/Path:";
-            this.toolTip1.SetToolTip(this.label13, resources.GetString("label13.ToolTip"));
             // 
             // tabDocument
             // 
@@ -1053,12 +1054,110 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(1090, 233);
             this.grdClientCapabilities.TabIndex = 1;
             this.grdClientCapabilities.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdInterfaces_CellMouseEnter);
+            // 
+            // tabProvided
+            // 
+            this.tabProvided.Controls.Add(this.tableLayoutProvided);
+            this.tabProvided.Location = new System.Drawing.Point(4, 22);
+            this.tabProvided.Name = "tabProvided";
+            this.tabProvided.Padding = new System.Windows.Forms.Padding(3);
+            this.tabProvided.Size = new System.Drawing.Size(1102, 275);
+            this.tabProvided.TabIndex = 5;
+            this.tabProvided.Text = "Provided";
+            this.tabProvided.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutProvided
+            // 
+            this.tableLayoutProvided.ColumnCount = 1;
+            this.tableLayoutProvided.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutProvided.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutProvided.Controls.Add(this.panel8, 0, 0);
+            this.tableLayoutProvided.Controls.Add(this.grdProvidedFeatures, 0, 1);
+            this.tableLayoutProvided.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutProvided.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutProvided.Name = "tableLayoutProvided";
+            this.tableLayoutProvided.RowCount = 2;
+            this.tableLayoutProvided.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutProvided.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutProvided.Size = new System.Drawing.Size(1096, 269);
+            this.tableLayoutProvided.TabIndex = 0;
+            // 
+            // panel8
+            // 
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel8.Location = new System.Drawing.Point(3, 3);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(1090, 24);
+            this.panel8.TabIndex = 0;
+            // 
+            // grdProvidedFeatures
+            // 
+            this.grdProvidedFeatures.AllowUserToAddRows = false;
+            this.grdProvidedFeatures.AllowUserToDeleteRows = false;
+            this.grdProvidedFeatures.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.grdProvidedFeatures.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdProvidedFeatures.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdProvidedFeatures.Location = new System.Drawing.Point(3, 33);
+            this.grdProvidedFeatures.Name = "grdProvidedFeatures";
+            this.grdProvidedFeatures.RowHeadersVisible = false;
+            this.grdProvidedFeatures.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grdProvidedFeatures.Size = new System.Drawing.Size(1090, 233);
+            this.grdProvidedFeatures.TabIndex = 1;
+            // 
+            // tabRequired
+            // 
+            this.tabRequired.Controls.Add(this.tableLayoutRequired);
+            this.tabRequired.Location = new System.Drawing.Point(4, 22);
+            this.tabRequired.Name = "tabRequired";
+            this.tabRequired.Padding = new System.Windows.Forms.Padding(3);
+            this.tabRequired.Size = new System.Drawing.Size(1102, 275);
+            this.tabRequired.TabIndex = 6;
+            this.tabRequired.Text = "Required";
+            this.tabRequired.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutRequired
+            // 
+            this.tableLayoutRequired.ColumnCount = 1;
+            this.tableLayoutRequired.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutRequired.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutRequired.Controls.Add(this.panel7, 0, 0);
+            this.tableLayoutRequired.Controls.Add(this.grdRequiredFeatures, 0, 1);
+            this.tableLayoutRequired.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutRequired.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutRequired.Name = "tableLayoutRequired";
+            this.tableLayoutRequired.RowCount = 2;
+            this.tableLayoutRequired.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutRequired.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutRequired.Size = new System.Drawing.Size(1096, 269);
+            this.tableLayoutRequired.TabIndex = 0;
+            // 
+            // panel7
+            // 
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel7.Location = new System.Drawing.Point(3, 3);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(1090, 24);
+            this.panel7.TabIndex = 0;
+            // 
+            // grdRequiredFeatures
+            // 
+            this.grdRequiredFeatures.AllowUserToAddRows = false;
+            this.grdRequiredFeatures.AllowUserToDeleteRows = false;
+            this.grdRequiredFeatures.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.grdRequiredFeatures.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdRequiredFeatures.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdRequiredFeatures.Location = new System.Drawing.Point(3, 33);
+            this.grdRequiredFeatures.Name = "grdRequiredFeatures";
+            this.grdRequiredFeatures.RowHeadersVisible = false;
+            this.grdRequiredFeatures.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grdRequiredFeatures.Size = new System.Drawing.Size(1090, 233);
+            this.grdRequiredFeatures.TabIndex = 1;
             // 
             // panel1
             // 
@@ -1260,113 +1359,6 @@ namespace LspAnalyzer
             this.txtState.Size = new System.Drawing.Size(1110, 20);
             this.txtState.TabIndex = 12;
             // 
-            // tabProvided
-            // 
-            this.tabProvided.Controls.Add(this.tableLayoutProvided);
-            this.tabProvided.Location = new System.Drawing.Point(4, 22);
-            this.tabProvided.Name = "tabProvided";
-            this.tabProvided.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProvided.Size = new System.Drawing.Size(1102, 275);
-            this.tabProvided.TabIndex = 5;
-            this.tabProvided.Text = "Provided";
-            this.tabProvided.UseVisualStyleBackColor = true;
-            // 
-            // tabRequired
-            // 
-            this.tabRequired.Controls.Add(this.tableLayoutRequired);
-            this.tabRequired.Location = new System.Drawing.Point(4, 22);
-            this.tabRequired.Name = "tabRequired";
-            this.tabRequired.Padding = new System.Windows.Forms.Padding(3);
-            this.tabRequired.Size = new System.Drawing.Size(1102, 275);
-            this.tabRequired.TabIndex = 6;
-            this.tabRequired.Text = "Required";
-            this.tabRequired.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutProvided
-            // 
-            this.tableLayoutProvided.ColumnCount = 1;
-            this.tableLayoutProvided.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutProvided.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutProvided.Controls.Add(this.panel8, 0, 0);
-            this.tableLayoutProvided.Controls.Add(this.gridProvided, 0, 1);
-            this.tableLayoutProvided.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutProvided.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutProvided.Name = "tableLayoutProvided";
-            this.tableLayoutProvided.RowCount = 2;
-            this.tableLayoutProvided.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutProvided.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutProvided.Size = new System.Drawing.Size(1096, 269);
-            this.tableLayoutProvided.TabIndex = 0;
-            // 
-            // tableLayoutRequired
-            // 
-            this.tableLayoutRequired.ColumnCount = 1;
-            this.tableLayoutRequired.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutRequired.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutRequired.Controls.Add(this.panel7, 0, 0);
-            this.tableLayoutRequired.Controls.Add(this.gridRequired, 0, 1);
-            this.tableLayoutRequired.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutRequired.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutRequired.Name = "tableLayoutRequired";
-            this.tableLayoutRequired.RowCount = 2;
-            this.tableLayoutRequired.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutRequired.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutRequired.Size = new System.Drawing.Size(1096, 269);
-            this.tableLayoutRequired.TabIndex = 0;
-            // 
-            // panel7
-            // 
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(3, 3);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1090, 24);
-            this.panel7.TabIndex = 0;
-            // 
-            // panel8
-            // 
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel8.Location = new System.Drawing.Point(3, 3);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(1090, 24);
-            this.panel8.TabIndex = 0;
-            // 
-            // gridProvided
-            // 
-            this.gridProvided.AllowUserToAddRows = false;
-            this.gridProvided.AllowUserToDeleteRows = false;
-            this.gridProvided.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridProvided.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridProvided.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridProvided.Location = new System.Drawing.Point(3, 33);
-            this.gridProvided.Name = "gridProvided";
-            this.gridProvided.RowHeadersVisible = false;
-            this.gridProvided.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridProvided.Size = new System.Drawing.Size(1090, 233);
-            this.gridProvided.TabIndex = 1;
-            // 
-            // gridRequired
-            // 
-            this.gridRequired.AllowUserToAddRows = false;
-            this.gridRequired.AllowUserToDeleteRows = false;
-            this.gridRequired.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridRequired.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridRequired.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridRequired.Location = new System.Drawing.Point(3, 33);
-            this.gridRequired.Name = "gridRequired";
-            this.gridRequired.RowHeadersVisible = false;
-            this.gridRequired.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridRequired.Size = new System.Drawing.Size(1090, 233);
-            this.gridRequired.TabIndex = 1;
-            // 
-            // btnInterface
-            // 
-            this.btnInterface.Location = new System.Drawing.Point(370, 3);
-            this.btnInterface.Name = "btnInterface";
-            this.btnInterface.Size = new System.Drawing.Size(75, 23);
-            this.btnInterface.TabIndex = 6;
-            this.btnInterface.Text = "Interface";
-            this.btnInterface.UseVisualStyleBackColor = true;
-            // 
             // LspAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1412,16 +1404,16 @@ namespace LspAnalyzer
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdClientCapabilities)).EndInit();
+            this.tabProvided.ResumeLayout(false);
+            this.tableLayoutProvided.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdProvidedFeatures)).EndInit();
+            this.tabRequired.ResumeLayout(false);
+            this.tableLayoutRequired.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdRequiredFeatures)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.tabProvided.ResumeLayout(false);
-            this.tabRequired.ResumeLayout(false);
-            this.tableLayoutProvided.ResumeLayout(false);
-            this.tableLayoutRequired.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridProvided)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridRequired)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1450,7 +1442,6 @@ namespace LspAnalyzer
         private System.Windows.Forms.TabPage tabCapabilities;
         private System.Windows.Forms.TabPage tabWsSymbol;
         private System.Windows.Forms.Button btnWsSymbol;
-        private System.Windows.Forms.Button btnDocumentSymbol;
         private System.Windows.Forms.TextBox txtSymbol;
         private System.Windows.Forms.TabPage tabDocumentSymbol;
         private System.Windows.Forms.DataGridView grdWorkspaceSymbols;
@@ -1540,8 +1531,8 @@ namespace LspAnalyzer
         private System.Windows.Forms.TabPage tabRequired;
         private System.Windows.Forms.TableLayoutPanel tableLayoutRequired;
         private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.DataGridView gridProvided;
-        private System.Windows.Forms.DataGridView gridRequired;
+        private System.Windows.Forms.DataGridView grdProvidedFeatures;
+        private System.Windows.Forms.DataGridView grdRequiredFeatures;
         private System.Windows.Forms.Button btnInterface;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -26,6 +27,8 @@ namespace LspAnalyzer.Services.Db
         private Dictionary<int,string> _dictKind = new Dictionary<int,string>();
         private readonly Dictionary<string, int> _dictFile = new Dictionary<string,int>();
 
+        public object dtTable { get; private set; }
+
         public SymbolDb(string dbPath, LanguageClient client)
         {
             _dbPath = dbPath;
@@ -33,6 +36,15 @@ namespace LspAnalyzer.Services.Db
             _connectionString = LinqUtil.GetConnectionString(dbPath, out _dbProvider);
            
 
+        }
+
+        public bool IsValid()
+        {
+            return System.IO.File.Exists(_dbPath);
+        }
+        public bool IsInitialized()
+        {
+            return IsValid()  && (new System.IO.FileInfo(_dbPath).Length > 1000) ;
         }
         /// <summary>
         /// Create Database
@@ -472,6 +484,114 @@ namespace LspAnalyzer.Services.Db
             }
         }
         /// <summary>
+        /// Output metrics of Code
+        /// </summary>
+        public DataTable GenProvidedFeatures(string componentPath)
+        {
+
+            componentPath = NormalizePath(componentPath);
+            string[] lKind = { "Function","Macro","Field","EnumMember","Struct","Method","TypeAlias","All"}; // "All for all types
+            using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
+            {
+
+                try
+                {
+                    var providedItemsHelp = (from reqItem in db.CodeItemUsages
+                        join reqFile in db.Files on reqItem.FileId equals reqFile.Id
+                        join item in db.CodeItems on reqItem.Id equals item.Id
+                        join kind in db.CodeItemKinds on item.Kind equals kind.Id
+                        join file in db.Files on item.FileId equals file.Id
+                        where file.Name.StartsWith(componentPath)
+                        where ! reqFile.Name.StartsWith(componentPath)
+                        where kind.Name == "Macro" && ! (item.Name.EndsWith("_H") || item.Name.EndsWith("_C"))
+                        orderby item.Name.ToLower(), kind
+                        select new
+                        {
+                            ProvidedItem = item.Name,
+                            ProvidedFile = file.LeafName,
+                            Kind = kind.Name,
+                            CalleeFile = reqFile.LeafName,
+                            CalleePath = reqFile.Name
+							
+                        }).ToArray();
+                    // Check for item kinds, it's possible to use "ALL"
+                    var providedItemsHelp2 = from item in providedItemsHelp
+                        join possibleKinds in lKind on item.Kind equals possibleKinds
+                        select item;
+                    if (lKind.Contains("All")) {
+                        providedItemsHelp2 = from item in providedItemsHelp
+                            select item;
+                    }
+                    return  providedItemsHelp2.ToDataTable();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"SQLite: '{_connectionString}'\r\nPath: '{componentPath}'\r\n\r\n{e}","SQL errors find provided Features");
+                    return new DataTable();
+                }
+
+               
+
+            }
+           
+
+        }
+
+        /// <summary>
+        /// Output metrics of Code
+        /// </summary>
+        public DataTable GenRequiredFeatures(string componentPath )
+        {
+
+            componentPath = NormalizePath(componentPath);
+            string[] lKind =
+            {
+                "Function", "Macro", "Field", "EnumMember", "Struct", "Method", "TypeAlias", "All"
+            }; // "All for all types
+            using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
+            {
+                try
+                {
+                    var requiredItemsHelp = (from reqItem in db.CodeItemUsages
+                        join reqFile in db.Files on reqItem.FileId equals reqFile.Id
+                        join item in db.CodeItems on reqItem.Id equals item.Id
+                        join kind in db.CodeItemKinds on item.Kind equals kind.Id
+                        join file in db.Files on item.FileId equals file.Id
+                        where ! file.Name.StartsWith(componentPath)
+                        where reqFile.Name.StartsWith(componentPath)
+                        where kind.Name == "Macro" && ! (item.Name.EndsWith("_H") || item.Name.EndsWith("_C"))
+                        orderby item.Name.ToLower(), kind
+                        select new
+                        {
+                            RequiredItem = item.Name,
+                            RequiredFile = file.LeafName,
+                            Kind = kind.Name,
+                            CalleeFile = reqFile.LeafName,
+                            CalleePath = reqFile.Name
+							
+                        }).ToArray();
+                    // Check for item kinds, it's possible to use "ALL"
+                    var requiredItemsHelp2 = from item in requiredItemsHelp
+                        join possibleKinds in lKind on item.Kind equals possibleKinds
+                        select item;
+                    if (lKind.Contains("All")) {
+                        requiredItemsHelp2 = from item in requiredItemsHelp
+                            select item;
+                    }
+                    return  requiredItemsHelp2.ToDataTable();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"SQLite: '{_connectionString}'\r\nPath: '{componentPath}'\r\n\r\n{e}","SQL errors find provided Features");
+                    return new DataTable();
+                }
+            }
+
+            return new DataTable();
+        }
+
+
+        /// <summary>
         /// Returns true if header file
         /// </summary>
         /// <param name="file"></param>
@@ -520,6 +640,15 @@ namespace LspAnalyzer.Services.Db
             }
 
             return true;
+        }
+        /// <summary>
+        /// Normalize path string to slash and lower cases.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private string NormalizePath(string path)
+        {
+            return path.Replace(@"\", "/").ToLower();
         }
     }
 }

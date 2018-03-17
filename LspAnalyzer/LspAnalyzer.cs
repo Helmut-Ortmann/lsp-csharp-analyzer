@@ -37,19 +37,24 @@ namespace LspAnalyzer
         readonly BindingSource _bsReferences = new BindingSource();
         readonly BindingSource _bsHighlight = new BindingSource();
 
+        readonly BindingSource _bsProvidedFeatures = new BindingSource();
+        readonly BindingSource _bsRequiredFeatures = new BindingSource();
+
         private AggregateGridFilter _aggregateFilterSymbol;
         private AggregateGridFilter _aggregateFilterServerCapabilities;
         private AggregateGridFilter _aggregateFilterClientCapabilities;
 
 
-
+        DataTable _dtProvidedFeatures = new DataTable();
+        DataTable _dtRequiredFeatures = new DataTable();
         DataTable _dtServerCapabilities = new DataTable();
         DataTable _dtClientCapabilities = new DataTable();
         DataTable _dtSymbols = new DataTable();
         readonly DataTable _dtReferences = new DataTable();
         DataTable _dtHighlight = new DataTable();
 
-        private string _dbSymbolPath = @"c:\temp\DbSymbol.sqlite";
+        
+        //private string _dbSymbolPath = @"c:\temp\DbSymbol.sqlite";
 
 
         private ProcessStartInfo _lspServerProcessStartInfo;
@@ -1129,7 +1134,7 @@ namespace LspAnalyzer
 
             var timeMeasurement = new TimeMeasurement();
 
-            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath, _client);
+            SymbolDb symbolDb = new SymbolDb(_settings.SettingsItem.SqLiteDatabasePath, _client);
             symbolDb.Create();
             symbolDb.LoadFiles(_settings.SettingsItem.WorkspaceDirectory);
             var countItems = symbolDb.LoadItems(_settings.SettingsItem.WorkspaceDirectory, _dtSymbols);
@@ -1140,7 +1145,7 @@ namespace LspAnalyzer
             Cursor.Current = Cursors.Default;
 
             MessageBox.Show(
-                $"SymbolDB='{_dbSymbolPath}'\r\nWorkspace='{_settings.SettingsItem.WorkspaceDirectory}'\r\nLoaded symbols:\t{countItems,8:N0}\r\nLoaded usages:\t{countItemUsages,8:N0}\r\n\r\n in {timeMeasurement.TimeSpanAsString()}",
+                $"SymbolDB='{_settings.SettingsItem.SqLiteDatabasePath}'\r\nWorkspace='{_settings.SettingsItem.WorkspaceDirectory}'\r\nLoaded symbols:\t{countItems,8:N0}\r\nLoaded usages:\t{countItemUsages,8:N0}\r\n\r\n in {timeMeasurement.TimeSpanAsString()}",
                 "Symbols, usages wrote to SQL");
         }
 
@@ -1154,10 +1159,10 @@ namespace LspAnalyzer
 
             var timeMeasurement = new TimeMeasurement();
             Cursor.Current = Cursors.WaitCursor;
-            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath, _client);
+            SymbolDb symbolDb = new SymbolDb(_settings.SettingsItem.SqLiteDatabasePath, _client);
             symbolDb.Create();
             Cursor.Current = Cursors.Default;
-            MessageBox.Show($"SymbolDB='{_dbSymbolPath}'\r\nDuration: {timeMeasurement.TimeSpanAsString()}",
+            MessageBox.Show($"SymbolDB='{_settings.SettingsItem.SqLiteDatabasePath}'\r\nDuration: {timeMeasurement.TimeSpanAsString()}",
                 "SymbolDB created");
 
         }
@@ -1192,7 +1197,7 @@ namespace LspAnalyzer
 
         private void sQLOverviewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SymbolDb symbolDb = new SymbolDb(_dbSymbolPath, _client);
+            SymbolDb symbolDb = new SymbolDb(_settings.SettingsItem.SqLiteDatabasePath, _client);
             symbolDb.Metrics();
 
         }
@@ -1267,6 +1272,85 @@ namespace LspAnalyzer
             };
 
             About.AboutMessage("LSP Analyzer", "Get most of your code", dllNames, pathSettings: _settings.SettingsPath);
+        }
+
+        /// <summary>
+        /// Show Provided and required features of the given path
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFeature_Click(object sender, EventArgs e)
+        {
+            
+            // probably to much to show
+            string compPath = txtSymbol.Text;
+            if (String.IsNullOrWhiteSpace(compPath))
+            {
+                if (MessageBox.Show("You have entered an empty path to your component to analyze.\r\n\r\nThere may be a lot of results and it may take some time.\r\n\r\nDo you want to continue?", "Empty path to component, Break?", MessageBoxButtons.OKCancel) != DialogResult.OK)
+                    return;
+            }
+            // Make an absolute path and check if valid path
+            if (Path.IsPathRooted(compPath))
+            {
+
+            }
+            else
+            {
+                compPath = Path.Combine(_settings.SettingsItem.WorkspaceDirectory, compPath);
+            }
+
+            if (!(Directory.Exists(compPath) || File.Exists(compPath)))
+            {
+                MessageBox.Show($"File/Directory '{compPath}' doesn't exists.\r\nYou can enter an absolute or relative path to workspace '{_settings.SettingsItem.WorkspaceDirectory}'.", "File/Directory doesn't exists");
+                return;
+            }
+           
+            SymbolDb symbolDb = new SymbolDb(_settings.SettingsItem.SqLiteDatabasePath, _client);
+            if (! symbolDb.IsInitialized())
+            {
+                MessageBox.Show(
+                    $"The symbol db '{_settings.SettingsItem.SqLiteDatabasePath}' is empty",
+                    "Empty Symbol DB, Break?");
+                    return;
+            }
+            var timeMeasurement = new TimeMeasurement();
+            Cursor.Current = Cursors.WaitCursor;
+            btnInterface.Enabled = false;
+            txtState.Text = "";
+
+
+            _dtProvidedFeatures = symbolDb.GenProvidedFeatures(compPath );
+            _dtRequiredFeatures = symbolDb.GenRequiredFeatures(compPath  );
+
+
+            _bsProvidedFeatures.DataSource = _dtProvidedFeatures;
+            grdProvidedFeatures.DataSource = _bsProvidedFeatures;
+            _bsRequiredFeatures.DataSource = _dtRequiredFeatures;
+            grdRequiredFeatures.DataSource = _bsRequiredFeatures;
+
+            tabDocument.SelectedTab = tabProvided;
+
+            //if (grdProvidedFeatures.ColumnCount > 2) {
+            //    grdProvidedFeatures.Columns[0].Width = 100; 
+            //    grdProvidedFeatures.Columns[1].Width = 200; 
+            //}
+            //tabDocument.SelectedTab = tabRequired;
+            //if (grdRequiredFeatures.ColumnCount > 2)
+            //{
+            //    grdRequiredFeatures.Columns[0].Width = 100;
+            //    grdRequiredFeatures.Columns[1].Width = 200;
+            //}
+
+            btnInterface.Enabled = true;
+           
+            txtState.Text =
+                $"Duration: {timeMeasurement.TimeSpanAsString()}, Loaded provided/required features for '{compPath}': Required: {_dtProvidedFeatures.Rows.Count,8:N0}, Loaded usages: {_dtRequiredFeatures.Rows.Count,8:N0}";
+            
+        }
+
+        private void btnDocumentSymbol_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

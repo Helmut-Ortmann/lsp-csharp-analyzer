@@ -44,6 +44,9 @@ namespace LspAnalyzer
         private AggregateGridFilter _aggregateFilterServerCapabilities;
         private AggregateGridFilter _aggregateFilterClientCapabilities;
 
+        private AggregateGridFilter _aggregateFilterProvidedFeatures;    
+        private AggregateGridFilter _aggregateFilterRequiredFeatures;
+
 
         DataTable _dtProvidedFeatures = new DataTable();
         DataTable _dtRequiredFeatures = new DataTable();
@@ -314,6 +317,21 @@ namespace LspAnalyzer
                 new List<string>() {"Name", "Value"},
                 new List<TextBox>(new[] {txtClientCapabilitiesName, txtClientCapabilitiesValue})
             );
+            _aggregateFilterProvidedFeatures = new AggregateGridFilter(
+                _bsProvidedFeatures,
+                new List<string>() {"ProvidedItem", "ProvidedFile", "Kind", "CalleeFile", "CalleePath"},
+                new List<TextBox>(new[] {txtProvidedItem, txtProvidedFile, txtProvidedKind, txtProvidedCalleeFile,txtProvidedCalleePath})
+            );
+            _aggregateFilterRequiredFeatures = new AggregateGridFilter(
+                _bsRequiredFeatures,
+                new List<string>() {"RequiredItem", "RequiredFile", "Kind", "CalleeFile", "CalleePath"},
+                new List<TextBox>(new[] {txtRequiredItem, txtRequiredCalleePath, txtRequiredKind, txtRequiredCalleeFile,txtRequiredCalleePath})
+            );
+
+
+
+
+
             new AggregateGridFilter(
                 _bsHighlight,
                 new List<string>() {"Kind"},
@@ -1274,6 +1292,25 @@ namespace LspAnalyzer
             About.AboutMessage("LSP Analyzer", "Get most of your code", dllNames, pathSettings: _settings.SettingsPath);
         }
 
+
+        private void txtProvidedFeature_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char) Keys.Enter)
+            {
+                _aggregateFilterProvidedFeatures.FilterGrid();
+                e.Handled = true;
+            }
+        }
+        
+        private void txtRequiredFeature_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char) Keys.Enter)
+            {
+                _aggregateFilterRequiredFeatures.FilterGrid();
+                e.Handled = true;
+            }
+        }
+
         /// <summary>
         /// Show Provided and required features of the given path
         /// </summary>
@@ -1317,6 +1354,8 @@ namespace LspAnalyzer
             Cursor.Current = Cursors.WaitCursor;
             btnInterface.Enabled = false;
             txtState.Text = "";
+            _aggregateFilterProvidedFeatures.FilterReset();
+            _aggregateFilterRequiredFeatures.FilterReset();
 
 
             _dtProvidedFeatures = symbolDb.GenProvidedFeatures(compPath );
@@ -1344,11 +1383,16 @@ namespace LspAnalyzer
             btnInterface.Enabled = true;
            
             txtState.Text =
-                $"Duration: {timeMeasurement.TimeSpanAsString()}, Loaded provided/required features for '{compPath}': Required: {_dtProvidedFeatures.Rows.Count,8:N0}, Loaded usages: {_dtRequiredFeatures.Rows.Count,8:N0}";
+                $"Duration: {timeMeasurement.TimeSpanAsString()}, Loaded provided/required features for '{compPath}': Provided features: {_dtProvidedFeatures.Rows.Count,8:N0}, Required features: {_dtRequiredFeatures.Rows.Count,8:N0}";
             
         }
 
         private void btnDocumentSymbol_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label22_Click(object sender, EventArgs e)
         {
 
         }

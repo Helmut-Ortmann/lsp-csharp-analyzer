@@ -503,7 +503,7 @@ namespace LspAnalyzer.Services.Db
                         join file in db.Files on item.FileId equals file.Id
                         where file.Name.StartsWith(componentPath)
                         where ! reqFile.Name.StartsWith(componentPath)
-                        where kind.Name == "Macro" && ! (item.Name.EndsWith("_H") || item.Name.EndsWith("_C"))
+                        where kind.Name != "Macro" || (kind.Name == "Macro" && ! (item.Name.EndsWith("_H") || item.Name.EndsWith("_C")))
                         orderby item.Name.ToLower(), kind
                         select new
                         {
@@ -559,7 +559,7 @@ namespace LspAnalyzer.Services.Db
                         join file in db.Files on item.FileId equals file.Id
                         where ! file.Name.StartsWith(componentPath)
                         where reqFile.Name.StartsWith(componentPath)
-                        where kind.Name == "Macro" && ! (item.Name.EndsWith("_H") || item.Name.EndsWith("_C"))
+                        where kind.Name != "Macro" || (kind.Name == "Macro" && ! (item.Name.EndsWith("_H") || item.Name.EndsWith("_C")))
                         orderby item.Name.ToLower(), kind
                         select new
                         {

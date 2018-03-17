@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -117,10 +117,30 @@ namespace LspAnalyzer
             this.tabProvided = new System.Windows.Forms.TabPage();
             this.tableLayoutProvided = new System.Windows.Forms.TableLayoutPanel();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtProvidedCalleePath = new System.Windows.Forms.TextBox();
+            this.txtProvidedCalleeFile = new System.Windows.Forms.TextBox();
+            this.txtProvidedKind = new System.Windows.Forms.TextBox();
+            this.txtProvidedFile = new System.Windows.Forms.TextBox();
+            this.txtProvidedItem = new System.Windows.Forms.TextBox();
             this.grdProvidedFeatures = new System.Windows.Forms.DataGridView();
             this.tabRequired = new System.Windows.Forms.TabPage();
             this.tableLayoutRequired = new System.Windows.Forms.TableLayoutPanel();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.txtRequiredCalleePath = new System.Windows.Forms.TextBox();
+            this.txtRequiredCalleeFile = new System.Windows.Forms.TextBox();
+            this.txtRequiredKind = new System.Windows.Forms.TextBox();
+            this.txtRequiredFile = new System.Windows.Forms.TextBox();
+            this.txtRequiredItem = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.grdRequiredFeatures = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -173,9 +193,11 @@ namespace LspAnalyzer
             ((System.ComponentModel.ISupportInitialize)(this.grdClientCapabilities)).BeginInit();
             this.tabProvided.SuspendLayout();
             this.tableLayoutProvided.SuspendLayout();
+            this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdProvidedFeatures)).BeginInit();
             this.tabRequired.SuspendLayout();
             this.tableLayoutRequired.SuspendLayout();
+            this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdRequiredFeatures)).BeginInit();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -238,14 +260,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle5;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -1054,8 +1076,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(1090, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -1090,11 +1112,111 @@ namespace LspAnalyzer
             // 
             // panel8
             // 
+            this.panel8.Controls.Add(this.label18);
+            this.panel8.Controls.Add(this.label17);
+            this.panel8.Controls.Add(this.label16);
+            this.panel8.Controls.Add(this.label15);
+            this.panel8.Controls.Add(this.label14);
+            this.panel8.Controls.Add(this.txtProvidedCalleePath);
+            this.panel8.Controls.Add(this.txtProvidedCalleeFile);
+            this.panel8.Controls.Add(this.txtProvidedKind);
+            this.panel8.Controls.Add(this.txtProvidedFile);
+            this.panel8.Controls.Add(this.txtProvidedItem);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(3, 3);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(1090, 24);
             this.panel8.TabIndex = 0;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(789, 5);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(70, 15);
+            this.label18.TabIndex = 1;
+            this.label18.Text = "CalleePath:";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(572, 3);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(65, 15);
+            this.label17.TabIndex = 1;
+            this.label17.Text = "CalleeFile:";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(451, 4);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(35, 15);
+            this.label16.TabIndex = 1;
+            this.label16.Text = "Kind:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(237, 6);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(78, 15);
+            this.label15.TabIndex = 1;
+            this.label15.Text = "ProvidedFile:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(5, 4);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(82, 15);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "ProvidedItem:";
+            // 
+            // txtProvidedCalleePath
+            // 
+            this.txtProvidedCalleePath.Location = new System.Drawing.Point(865, 4);
+            this.txtProvidedCalleePath.Name = "txtProvidedCalleePath";
+            this.txtProvidedCalleePath.Size = new System.Drawing.Size(222, 20);
+            this.txtProvidedCalleePath.TabIndex = 0;
+            this.txtProvidedCalleePath.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
+            // 
+            // txtProvidedCalleeFile
+            // 
+            this.txtProvidedCalleeFile.Location = new System.Drawing.Point(655, 1);
+            this.txtProvidedCalleeFile.Name = "txtProvidedCalleeFile";
+            this.txtProvidedCalleeFile.Size = new System.Drawing.Size(128, 20);
+            this.txtProvidedCalleeFile.TabIndex = 0;
+            this.txtProvidedCalleeFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
+            // 
+            // txtProvidedKind
+            // 
+            this.txtProvidedKind.Location = new System.Drawing.Point(492, 1);
+            this.txtProvidedKind.Name = "txtProvidedKind";
+            this.txtProvidedKind.Size = new System.Drawing.Size(74, 20);
+            this.txtProvidedKind.TabIndex = 0;
+            this.txtProvidedKind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
+            // 
+            // txtProvidedFile
+            // 
+            this.txtProvidedFile.Location = new System.Drawing.Point(321, 2);
+            this.txtProvidedFile.Name = "txtProvidedFile";
+            this.txtProvidedFile.Size = new System.Drawing.Size(128, 20);
+            this.txtProvidedFile.TabIndex = 0;
+            this.txtProvidedFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
+            // 
+            // txtProvidedItem
+            // 
+            this.txtProvidedItem.Location = new System.Drawing.Point(89, 4);
+            this.txtProvidedItem.Name = "txtProvidedItem";
+            this.txtProvidedItem.Size = new System.Drawing.Size(142, 20);
+            this.txtProvidedItem.TabIndex = 0;
+            this.txtProvidedItem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
             // 
             // grdProvidedFeatures
             // 
@@ -1139,11 +1261,122 @@ namespace LspAnalyzer
             // 
             // panel7
             // 
+            this.panel7.Controls.Add(this.txtRequiredCalleePath);
+            this.panel7.Controls.Add(this.txtRequiredCalleeFile);
+            this.panel7.Controls.Add(this.txtRequiredKind);
+            this.panel7.Controls.Add(this.txtRequiredFile);
+            this.panel7.Controls.Add(this.txtRequiredItem);
+            this.panel7.Controls.Add(this.label23);
+            this.panel7.Controls.Add(this.label22);
+            this.panel7.Controls.Add(this.label21);
+            this.panel7.Controls.Add(this.label20);
+            this.panel7.Controls.Add(this.label19);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel7.Location = new System.Drawing.Point(3, 3);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(1090, 24);
             this.panel7.TabIndex = 0;
+            // 
+            // txtRequiredCalleePath
+            // 
+            this.txtRequiredCalleePath.Location = new System.Drawing.Point(873, 4);
+            this.txtRequiredCalleePath.Margin = new System.Windows.Forms.Padding(1);
+            this.txtRequiredCalleePath.Name = "txtRequiredCalleePath";
+            this.txtRequiredCalleePath.Size = new System.Drawing.Size(189, 20);
+            this.txtRequiredCalleePath.TabIndex = 1;
+            this.txtRequiredCalleePath.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
+            // 
+            // txtRequiredCalleeFile
+            // 
+            this.txtRequiredCalleeFile.Location = new System.Drawing.Point(647, 4);
+            this.txtRequiredCalleeFile.Margin = new System.Windows.Forms.Padding(1);
+            this.txtRequiredCalleeFile.Name = "txtRequiredCalleeFile";
+            this.txtRequiredCalleeFile.Size = new System.Drawing.Size(100, 20);
+            this.txtRequiredCalleeFile.TabIndex = 1;
+            this.txtRequiredCalleeFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
+            // 
+            // txtRequiredKind
+            // 
+            this.txtRequiredKind.Location = new System.Drawing.Point(483, 4);
+            this.txtRequiredKind.Margin = new System.Windows.Forms.Padding(1);
+            this.txtRequiredKind.Name = "txtRequiredKind";
+            this.txtRequiredKind.Size = new System.Drawing.Size(76, 20);
+            this.txtRequiredKind.TabIndex = 1;
+            this.txtRequiredKind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
+            // 
+            // txtRequiredFile
+            // 
+            this.txtRequiredFile.Location = new System.Drawing.Point(296, 4);
+            this.txtRequiredFile.Margin = new System.Windows.Forms.Padding(1);
+            this.txtRequiredFile.Name = "txtRequiredFile";
+            this.txtRequiredFile.Size = new System.Drawing.Size(100, 20);
+            this.txtRequiredFile.TabIndex = 1;
+            this.txtRequiredFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
+            // 
+            // txtRequiredItem
+            // 
+            this.txtRequiredItem.Location = new System.Drawing.Point(89, 4);
+            this.txtRequiredItem.Margin = new System.Windows.Forms.Padding(1);
+            this.txtRequiredItem.Name = "txtRequiredItem";
+            this.txtRequiredItem.Size = new System.Drawing.Size(100, 20);
+            this.txtRequiredItem.TabIndex = 1;
+            this.txtRequiredItem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(792, 7);
+            this.label23.Margin = new System.Windows.Forms.Padding(0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(67, 15);
+            this.label23.TabIndex = 0;
+            this.label23.Text = "CalleePath";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(565, 7);
+            this.label22.Margin = new System.Windows.Forms.Padding(0);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(62, 15);
+            this.label22.TabIndex = 0;
+            this.label22.Text = "CalleeFile";
+            this.label22.Click += new System.EventHandler(this.label22_Click);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(449, 7);
+            this.label21.Margin = new System.Windows.Forms.Padding(0);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(32, 15);
+            this.label21.TabIndex = 0;
+            this.label21.Text = "Kind";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(205, 7);
+            this.label20.Margin = new System.Windows.Forms.Padding(0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(78, 15);
+            this.label20.TabIndex = 0;
+            this.label20.Text = "RequiredFile";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(4, 7);
+            this.label19.Margin = new System.Windows.Forms.Padding(0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(79, 15);
+            this.label19.TabIndex = 0;
+            this.label19.Text = "Requiredtem";
             // 
             // grdRequiredFeatures
             // 
@@ -1406,9 +1639,13 @@ namespace LspAnalyzer
             ((System.ComponentModel.ISupportInitialize)(this.grdClientCapabilities)).EndInit();
             this.tabProvided.ResumeLayout(false);
             this.tableLayoutProvided.ResumeLayout(false);
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdProvidedFeatures)).EndInit();
             this.tabRequired.ResumeLayout(false);
             this.tableLayoutRequired.ResumeLayout(false);
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdRequiredFeatures)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -1534,6 +1771,26 @@ namespace LspAnalyzer
         private System.Windows.Forms.DataGridView grdProvidedFeatures;
         private System.Windows.Forms.DataGridView grdRequiredFeatures;
         private System.Windows.Forms.Button btnInterface;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txtProvidedCalleePath;
+        private System.Windows.Forms.TextBox txtProvidedCalleeFile;
+        private System.Windows.Forms.TextBox txtProvidedKind;
+        private System.Windows.Forms.TextBox txtProvidedFile;
+        private System.Windows.Forms.TextBox txtProvidedItem;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txtRequiredCalleePath;
+        private System.Windows.Forms.TextBox txtRequiredCalleeFile;
+        private System.Windows.Forms.TextBox txtRequiredKind;
+        private System.Windows.Forms.TextBox txtRequiredFile;
+        private System.Windows.Forms.TextBox txtRequiredItem;
     }
 }
 

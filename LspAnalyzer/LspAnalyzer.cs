@@ -17,6 +17,7 @@ using OmniSharp.Extensions.LanguageServer.Client;
 using OmniSharp.Extensions.LanguageServer.Client.Processes;
 using OmniSharp.Extensions.LanguageServer.Client.Protocol;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
+using OmniSharpPosition = OmniSharp.Extensions.LanguageServer.Protocol.Models.Position;
 using LspAnalyzer.Services.Db;
 
 
@@ -630,8 +631,8 @@ namespace LspAnalyzer
                 var signature = LspFile.ReadLocation(document, startLine, startPosition, endLine, endPosition);
 
                 // Determine start position of symbol
-                Position position = LspAnalyzerHelper.GetSymbolStartPosition(signature, symbolName,
-                    new Position {Line = startLine, Character = startPosition});
+                OmniSharpPosition position = LspAnalyzerHelper.GetSymbolStartPosition(signature, symbolName,
+                    new OmniSharpPosition {Line = startLine, Character = startPosition});
                 txtReferencesSymbolName.Text = symbolName;
 
                 // ReferenceParams: Request
@@ -740,8 +741,8 @@ namespace LspAnalyzer
             var signature = LspFile.ReadLocation(document, startLine, startPosition, endLine, endPosition);
 
             // Determine start position of symbol
-            Position position = LspAnalyzerHelper.GetSymbolStartPosition(signature, symbolName,
-                new Position {Line = startLine, Character = startPosition});
+            OmniSharpPosition position = LspAnalyzerHelper.GetSymbolStartPosition(signature, symbolName,
+                new OmniSharpPosition {Line = startLine, Character = startPosition});
             txtReferencesSymbolName.Text = symbolName;
 
             // ReferenceParams: Request
@@ -1369,16 +1370,15 @@ namespace LspAnalyzer
 
             tabDocument.SelectedTab = tabProvided;
 
-            //if (grdProvidedFeatures.ColumnCount > 2) {
-            //    grdProvidedFeatures.Columns[0].Width = 100; 
-            //    grdProvidedFeatures.Columns[1].Width = 200; 
-            //}
-            //tabDocument.SelectedTab = tabRequired;
-            //if (grdRequiredFeatures.ColumnCount > 2)
-            //{
-            //    grdRequiredFeatures.Columns[0].Width = 100;
-            //    grdRequiredFeatures.Columns[1].Width = 200;
-            //}
+            if (grdProvidedFeatures.ColumnCount > 5)
+            {
+                grdProvidedFeatures.Columns[5].Visible = false;
+            }
+            if (grdRequiredFeatures.ColumnCount > 5)
+            {
+                grdRequiredFeatures.Columns[5].Visible = false;
+            }
+            
 
             btnInterface.Enabled = true;
            
@@ -1386,13 +1386,53 @@ namespace LspAnalyzer
                 $"Duration: {timeMeasurement.TimeSpanAsString()}, Loaded provided/required features for '{compPath}': Provided features: {_dtProvidedFeatures.Rows.Count,8:N0}, Required features: {_dtRequiredFeatures.Rows.Count,8:N0}";
             
         }
-
-        private void btnDocumentSymbol_Click(object sender, EventArgs e)
+      
+        /// <summary>
+        /// Get all possible include files and copy them as in .CQuery format to Clipboard
+        /// - The include paths are stored as relative paths based on workspace
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void getIncludesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+           string workspace = Path.GetDirectoryName(_settings.SettingsItem.WorkspaceDirectory);
+            Regex rx = new Regex(workspace.Replace(@"\",@"\\"), RegexOptions.IgnoreCase);
+            var queryFiles = (from file in Directory.GetFiles(workspace, $"*.h*", SearchOption.AllDirectories)
+                    select Path.GetDirectoryName(file) into n 
+                    where ! _settings.SettingsItem.IncludeDirectoryBlackList.Any (x=> n.Contains(x))
+                    select rx.Replace(n, "-I"))
+                .Distinct().OrderBy(x=>x);
+            string clipboardText = String.Join("\r\n", queryFiles );
+            clipboardText = 
+$@"# Includes for .CQuery 
+# see
+# https://github.com/cquery-project/cquery/wiki/Getting-started#project-setup
+{clipboardText}";
+            Clipboard.SetText(clipboardText);
+        }
+
+        private void openCQueryOfWorkspaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Start.StartFile(Path.Combine(_settings.SettingsItem.WorkspaceDirectory, ".CQuery"));
+        }
+
+        private void openImplmentationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataGridView grid = Start.GetDataGridViewOfContextMenu(sender);
+           
+            var row = grid.SelectedRows[0];
+            int id = (int)row.Cells["Id"].Value;
+
+            SymbolDb symbolDb = new SymbolDb(_settings.SettingsItem.SqLiteDatabasePath, null);
+            string fileName = symbolDb.GetFileNameFromId(id, out Services.Position pos);
+
+            Start.StartFile(fileName, pos);
+
+
 
         }
 
-        private void label22_Click(object sender, EventArgs e)
+        private void contextMenuReference_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
 
         }

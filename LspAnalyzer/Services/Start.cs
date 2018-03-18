@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
+using LspAnalyzer.Services;
 using static System.Int32;
 
 // ReSharper disable once CheckNamespace
@@ -98,7 +99,24 @@ namespace LspAnalyzer.Analyze
                 }
             }
         }
+        /// <summary>
+        /// Start Code for a position
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="pos"></param>
+        public static void StartFile(string filePath, Position pos)
+        {
+            // make position line/character relative  1
+            string position = $":{pos.Line + 1}:{pos.Character + 1}";
+            StartApp(@"Code", $@"""{filePath}""{position} -g");
 
+        }
+
+        /// <summary>
+        /// Get the DatagridView associated to the context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <returns></returns>
         public static DataGridView GetDataGridViewOfContextMenu(object sender)
         {
             // Try to cast the sender to a ToolStripItem

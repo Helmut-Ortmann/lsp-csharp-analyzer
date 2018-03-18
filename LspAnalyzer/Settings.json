@@ -1,9 +1,10 @@
 ﻿//
-// Settings LspAnalyzer Factory settings
+// Settings LspAnalyzer Factory settings. 
 // History
-// - 3. March 2018
-// - 4. March 2018 extra clang arguments
-// - 8. March 2018, workspaceSymbol, XRef
+// - 3.  March 2018
+// - 4.  March 2018 extra clang arguments
+// - 8.  March 2018, workspaceSymbol, XRef
+// - 18. March 2018 Blacklist to generate .CQuery -I statements (includes)
 //
 // File-Path: you can use "\\" or "/"
 {
@@ -19,6 +20,7 @@
                                               "Array","Object","Key","Null","EnumMember", "Struct","Event","Operator","TypeParameter",
                                               "TypeAlias", "StaticMethod", "Macro"
                                              ],
+    "IncludeDirectoryBlackList":             [], // Directories of Header files to ignore when generating '.CQuery'. Use a part of the relative workspace directory path 
     //
     // CQuery parameters (same as used in VS Code, no calculated parameters)
     // see: CQuery config.h and in the wiki (https://github.com/cquery-project/cquery/wiki)
@@ -29,7 +31,7 @@
     "cquery.extraClangArguments" :           ["%clang","%c -std=gnu11","%cpp -std=gnu++14","-xc"],
     "cquery.compilationDatabaseDirectory":   "",
     "cquery.workspaceSymbol":                 {"maxNum":500000, "sort":true},
-    "Xref":{"container" : false, "maxNum":100}
+    "Xref":                                   {"container" : false, "maxNum":100}
 
 
    

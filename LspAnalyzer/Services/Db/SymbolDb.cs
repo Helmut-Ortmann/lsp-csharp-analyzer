@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,7 +11,7 @@ using LinqToDB;
 using LinqToDB.DataProvider;
 using LspDb.Linq2sql.LinqUtils;
 using OmniSharp.Extensions.LanguageServer.Client;
-using OmniSharp.Extensions.LanguageServer.Protocol.Models;
+using OmniSharpPosition = OmniSharp.Extensions.LanguageServer.Protocol.Models.Position;
 using File = DataModels.Symbols.File;
 
 namespace LspAnalyzer.Services.Db
@@ -320,7 +319,7 @@ namespace LspAnalyzer.Services.Db
                     let position = LspAnalyzerHelper.GetSymbolStartPosition(
                         i.Field<string>("Intern"),
                         i.Field<string>("Name"),
-                        new Position(i.Field<long>("StartLine"), i.Field<long>("StartChar")
+                        new OmniSharpPosition(i.Field<long>("StartLine"), i.Field<long>("StartChar")
                         ))
 
                     select new
@@ -511,7 +510,8 @@ namespace LspAnalyzer.Services.Db
                             ProvidedFile = file.LeafName,
                             Kind = kind.Name,
                             CalleeFile = reqFile.LeafName,
-                            CalleePath = reqFile.Name
+                            CalleePath = reqFile.Name,
+                            Id = item.Id
 							
                         }).ToArray();
                     // Check for item kinds, it's possible to use "ALL"
@@ -567,7 +567,8 @@ namespace LspAnalyzer.Services.Db
                             RequiredFile = file.LeafName,
                             Kind = kind.Name,
                             CalleeFile = reqFile.LeafName,
-                            CalleePath = reqFile.Name
+                            CalleePath = reqFile.Name,
+                            Id = item.Id
 							
                         }).ToArray();
                     // Check for item kinds, it's possible to use "ALL"
@@ -649,6 +650,36 @@ namespace LspAnalyzer.Services.Db
         private string NormalizePath(string path)
         {
             return path.Replace(@"\", "/").ToLower();
+        }
+
+        /// <summary>
+        /// Get file name for id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public string GetFileNameFromId(int id, out Position pos)
+        {
+            using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
+            {
+                try
+                {
+                    var res = (from i in db.CodeItems
+                        join f1 in db.Files on i.FileId equals f1.Id
+                        where i.Id == id
+                        select new {FileName = f1.Name, Position = new Position(i.NameStartLine,i.NameStartColumn) }).FirstOrDefault();
+                    pos = res.Position;
+                    return res.FileName;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"SQLite: '{_connectionString}'\r\n\r\n{e}","SQL errors find.");
+                    pos = new Position(0, 0);
+                    return "";
+                }
+            }
+
+
         }
     }
 }

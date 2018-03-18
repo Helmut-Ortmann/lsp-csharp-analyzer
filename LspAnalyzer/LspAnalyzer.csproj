@@ -144,6 +144,7 @@
     <Compile Include="Services\JsonUtilities.cs" />
     <Compile Include="Services\Linq.cs" />
     <Compile Include="Services\LspFile.cs" />
+    <Compile Include="Services\Position.cs" />
     <Compile Include="Services\Start.cs" />
     <Compile Include="Services\TimeMeasurement.cs" />
     <Compile Include="Settings\Settings.cs" />

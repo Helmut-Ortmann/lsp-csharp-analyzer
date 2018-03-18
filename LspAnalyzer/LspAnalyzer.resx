@@ -214,10 +214,204 @@ Full path or the relative path in workspace.
 Symbol:
 The part of the symbol you want to search for</value>
   </data>
+  <data name="txtProvidedCalleePath.ToolTip" xml:space="preserve">
+    <value>Filter "ProvidedItem" of Feature (Function &amp; more):
+- 'myNameFilter'
+- '%myNameFilter'
+- 'NOT myNameFilter'
+- 'NOT %myNameFilter'
+
+LSPManager always adds a wildcard at string end! hoReverse combines filters by ' AND '
+
+Not allowed are wildcard '*' or '%' amidst the filter string.
+
+You can also add free filters like:
+(ProvidedItem Like 'AB*' OR Kind = 'Function' OR ProvidedFile  = 'appl*')
+
+For 'Kind' look in the LSP specification under SymbolKind.
+</value>
+  </data>
+  <data name="txtProvidedCalleeFile.ToolTip" xml:space="preserve">
+    <value>Filter "ProvidedItem" of Feature (Function &amp; more):
+- 'myNameFilter'
+- '%myNameFilter'
+- 'NOT myNameFilter'
+- 'NOT %myNameFilter'
+
+LSPManager always adds a wildcard at string end! hoReverse combines filters by ' AND '
+
+Not allowed are wildcard '*' or '%' amidst the filter string.
+
+You can also add free filters like:
+(ProvidedItem Like 'AB*' OR Kind = 'Function' OR ProvidedFile  = 'appl*')
+
+For 'Kind' look in the LSP specification under SymbolKind.
+</value>
+  </data>
+  <data name="txtProvidedKind.ToolTip" xml:space="preserve">
+    <value>Filter "ProvidedItem" of Feature (Function &amp; more):
+- 'myNameFilter'
+- '%myNameFilter'
+- 'NOT myNameFilter'
+- 'NOT %myNameFilter'
+
+LSPManager always adds a wildcard at string end! hoReverse combines filters by ' AND '
+
+Not allowed are wildcard '*' or '%' amidst the filter string.
+
+You can also add free filters like:
+(ProvidedItem Like 'AB*' OR Kind = 'Function' OR ProvidedFile  = 'appl*')
+
+For 'Kind' look in the LSP specification under SymbolKind.
+</value>
+  </data>
+  <data name="txtProvidedFile.ToolTip" xml:space="preserve">
+    <value>Filter "ProvidedItem" of Feature (Function &amp; more):
+- 'myNameFilter'
+- '%myNameFilter'
+- 'NOT myNameFilter'
+- 'NOT %myNameFilter'
+
+LSPManager always adds a wildcard at string end! hoReverse combines filters by ' AND '
+
+Not allowed are wildcard '*' or '%' amidst the filter string.
+
+You can also add free filters like:
+(ProvidedItem Like 'AB*' OR Kind = 'Function' OR ProvidedFile  = 'appl*')
+
+For 'Kind' look in the LSP specification under SymbolKind.
+</value>
+  </data>
+  <data name="txtProvidedItem.ToolTip" xml:space="preserve">
+    <value>Filter "ProvidedItem" of Feature (Function &amp; more):
+- 'myNameFilter'
+- '%myNameFilter'
+- 'NOT myNameFilter'
+- 'NOT %myNameFilter'
+
+LSPManager always adds a wildcard at string end! hoReverse combines filters by ' AND '
+
+Not allowed are wildcard '*' or '%' amidst the filter string.
+
+You can also add free filters like:
+(ProvidedItem Like 'AB*' OR Kind = 'Function' OR ProvidedFile  = 'appl*')
+
+For 'Kind' look in the LSP specification under SymbolKind.
+</value>
+  </data>
+  <data name="txtRequiredCalleePath.ToolTip" xml:space="preserve">
+    <value>Filter "RequiredItem" of Feature (Function &amp; more):
+- 'myNameFilter'
+- '%myNameFilter'
+- 'NOT myNameFilter'
+- 'NOT %myNameFilter'
+
+LSPManager always adds a wildcard at string end! hoReverse combines filters by ' AND '
+
+Not allowed are wildcard '*' or '%' amidst the filter string.
+
+You can also add free filters like:
+(RequiredItem Like 'AB*' OR Kind = 'Function' OR RequiredFile  = 'appl*')
+
+For 'Kind' look in the LSP specification under SymbolKind.</value>
+  </data>
+  <data name="txtRequiredCalleeFile.ToolTip" xml:space="preserve">
+    <value>Filter "RequiredItem" of Feature (Function &amp; more):
+- 'myNameFilter'
+- '%myNameFilter'
+- 'NOT myNameFilter'
+- 'NOT %myNameFilter'
+
+LSPManager always adds a wildcard at string end! hoReverse combines filters by ' AND '
+
+Not allowed are wildcard '*' or '%' amidst the filter string.
+
+You can also add free filters like:
+(RequiredItem Like 'AB*' OR Kind = 'Function' OR RequiredFile  = 'appl*')
+
+For 'Kind' look in the LSP specification under SymbolKind.</value>
+  </data>
+  <data name="txtRequiredKind.ToolTip" xml:space="preserve">
+    <value>Filter "RequiredItem" of Feature (Function &amp; more):
+- 'myNameFilter'
+- '%myNameFilter'
+- 'NOT myNameFilter'
+- 'NOT %myNameFilter'
+
+LSPManager always adds a wildcard at string end! hoReverse combines filters by ' AND '
+
+Not allowed are wildcard '*' or '%' amidst the filter string.
+
+You can also add free filters like:
+(RequiredItem Like 'AB*' OR Kind = 'Function' OR RequiredFile  = 'appl*')
+
+For 'Kind' look in the LSP specification under SymbolKind.</value>
+  </data>
+  <data name="txtRequiredFile.ToolTip" xml:space="preserve">
+    <value>Filter "RequiredItem" of Feature (Function &amp; more):
+- 'myNameFilter'
+- '%myNameFilter'
+- 'NOT myNameFilter'
+- 'NOT %myNameFilter'
+
+LSPManager always adds a wildcard at string end! hoReverse combines filters by ' AND '
+
+Not allowed are wildcard '*' or '%' amidst the filter string.
+
+You can also add free filters like:
+(RequiredItem Like 'AB*' OR Kind = 'Function' OR RequiredFile  = 'appl*')
+
+For 'Kind' look in the LSP specification under SymbolKind.</value>
+  </data>
+  <data name="txtRequiredItem.ToolTip" xml:space="preserve">
+    <value>Filter "RequiredItem" of Feature (Function &amp; more):
+- 'myNameFilter'
+- '%myNameFilter'
+- 'NOT myNameFilter'
+- 'NOT %myNameFilter'
+
+LSPManager always adds a wildcard at string end! hoReverse combines filters by ' AND '
+
+Not allowed are wildcard '*' or '%' amidst the filter string.
+
+You can also add free filters like:
+(RequiredItem Like 'AB*' OR Kind = 'Function' OR RequiredFile  = 'appl*')
+
+For 'Kind' look in the LSP specification under SymbolKind.
+</value>
+  </data>
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>278, 17</value>
   </metadata>
-  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 56</value>
+  <metadata name="contextMenuStripFeature.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>761, 17</value>
   </metadata>
+  <data name="doToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Copy CQuery include statements to Clipboard
+
+For the workspace LSP Analyzer estimates all used worksoace local includes
+and put them to the Clipboard.
+
+See:
+https://github.com/cquery-project/cquery/wiki/Getting-started#project-setup</value>
+  </data>
+  <data name="getIncludesToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Copy CQuery include statements to Clipboard.
+
+For the given workspace LSP Analyzer estimates all workspace local include folders
+and put them to the Clipboard. In settings.json is a blacklist to ignore folders.
+
+See:
+https://github.com/cquery-project/cquery/wiki/Getting-started#project-setup</value>
+  </data>
+  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>951, 17</value>
+  </metadata>
+  <data name="openCQueryOfWorkspaceToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Opens the .CQuery file of the workspace.
+
+This is e.g. useful to insert the header statements if you use CQuery as C/C++ LSP Server.
+
+In Settings.json you can use the entry  "IncludeDirectoryBlackList" no tignore some directories from the include list.</value>
+  </data>
 </root>

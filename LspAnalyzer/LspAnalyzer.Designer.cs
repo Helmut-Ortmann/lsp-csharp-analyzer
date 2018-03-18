@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -102,6 +102,16 @@ namespace LspAnalyzer
             this.btnCreateSSQLiteDB = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.btnInterface = new System.Windows.Forms.Button();
+            this.txtProvidedCalleePath = new System.Windows.Forms.TextBox();
+            this.txtProvidedCalleeFile = new System.Windows.Forms.TextBox();
+            this.txtProvidedKind = new System.Windows.Forms.TextBox();
+            this.txtProvidedFile = new System.Windows.Forms.TextBox();
+            this.txtProvidedItem = new System.Windows.Forms.TextBox();
+            this.txtRequiredCalleePath = new System.Windows.Forms.TextBox();
+            this.txtRequiredCalleeFile = new System.Windows.Forms.TextBox();
+            this.txtRequiredKind = new System.Windows.Forms.TextBox();
+            this.txtRequiredFile = new System.Windows.Forms.TextBox();
+            this.txtRequiredItem = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tblGui = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -122,20 +132,10 @@ namespace LspAnalyzer
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.txtProvidedCalleePath = new System.Windows.Forms.TextBox();
-            this.txtProvidedCalleeFile = new System.Windows.Forms.TextBox();
-            this.txtProvidedKind = new System.Windows.Forms.TextBox();
-            this.txtProvidedFile = new System.Windows.Forms.TextBox();
-            this.txtProvidedItem = new System.Windows.Forms.TextBox();
             this.grdProvidedFeatures = new System.Windows.Forms.DataGridView();
             this.tabRequired = new System.Windows.Forms.TabPage();
             this.tableLayoutRequired = new System.Windows.Forms.TableLayoutPanel();
             this.panel7 = new System.Windows.Forms.Panel();
-            this.txtRequiredCalleePath = new System.Windows.Forms.TextBox();
-            this.txtRequiredCalleeFile = new System.Windows.Forms.TextBox();
-            this.txtRequiredKind = new System.Windows.Forms.TextBox();
-            this.txtRequiredFile = new System.Windows.Forms.TextBox();
-            this.txtRequiredItem = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
@@ -154,6 +154,7 @@ namespace LspAnalyzer
             this.resetFactorySettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.doToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.codeMetricsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.getIncludesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCFrameworkLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCQueryLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -166,6 +167,11 @@ namespace LspAnalyzer
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtState = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.openCQueryOfWorkspaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStripFeature = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openImplmentationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openCalleeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyFeatureNamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -201,6 +207,7 @@ namespace LspAnalyzer
             ((System.ComponentModel.ISupportInitialize)(this.grdRequiredFeatures)).BeginInit();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.contextMenuStripFeature.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnRun
@@ -260,14 +267,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle9;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -749,9 +756,10 @@ namespace LspAnalyzer
             this.toolStripMenuHover,
             this.toolStripMenuItem2});
             this.contextMenuReference.Name = "contextMenuReference";
-            this.contextMenuReference.Size = new System.Drawing.Size(198, 98);
+            this.contextMenuReference.Size = new System.Drawing.Size(198, 120);
             this.contextMenuReference.Text = "Open Implementation";
             this.toolTip1.SetToolTip(this.contextMenuReference, "Open the implementation");
+            this.contextMenuReference.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuReference_Opening);
             // 
             // toolStripMenuItemOpen
             // 
@@ -926,6 +934,101 @@ namespace LspAnalyzer
             this.btnInterface.UseVisualStyleBackColor = true;
             this.btnInterface.Click += new System.EventHandler(this.btnFeature_Click);
             // 
+            // txtProvidedCalleePath
+            // 
+            this.txtProvidedCalleePath.Location = new System.Drawing.Point(865, 4);
+            this.txtProvidedCalleePath.Name = "txtProvidedCalleePath";
+            this.txtProvidedCalleePath.Size = new System.Drawing.Size(222, 20);
+            this.txtProvidedCalleePath.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.txtProvidedCalleePath, resources.GetString("txtProvidedCalleePath.ToolTip"));
+            this.txtProvidedCalleePath.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
+            // 
+            // txtProvidedCalleeFile
+            // 
+            this.txtProvidedCalleeFile.Location = new System.Drawing.Point(655, 1);
+            this.txtProvidedCalleeFile.Name = "txtProvidedCalleeFile";
+            this.txtProvidedCalleeFile.Size = new System.Drawing.Size(128, 20);
+            this.txtProvidedCalleeFile.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.txtProvidedCalleeFile, resources.GetString("txtProvidedCalleeFile.ToolTip"));
+            this.txtProvidedCalleeFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
+            // 
+            // txtProvidedKind
+            // 
+            this.txtProvidedKind.Location = new System.Drawing.Point(492, 1);
+            this.txtProvidedKind.Name = "txtProvidedKind";
+            this.txtProvidedKind.Size = new System.Drawing.Size(74, 20);
+            this.txtProvidedKind.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.txtProvidedKind, resources.GetString("txtProvidedKind.ToolTip"));
+            this.txtProvidedKind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
+            // 
+            // txtProvidedFile
+            // 
+            this.txtProvidedFile.Location = new System.Drawing.Point(321, 2);
+            this.txtProvidedFile.Name = "txtProvidedFile";
+            this.txtProvidedFile.Size = new System.Drawing.Size(128, 20);
+            this.txtProvidedFile.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.txtProvidedFile, resources.GetString("txtProvidedFile.ToolTip"));
+            this.txtProvidedFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
+            // 
+            // txtProvidedItem
+            // 
+            this.txtProvidedItem.Location = new System.Drawing.Point(89, 4);
+            this.txtProvidedItem.Name = "txtProvidedItem";
+            this.txtProvidedItem.Size = new System.Drawing.Size(142, 20);
+            this.txtProvidedItem.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.txtProvidedItem, resources.GetString("txtProvidedItem.ToolTip"));
+            this.txtProvidedItem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
+            // 
+            // txtRequiredCalleePath
+            // 
+            this.txtRequiredCalleePath.Location = new System.Drawing.Point(873, 4);
+            this.txtRequiredCalleePath.Margin = new System.Windows.Forms.Padding(1);
+            this.txtRequiredCalleePath.Name = "txtRequiredCalleePath";
+            this.txtRequiredCalleePath.Size = new System.Drawing.Size(189, 20);
+            this.txtRequiredCalleePath.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.txtRequiredCalleePath, resources.GetString("txtRequiredCalleePath.ToolTip"));
+            this.txtRequiredCalleePath.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
+            // 
+            // txtRequiredCalleeFile
+            // 
+            this.txtRequiredCalleeFile.Location = new System.Drawing.Point(647, 4);
+            this.txtRequiredCalleeFile.Margin = new System.Windows.Forms.Padding(1);
+            this.txtRequiredCalleeFile.Name = "txtRequiredCalleeFile";
+            this.txtRequiredCalleeFile.Size = new System.Drawing.Size(100, 20);
+            this.txtRequiredCalleeFile.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.txtRequiredCalleeFile, resources.GetString("txtRequiredCalleeFile.ToolTip"));
+            this.txtRequiredCalleeFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
+            // 
+            // txtRequiredKind
+            // 
+            this.txtRequiredKind.Location = new System.Drawing.Point(483, 4);
+            this.txtRequiredKind.Margin = new System.Windows.Forms.Padding(1);
+            this.txtRequiredKind.Name = "txtRequiredKind";
+            this.txtRequiredKind.Size = new System.Drawing.Size(76, 20);
+            this.txtRequiredKind.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.txtRequiredKind, resources.GetString("txtRequiredKind.ToolTip"));
+            this.txtRequiredKind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
+            // 
+            // txtRequiredFile
+            // 
+            this.txtRequiredFile.Location = new System.Drawing.Point(296, 4);
+            this.txtRequiredFile.Margin = new System.Windows.Forms.Padding(1);
+            this.txtRequiredFile.Name = "txtRequiredFile";
+            this.txtRequiredFile.Size = new System.Drawing.Size(100, 20);
+            this.txtRequiredFile.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.txtRequiredFile, resources.GetString("txtRequiredFile.ToolTip"));
+            this.txtRequiredFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
+            // 
+            // txtRequiredItem
+            // 
+            this.txtRequiredItem.Location = new System.Drawing.Point(89, 4);
+            this.txtRequiredItem.Margin = new System.Windows.Forms.Padding(1);
+            this.txtRequiredItem.Name = "txtRequiredItem";
+            this.txtRequiredItem.Size = new System.Drawing.Size(100, 20);
+            this.txtRequiredItem.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.txtRequiredItem, resources.GetString("txtRequiredItem.ToolTip"));
+            this.txtRequiredItem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -1076,8 +1179,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle10;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(1090, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -1178,52 +1281,13 @@ namespace LspAnalyzer
             this.label14.TabIndex = 1;
             this.label14.Text = "ProvidedItem:";
             // 
-            // txtProvidedCalleePath
-            // 
-            this.txtProvidedCalleePath.Location = new System.Drawing.Point(865, 4);
-            this.txtProvidedCalleePath.Name = "txtProvidedCalleePath";
-            this.txtProvidedCalleePath.Size = new System.Drawing.Size(222, 20);
-            this.txtProvidedCalleePath.TabIndex = 0;
-            this.txtProvidedCalleePath.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
-            // 
-            // txtProvidedCalleeFile
-            // 
-            this.txtProvidedCalleeFile.Location = new System.Drawing.Point(655, 1);
-            this.txtProvidedCalleeFile.Name = "txtProvidedCalleeFile";
-            this.txtProvidedCalleeFile.Size = new System.Drawing.Size(128, 20);
-            this.txtProvidedCalleeFile.TabIndex = 0;
-            this.txtProvidedCalleeFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
-            // 
-            // txtProvidedKind
-            // 
-            this.txtProvidedKind.Location = new System.Drawing.Point(492, 1);
-            this.txtProvidedKind.Name = "txtProvidedKind";
-            this.txtProvidedKind.Size = new System.Drawing.Size(74, 20);
-            this.txtProvidedKind.TabIndex = 0;
-            this.txtProvidedKind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
-            // 
-            // txtProvidedFile
-            // 
-            this.txtProvidedFile.Location = new System.Drawing.Point(321, 2);
-            this.txtProvidedFile.Name = "txtProvidedFile";
-            this.txtProvidedFile.Size = new System.Drawing.Size(128, 20);
-            this.txtProvidedFile.TabIndex = 0;
-            this.txtProvidedFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
-            // 
-            // txtProvidedItem
-            // 
-            this.txtProvidedItem.Location = new System.Drawing.Point(89, 4);
-            this.txtProvidedItem.Name = "txtProvidedItem";
-            this.txtProvidedItem.Size = new System.Drawing.Size(142, 20);
-            this.txtProvidedItem.TabIndex = 0;
-            this.txtProvidedItem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtProvidedFeature_KeyPress);
-            // 
             // grdProvidedFeatures
             // 
             this.grdProvidedFeatures.AllowUserToAddRows = false;
             this.grdProvidedFeatures.AllowUserToDeleteRows = false;
             this.grdProvidedFeatures.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.grdProvidedFeatures.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdProvidedFeatures.ContextMenuStrip = this.contextMenuStripFeature;
             this.grdProvidedFeatures.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdProvidedFeatures.Location = new System.Drawing.Point(3, 33);
             this.grdProvidedFeatures.Name = "grdProvidedFeatures";
@@ -1277,51 +1341,6 @@ namespace LspAnalyzer
             this.panel7.Size = new System.Drawing.Size(1090, 24);
             this.panel7.TabIndex = 0;
             // 
-            // txtRequiredCalleePath
-            // 
-            this.txtRequiredCalleePath.Location = new System.Drawing.Point(873, 4);
-            this.txtRequiredCalleePath.Margin = new System.Windows.Forms.Padding(1);
-            this.txtRequiredCalleePath.Name = "txtRequiredCalleePath";
-            this.txtRequiredCalleePath.Size = new System.Drawing.Size(189, 20);
-            this.txtRequiredCalleePath.TabIndex = 1;
-            this.txtRequiredCalleePath.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
-            // 
-            // txtRequiredCalleeFile
-            // 
-            this.txtRequiredCalleeFile.Location = new System.Drawing.Point(647, 4);
-            this.txtRequiredCalleeFile.Margin = new System.Windows.Forms.Padding(1);
-            this.txtRequiredCalleeFile.Name = "txtRequiredCalleeFile";
-            this.txtRequiredCalleeFile.Size = new System.Drawing.Size(100, 20);
-            this.txtRequiredCalleeFile.TabIndex = 1;
-            this.txtRequiredCalleeFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
-            // 
-            // txtRequiredKind
-            // 
-            this.txtRequiredKind.Location = new System.Drawing.Point(483, 4);
-            this.txtRequiredKind.Margin = new System.Windows.Forms.Padding(1);
-            this.txtRequiredKind.Name = "txtRequiredKind";
-            this.txtRequiredKind.Size = new System.Drawing.Size(76, 20);
-            this.txtRequiredKind.TabIndex = 1;
-            this.txtRequiredKind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
-            // 
-            // txtRequiredFile
-            // 
-            this.txtRequiredFile.Location = new System.Drawing.Point(296, 4);
-            this.txtRequiredFile.Margin = new System.Windows.Forms.Padding(1);
-            this.txtRequiredFile.Name = "txtRequiredFile";
-            this.txtRequiredFile.Size = new System.Drawing.Size(100, 20);
-            this.txtRequiredFile.TabIndex = 1;
-            this.txtRequiredFile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
-            // 
-            // txtRequiredItem
-            // 
-            this.txtRequiredItem.Location = new System.Drawing.Point(89, 4);
-            this.txtRequiredItem.Margin = new System.Windows.Forms.Padding(1);
-            this.txtRequiredItem.Name = "txtRequiredItem";
-            this.txtRequiredItem.Size = new System.Drawing.Size(100, 20);
-            this.txtRequiredItem.TabIndex = 1;
-            this.txtRequiredItem.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtRequiredFeature_KeyPress);
-            // 
             // label23
             // 
             this.label23.AutoSize = true;
@@ -1343,7 +1362,6 @@ namespace LspAnalyzer
             this.label22.Size = new System.Drawing.Size(62, 15);
             this.label22.TabIndex = 0;
             this.label22.Text = "CalleeFile";
-            this.label22.Click += new System.EventHandler(this.label22_Click);
             // 
             // label21
             // 
@@ -1384,6 +1402,7 @@ namespace LspAnalyzer
             this.grdRequiredFeatures.AllowUserToDeleteRows = false;
             this.grdRequiredFeatures.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.grdRequiredFeatures.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdRequiredFeatures.ContextMenuStrip = this.contextMenuStripFeature;
             this.grdRequiredFeatures.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdRequiredFeatures.Location = new System.Drawing.Point(3, 33);
             this.grdRequiredFeatures.Name = "grdRequiredFeatures";
@@ -1489,19 +1508,30 @@ namespace LspAnalyzer
             // doToolStripMenuItem
             // 
             this.doToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.codeMetricsToolStripMenuItem});
+            this.codeMetricsToolStripMenuItem,
+            this.getIncludesToolStripMenuItem,
+            this.openCQueryOfWorkspaceToolStripMenuItem});
             this.doToolStripMenuItem.Name = "doToolStripMenuItem";
             this.doToolStripMenuItem.Size = new System.Drawing.Size(34, 18);
             this.doToolStripMenuItem.Text = "Do";
+            this.doToolStripMenuItem.ToolTipText = resources.GetString("doToolStripMenuItem.ToolTipText");
             // 
             // codeMetricsToolStripMenuItem
             // 
             this.codeMetricsToolStripMenuItem.Name = "codeMetricsToolStripMenuItem";
-            this.codeMetricsToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.codeMetricsToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
             this.codeMetricsToolStripMenuItem.Text = "Code Metrics";
             this.codeMetricsToolStripMenuItem.ToolTipText = "Some metrics about Code\r\n- Symbols (from Functions to Macros)\r\n- Usage of Symbols" +
     "";
             this.codeMetricsToolStripMenuItem.Click += new System.EventHandler(this.sQLOverviewToolStripMenuItem_Click);
+            // 
+            // getIncludesToolStripMenuItem
+            // 
+            this.getIncludesToolStripMenuItem.Name = "getIncludesToolStripMenuItem";
+            this.getIncludesToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.getIncludesToolStripMenuItem.Text = "Copy Include Folders to Clipboard";
+            this.getIncludesToolStripMenuItem.ToolTipText = resources.GetString("getIncludesToolStripMenuItem.ToolTipText");
+            this.getIncludesToolStripMenuItem.Click += new System.EventHandler(this.getIncludesToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -1592,6 +1622,42 @@ namespace LspAnalyzer
             this.txtState.Size = new System.Drawing.Size(1110, 20);
             this.txtState.TabIndex = 12;
             // 
+            // openCQueryOfWorkspaceToolStripMenuItem
+            // 
+            this.openCQueryOfWorkspaceToolStripMenuItem.Name = "openCQueryOfWorkspaceToolStripMenuItem";
+            this.openCQueryOfWorkspaceToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.openCQueryOfWorkspaceToolStripMenuItem.Text = "Open .CQuery of workspace";
+            this.openCQueryOfWorkspaceToolStripMenuItem.ToolTipText = resources.GetString("openCQueryOfWorkspaceToolStripMenuItem.ToolTipText");
+            this.openCQueryOfWorkspaceToolStripMenuItem.Click += new System.EventHandler(this.openCQueryOfWorkspaceToolStripMenuItem_Click);
+            // 
+            // contextMenuStripFeature
+            // 
+            this.contextMenuStripFeature.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openImplmentationToolStripMenuItem,
+            this.openCalleeToolStripMenuItem,
+            this.copyFeatureNamesToolStripMenuItem});
+            this.contextMenuStripFeature.Name = "contextMenuStripFeature";
+            this.contextMenuStripFeature.Size = new System.Drawing.Size(192, 70);
+            // 
+            // openImplmentationToolStripMenuItem
+            // 
+            this.openImplmentationToolStripMenuItem.Name = "openImplmentationToolStripMenuItem";
+            this.openImplmentationToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.openImplmentationToolStripMenuItem.Text = "Open Implementation";
+            this.openImplmentationToolStripMenuItem.Click += new System.EventHandler(this.openImplmentationToolStripMenuItem_Click);
+            // 
+            // openCalleeToolStripMenuItem
+            // 
+            this.openCalleeToolStripMenuItem.Name = "openCalleeToolStripMenuItem";
+            this.openCalleeToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.openCalleeToolStripMenuItem.Text = "Open Callee";
+            // 
+            // copyFeatureNamesToolStripMenuItem
+            // 
+            this.copyFeatureNamesToolStripMenuItem.Name = "copyFeatureNamesToolStripMenuItem";
+            this.copyFeatureNamesToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.copyFeatureNamesToolStripMenuItem.Text = "Copy Feature names";
+            // 
             // LspAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1651,6 +1717,7 @@ namespace LspAnalyzer
             this.panel1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.contextMenuStripFeature.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1791,6 +1858,12 @@ namespace LspAnalyzer
         private System.Windows.Forms.TextBox txtRequiredKind;
         private System.Windows.Forms.TextBox txtRequiredFile;
         private System.Windows.Forms.TextBox txtRequiredItem;
+        private System.Windows.Forms.ToolStripMenuItem getIncludesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openCQueryOfWorkspaceToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripFeature;
+        private System.Windows.Forms.ToolStripMenuItem openImplmentationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openCalleeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyFeatureNamesToolStripMenuItem;
     }
 }
 

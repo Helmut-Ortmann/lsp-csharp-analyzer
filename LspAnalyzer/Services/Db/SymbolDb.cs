@@ -679,7 +679,37 @@ namespace LspAnalyzer.Services.Db
                 }
             }
 
+        }
+        /// <summary>
+        /// Get first callee for id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public string GetFirstCalleeFromId(int id, out Position pos)
+        {
+            using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
+            {
+                try
+                {
+                    var res = (from i in db.CodeItems
+                        join u in db.CodeItemUsages on i.Id equals u.Id
+                        join f1 in db.Files on u.FileId equals f1.Id
+                        where i.Id == id
+                        select new {FileName = f1.Name, Position = new Position(u.StartLine,i.StartColumn) }).FirstOrDefault();
+                    pos = res.Position;
+                    return res.FileName;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"SQLite: '{_connectionString}'\r\n\r\n{e}","SQL errors find.");
+                    pos = new Position(0, 0);
+                    return "";
+                }
+            }
+
 
         }
+
     }
 }

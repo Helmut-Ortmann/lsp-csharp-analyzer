@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -133,6 +133,10 @@ namespace LspAnalyzer
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.grdProvidedFeatures = new System.Windows.Forms.DataGridView();
+            this.contextMenuStripFeature = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openImplmentationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openCalleeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyFeatureNamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabRequired = new System.Windows.Forms.TabPage();
             this.tableLayoutRequired = new System.Windows.Forms.TableLayoutPanel();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -155,6 +159,7 @@ namespace LspAnalyzer
             this.doToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.codeMetricsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getIncludesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openCQueryOfWorkspaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCFrameworkLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showCQueryLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -167,11 +172,6 @@ namespace LspAnalyzer
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtState = new System.Windows.Forms.TextBox();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.openCQueryOfWorkspaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStripFeature = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.openImplmentationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openCalleeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyFeatureNamesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.grdServerCapabilities)).BeginInit();
             this.tabCapabilities.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -201,13 +201,13 @@ namespace LspAnalyzer
             this.tableLayoutProvided.SuspendLayout();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdProvidedFeatures)).BeginInit();
+            this.contextMenuStripFeature.SuspendLayout();
             this.tabRequired.SuspendLayout();
             this.tableLayoutRequired.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdRequiredFeatures)).BeginInit();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
-            this.contextMenuStripFeature.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnRun
@@ -267,14 +267,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle3;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -756,7 +756,7 @@ namespace LspAnalyzer
             this.toolStripMenuHover,
             this.toolStripMenuItem2});
             this.contextMenuReference.Name = "contextMenuReference";
-            this.contextMenuReference.Size = new System.Drawing.Size(198, 120);
+            this.contextMenuReference.Size = new System.Drawing.Size(198, 98);
             this.contextMenuReference.Text = "Open Implementation";
             this.toolTip1.SetToolTip(this.contextMenuReference, "Open the implementation");
             this.contextMenuReference.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuReference_Opening);
@@ -1179,8 +1179,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(1090, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -1295,6 +1295,36 @@ namespace LspAnalyzer
             this.grdProvidedFeatures.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdProvidedFeatures.Size = new System.Drawing.Size(1090, 233);
             this.grdProvidedFeatures.TabIndex = 1;
+            // 
+            // contextMenuStripFeature
+            // 
+            this.contextMenuStripFeature.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openImplmentationToolStripMenuItem,
+            this.openCalleeToolStripMenuItem,
+            this.copyFeatureNamesToolStripMenuItem});
+            this.contextMenuStripFeature.Name = "contextMenuStripFeature";
+            this.contextMenuStripFeature.Size = new System.Drawing.Size(192, 92);
+            // 
+            // openImplmentationToolStripMenuItem
+            // 
+            this.openImplmentationToolStripMenuItem.Name = "openImplmentationToolStripMenuItem";
+            this.openImplmentationToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.openImplmentationToolStripMenuItem.Text = "Open Implementation";
+            this.openImplmentationToolStripMenuItem.Click += new System.EventHandler(this.openImplmentationToolStripMenuItem_Click);
+            // 
+            // openCalleeToolStripMenuItem
+            // 
+            this.openCalleeToolStripMenuItem.Name = "openCalleeToolStripMenuItem";
+            this.openCalleeToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.openCalleeToolStripMenuItem.Text = "Open Callee";
+            this.openCalleeToolStripMenuItem.Click += new System.EventHandler(this.openCalleeToolStripMenuItem_Click);
+            // 
+            // copyFeatureNamesToolStripMenuItem
+            // 
+            this.copyFeatureNamesToolStripMenuItem.Name = "copyFeatureNamesToolStripMenuItem";
+            this.copyFeatureNamesToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.copyFeatureNamesToolStripMenuItem.Text = "Copy Feature names";
+            this.copyFeatureNamesToolStripMenuItem.Click += new System.EventHandler(this.copyFeatureNamesToolStripMenuItem_Click);
             // 
             // tabRequired
             // 
@@ -1533,6 +1563,14 @@ namespace LspAnalyzer
             this.getIncludesToolStripMenuItem.ToolTipText = resources.GetString("getIncludesToolStripMenuItem.ToolTipText");
             this.getIncludesToolStripMenuItem.Click += new System.EventHandler(this.getIncludesToolStripMenuItem_Click);
             // 
+            // openCQueryOfWorkspaceToolStripMenuItem
+            // 
+            this.openCQueryOfWorkspaceToolStripMenuItem.Name = "openCQueryOfWorkspaceToolStripMenuItem";
+            this.openCQueryOfWorkspaceToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
+            this.openCQueryOfWorkspaceToolStripMenuItem.Text = "Open .CQuery of workspace";
+            this.openCQueryOfWorkspaceToolStripMenuItem.ToolTipText = resources.GetString("openCQueryOfWorkspaceToolStripMenuItem.ToolTipText");
+            this.openCQueryOfWorkspaceToolStripMenuItem.Click += new System.EventHandler(this.openCQueryOfWorkspaceToolStripMenuItem_Click);
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1622,42 +1660,6 @@ namespace LspAnalyzer
             this.txtState.Size = new System.Drawing.Size(1110, 20);
             this.txtState.TabIndex = 12;
             // 
-            // openCQueryOfWorkspaceToolStripMenuItem
-            // 
-            this.openCQueryOfWorkspaceToolStripMenuItem.Name = "openCQueryOfWorkspaceToolStripMenuItem";
-            this.openCQueryOfWorkspaceToolStripMenuItem.Size = new System.Drawing.Size(254, 22);
-            this.openCQueryOfWorkspaceToolStripMenuItem.Text = "Open .CQuery of workspace";
-            this.openCQueryOfWorkspaceToolStripMenuItem.ToolTipText = resources.GetString("openCQueryOfWorkspaceToolStripMenuItem.ToolTipText");
-            this.openCQueryOfWorkspaceToolStripMenuItem.Click += new System.EventHandler(this.openCQueryOfWorkspaceToolStripMenuItem_Click);
-            // 
-            // contextMenuStripFeature
-            // 
-            this.contextMenuStripFeature.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openImplmentationToolStripMenuItem,
-            this.openCalleeToolStripMenuItem,
-            this.copyFeatureNamesToolStripMenuItem});
-            this.contextMenuStripFeature.Name = "contextMenuStripFeature";
-            this.contextMenuStripFeature.Size = new System.Drawing.Size(192, 70);
-            // 
-            // openImplmentationToolStripMenuItem
-            // 
-            this.openImplmentationToolStripMenuItem.Name = "openImplmentationToolStripMenuItem";
-            this.openImplmentationToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.openImplmentationToolStripMenuItem.Text = "Open Implementation";
-            this.openImplmentationToolStripMenuItem.Click += new System.EventHandler(this.openImplmentationToolStripMenuItem_Click);
-            // 
-            // openCalleeToolStripMenuItem
-            // 
-            this.openCalleeToolStripMenuItem.Name = "openCalleeToolStripMenuItem";
-            this.openCalleeToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.openCalleeToolStripMenuItem.Text = "Open Callee";
-            // 
-            // copyFeatureNamesToolStripMenuItem
-            // 
-            this.copyFeatureNamesToolStripMenuItem.Name = "copyFeatureNamesToolStripMenuItem";
-            this.copyFeatureNamesToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.copyFeatureNamesToolStripMenuItem.Text = "Copy Feature names";
-            // 
             // LspAnalyzer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1708,6 +1710,7 @@ namespace LspAnalyzer
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdProvidedFeatures)).EndInit();
+            this.contextMenuStripFeature.ResumeLayout(false);
             this.tabRequired.ResumeLayout(false);
             this.tableLayoutRequired.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
@@ -1717,7 +1720,6 @@ namespace LspAnalyzer
             this.panel1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.contextMenuStripFeature.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

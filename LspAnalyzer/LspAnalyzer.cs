@@ -1436,5 +1436,35 @@ $@"# Includes for .CQuery
         {
 
         }
+        /// <summary>
+        /// Copy Item names to Clipboard
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void copyFeatureNamesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataGridView grid = Start.GetDataGridViewOfContextMenu(sender);
+            string columnName = "RequiredItem";
+            if (grid == grdProvidedFeatures) columnName = "ProvidedItem";
+            CopyCellValuesToClipboard(sender, columnName);
+        }
+        /// <summary>
+        /// Open first Callee
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void openCalleeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataGridView grid = Start.GetDataGridViewOfContextMenu(sender);
+           
+            var row = grid.SelectedRows[0];
+            int id = (int)row.Cells["Id"].Value;
+
+            SymbolDb symbolDb = new SymbolDb(_settings.SettingsItem.SqLiteDatabasePath, null);
+            string fileName = symbolDb.GetFirstCalleeFromId(id, out Services.Position pos);
+
+            Start.StartFile(fileName, pos);
+
+        }
     }
 }

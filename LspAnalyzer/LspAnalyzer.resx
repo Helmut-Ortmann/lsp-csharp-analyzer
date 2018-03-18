@@ -380,11 +380,11 @@ You can also add free filters like:
 For 'Kind' look in the LSP specification under SymbolKind.
 </value>
   </data>
-  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>278, 17</value>
-  </metadata>
   <metadata name="contextMenuStripFeature.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>761, 17</value>
+  </metadata>
+  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>278, 17</value>
   </metadata>
   <data name="doToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Copy CQuery include statements to Clipboard
@@ -404,9 +404,6 @@ and put them to the Clipboard. In settings.json is a blacklist to ignore folders
 See:
 https://github.com/cquery-project/cquery/wiki/Getting-started#project-setup</value>
   </data>
-  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>951, 17</value>
-  </metadata>
   <data name="openCQueryOfWorkspaceToolStripMenuItem.ToolTipText" xml:space="preserve">
     <value>Opens the .CQuery file of the workspace.
 
@@ -414,4 +411,7 @@ This is e.g. useful to insert the header statements if you use CQuery as C/C++ L
 
 In Settings.json you can use the entry  "IncludeDirectoryBlackList" no tignore some directories from the include list.</value>
   </data>
+  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>951, 17</value>
+  </metadata>
 </root>

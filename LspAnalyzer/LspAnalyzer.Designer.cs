@@ -29,9 +29,9 @@ namespace LspAnalyzer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LspAnalyzer));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnShutDown = new System.Windows.Forms.Button();
             this.txtServerPath = new System.Windows.Forms.TextBox();
@@ -267,14 +267,14 @@ namespace LspAnalyzer
             this.grdServerCapabilities.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdServerCapabilities.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grdServerCapabilities.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdServerCapabilities.DefaultCellStyle = dataGridViewCellStyle5;
             this.grdServerCapabilities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grdServerCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdServerCapabilities.MultiSelect = false;
@@ -333,9 +333,8 @@ namespace LspAnalyzer
             this.txtSymbol.Name = "txtSymbol";
             this.txtSymbol.Size = new System.Drawing.Size(473, 20);
             this.txtSymbol.TabIndex = 2;
-            this.toolTip1.SetToolTip(this.txtSymbol, "Symbol to find in Workspace or Document like:\r\n\r\nAMM_");
-            this.txtSymbol.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtSymbol_KeyPress);
-            this.txtSymbol.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txtSymbol_MouseDoubleClick);
+            this.toolTip1.SetToolTip(this.txtSymbol, "Symbol to find in Workspace or Document or\r\nRelative path of folder/file to estim" +
+        "ate features:\r\n\r\nSymbol like:\r\nAMM_\r\n\r\nFeature like:\r\nmyFolder\\myFolder");
             // 
             // tabCapabilities
             // 
@@ -1179,8 +1178,8 @@ namespace LspAnalyzer
             this.grdClientCapabilities.Location = new System.Drawing.Point(3, 33);
             this.grdClientCapabilities.Name = "grdClientCapabilities";
             this.grdClientCapabilities.RowHeadersVisible = false;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdClientCapabilities.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.grdClientCapabilities.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grdClientCapabilities.Size = new System.Drawing.Size(1090, 233);
             this.grdClientCapabilities.TabIndex = 1;
@@ -1303,7 +1302,7 @@ namespace LspAnalyzer
             this.openCalleeToolStripMenuItem,
             this.copyFeatureNamesToolStripMenuItem});
             this.contextMenuStripFeature.Name = "contextMenuStripFeature";
-            this.contextMenuStripFeature.Size = new System.Drawing.Size(192, 92);
+            this.contextMenuStripFeature.Size = new System.Drawing.Size(192, 70);
             // 
             // openImplmentationToolStripMenuItem
             // 

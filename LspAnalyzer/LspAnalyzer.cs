@@ -768,43 +768,12 @@ namespace LspAnalyzer
 
         private async void txtSymbol_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (_client == null)
-            {
-                MessageBox.Show("Client not initialized, Break");
-                return;
-            }
-
-            if (txtSymbol.Text.Trim() == "")
-            {
-                MessageBox.Show("No symbol to search for defined, Break");
-                return;
-            }
-
-            await RequestSymbol(txtSymbol.Text);
 
         }
 
         private async void txtSymbol_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char) Keys.Enter)
-            {
-                if (_client == null)
-                {
-                    MessageBox.Show("Client not initialized, Break");
-                    e.Handled = true;
-                    return;
-                }
 
-                if (txtSymbol.Text.Trim() == "xxxxxx")
-                {
-                    MessageBox.Show("No symbol to search for defined, Break");
-                    e.Handled = true;
-                    return;
-                }
-
-                e.Handled = true;
-                await RequestSymbol(txtSymbol.Text);
-            }
         }
 
         private void toolStripMenuItemOpen_Click(object sender, EventArgs e)

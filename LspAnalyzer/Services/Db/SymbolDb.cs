@@ -497,7 +497,7 @@ namespace LspAnalyzer.Services.Db
                 {
                     var providedItemsHelp = (from reqItem in db.CodeItemUsages
                         join reqFile in db.Files on reqItem.FileId equals reqFile.Id
-                        join item in db.CodeItems on reqItem.Id equals item.Id
+                        join item in db.CodeItems on reqItem.CodeItemId equals item.Id
                         join kind in db.CodeItemKinds on item.Kind equals kind.Id
                         join file in db.Files on item.FileId equals file.Id
                         where file.Name.StartsWith(componentPath)
@@ -554,7 +554,7 @@ namespace LspAnalyzer.Services.Db
                 {
                     var requiredItemsHelp = (from reqItem in db.CodeItemUsages
                         join reqFile in db.Files on reqItem.FileId equals reqFile.Id
-                        join item in db.CodeItems on reqItem.Id equals item.Id
+                        join item in db.CodeItems on reqItem.CodeItemId equals item.Id
                         join kind in db.CodeItemKinds on item.Kind equals kind.Id
                         join file in db.Files on item.FileId equals file.Id
                         where ! file.Name.StartsWith(componentPath)
@@ -693,10 +693,10 @@ namespace LspAnalyzer.Services.Db
                 try
                 {
                     var res = (from i in db.CodeItems
-                        join u in db.CodeItemUsages on i.Id equals u.Id
+                        join u in db.CodeItemUsages on i.Id equals u.CodeItemId
                         join f1 in db.Files on u.FileId equals f1.Id
                         where i.Id == id
-                        select new {FileName = f1.Name, Position = new Position(u.StartLine,i.StartColumn) }).FirstOrDefault();
+                        select new {FileName = f1.Name, Position = new Position(u.StartLine,u.StartColumn) }).FirstOrDefault();
                     pos = res.Position;
                     return res.FileName;
                 }

@@ -31,6 +31,8 @@ namespace LspAnalyzer
         private LanguageClient _client;
         private Settings.Settings _settings;
 
+        private static AutoCompleteStringCollection _txtSymbolSuggestion = new AutoCompleteStringCollection();
+
         private readonly ILoggerFactory _loggerFactory = new LoggerFactory();
         readonly BindingSource _bsServerCapabilities = new BindingSource();
         readonly BindingSource _bsClientCapabilities = new BindingSource();
@@ -118,6 +120,9 @@ namespace LspAnalyzer
             txtReferencesSymbolName.Text = "";
             txtWsSymbolName.Text = "";
             txtState.Text = "";
+
+            
+
         }
 
         /// <summary>
@@ -300,6 +305,22 @@ namespace LspAnalyzer
             grdDocument.ShowCellToolTips = false;
             grdReferences.ShowCellToolTips = false;
 
+            string workspace = _settings.SettingsItem.WorkspaceDirectory;
+
+            var filesHelp = (from f in Directory.GetFiles(workspace, "*.*", SearchOption.AllDirectories)
+                    where Path.GetExtension(f).ToLower().StartsWith(".c") 
+                    select f)
+                .Union
+                (from f1 in Directory.GetDirectories(workspace, "*", SearchOption.AllDirectories)
+                    select f1);
+            string[] files = (from f in filesHelp
+                where f.Substring(workspace.Length ,1) != "."
+                orderby f
+                select f.Substring(workspace.Length).Replace(@"\", "/")).ToArray();
+
+            _txtSymbolSuggestion.AddRange(files);
+            txtSymbol.AutoCompleteCustomSource = _txtSymbolSuggestion;
+
 
             // Make an Aggregate filters 
             _aggregateFilterSymbol = new AggregateGridFilter(
@@ -320,13 +341,13 @@ namespace LspAnalyzer
             );
             _aggregateFilterProvidedFeatures = new AggregateGridFilter(
                 _bsProvidedFeatures,
-                new List<string>() {"ProvidedItem", "ProvidedFile", "Kind", "CalleeFile", "CalleePath"},
-                new List<TextBox>(new[] {txtProvidedItem, txtProvidedFile, txtProvidedKind, txtProvidedCalleeFile,txtProvidedCalleePath})
+                new List<string>() {"ProvidedItem", "ProvidedFile", "Kind", "CalleeFile"},
+                new List<TextBox>(new[] {txtProvidedItem, txtProvidedFile, txtProvidedKind, txtProvidedCalleeFile})
             );
             _aggregateFilterRequiredFeatures = new AggregateGridFilter(
                 _bsRequiredFeatures,
-                new List<string>() {"RequiredItem", "RequiredFile", "Kind", "CalleeFile", "CalleePath"},
-                new List<TextBox>(new[] {txtRequiredItem, txtRequiredCalleePath, txtRequiredKind, txtRequiredCalleeFile,txtRequiredCalleePath})
+                new List<string>() {"RequiredItem", "RequiredFile", "Kind", "CalleeFile"},
+                new List<TextBox>(new[] {txtRequiredItem, txtRequiredFile, txtRequiredKind, txtRequiredCalleeFile})
             );
 
 
@@ -338,6 +359,7 @@ namespace LspAnalyzer
                 new List<string>() {"Kind"},
                 new List<TextBox>(new[] {txtDocumentKind})
             );
+
 
         }
 
@@ -766,15 +788,12 @@ namespace LspAnalyzer
         }
 
 
-        private async void txtSymbol_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void txtSymbol_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-
+            txtSymbol.Text = Clipboard.GetText().Trim();
         }
 
-        private async void txtSymbol_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
+        
 
         private void toolStripMenuItemOpen_Click(object sender, EventArgs e)
         {
@@ -1122,7 +1141,7 @@ namespace LspAnalyzer
 
             var timeMeasurement = new TimeMeasurement();
 
-            SymbolDb symbolDb = new SymbolDb(_settings.SettingsItem.SqLiteDatabasePath, _client);
+            SymbolDb symbolDb = new SymbolDb(_settings, _client);
             symbolDb.Create();
             symbolDb.LoadFiles(_settings.SettingsItem.WorkspaceDirectory);
             var countItems = symbolDb.LoadItems(_settings.SettingsItem.WorkspaceDirectory, _dtSymbols);
@@ -1147,7 +1166,7 @@ namespace LspAnalyzer
 
             var timeMeasurement = new TimeMeasurement();
             Cursor.Current = Cursors.WaitCursor;
-            SymbolDb symbolDb = new SymbolDb(_settings.SettingsItem.SqLiteDatabasePath, _client);
+            SymbolDb symbolDb = new SymbolDb(_settings, _client);
             symbolDb.Create();
             Cursor.Current = Cursors.Default;
             MessageBox.Show($"SymbolDB='{_settings.SettingsItem.SqLiteDatabasePath}'\r\nDuration: {timeMeasurement.TimeSpanAsString()}",
@@ -1185,7 +1204,7 @@ namespace LspAnalyzer
 
         private void sQLOverviewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SymbolDb symbolDb = new SymbolDb(_settings.SettingsItem.SqLiteDatabasePath, _client);
+            SymbolDb symbolDb = new SymbolDb(_settings, _client);
             symbolDb.Metrics();
 
         }
@@ -1312,7 +1331,7 @@ namespace LspAnalyzer
                 return;
             }
            
-            SymbolDb symbolDb = new SymbolDb(_settings.SettingsItem.SqLiteDatabasePath, _client);
+            SymbolDb symbolDb = new SymbolDb(_settings, _client);
             if (! symbolDb.IsInitialized())
             {
                 MessageBox.Show(
@@ -1328,8 +1347,8 @@ namespace LspAnalyzer
             _aggregateFilterRequiredFeatures.FilterReset();
 
 
-            _dtProvidedFeatures = symbolDb.GenProvidedFeatures(compPath );
-            _dtRequiredFeatures = symbolDb.GenRequiredFeatures(compPath  );
+            _dtProvidedFeatures = symbolDb.DataTableFromProvidedFeatures(compPath );
+            _dtRequiredFeatures = symbolDb.DataTableFromRequiredFeatures(compPath  );
 
 
             _bsProvidedFeatures.DataSource = _dtProvidedFeatures;
@@ -1337,19 +1356,28 @@ namespace LspAnalyzer
             _bsRequiredFeatures.DataSource = _dtRequiredFeatures;
             grdRequiredFeatures.DataSource = _bsRequiredFeatures;
 
-            tabDocument.SelectedTab = tabProvided;
-
-            if (grdProvidedFeatures.ColumnCount > 5)
-            {
-                grdProvidedFeatures.Columns[5].Visible = false;
-            }
+            // Tab has to be visible to manipulate width
+            tabDocument.SelectedTab = tabRequired;
             if (grdRequiredFeatures.ColumnCount > 5)
             {
+                grdRequiredFeatures.Columns[2].Width = 55;
+                grdRequiredFeatures.Columns[3].Width = 30;
                 grdRequiredFeatures.Columns[5].Visible = false;
             }
-            
 
+            tabDocument.SelectedTab = tabProvided;
+            if (grdProvidedFeatures.ColumnCount > 5)
+            {
+                grdProvidedFeatures.Columns[2].Width = 55;
+                grdProvidedFeatures.Columns[3].Width = 30;
+                grdProvidedFeatures.Columns[5].Visible = false;
+            }
+            
+            
+            
             btnInterface.Enabled = true;
+            txtProvidedCount.Text = grdProvidedFeatures.Rows.Count.ToString("N0");
+            txtRequiredCount.Text = grdRequiredFeatures.Rows.Count.ToString("N0");
            
             txtState.Text =
                 $"Duration: {timeMeasurement.TimeSpanAsString()}, Loaded provided/required features for '{compPath}': Provided features: {_dtProvidedFeatures.Rows.Count,8:N0}, Required features: {_dtRequiredFeatures.Rows.Count,8:N0}";
@@ -1392,7 +1420,7 @@ $@"# Includes for .CQuery
             var row = grid.SelectedRows[0];
             int id = (int)row.Cells["Id"].Value;
 
-            SymbolDb symbolDb = new SymbolDb(_settings.SettingsItem.SqLiteDatabasePath, null);
+            SymbolDb symbolDb = new SymbolDb(_settings, null);
             string fileName = symbolDb.GetFileNameFromId(id, out Services.Position pos);
 
             Start.StartFile(fileName, pos);
@@ -1429,7 +1457,7 @@ $@"# Includes for .CQuery
             var row = grid.SelectedRows[0];
             int id = (int)row.Cells["Id"].Value;
 
-            SymbolDb symbolDb = new SymbolDb(_settings.SettingsItem.SqLiteDatabasePath, null);
+            SymbolDb symbolDb = new SymbolDb(_settings, null);
             string fileName = symbolDb.GetFirstCalleeFromId(id, out Services.Position pos);
 
             Start.StartFile(fileName, pos);

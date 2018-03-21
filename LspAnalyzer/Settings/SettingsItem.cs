@@ -22,7 +22,7 @@ namespace LspAnalyzer.Settings
         [JsonIgnore]
         public string WorkspaceDirectory
         {
-            get => _workspaceDirectory.Replace(@"\", "/");
+            get => _workspaceDirectory?.Replace(@"\", "/") ?? "";
             set => _workspaceDirectory = value;
         }
         [JsonProperty("WorkspaceDirectory")]

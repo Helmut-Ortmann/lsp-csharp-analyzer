@@ -14,36 +14,37 @@ using OmniSharp.Extensions.LanguageServer.Client;
 using OmniSharpPosition = OmniSharp.Extensions.LanguageServer.Protocol.Models.Position;
 using File = DataModels.Symbols.File;
 
+
 namespace LspAnalyzer.Services.Db
 {
     public class SymbolDb
     {
+        private readonly Settings.Settings _settings;
         private readonly LanguageClient _client;
         readonly IDataProvider _dbProvider;
-        private readonly string _dbPath;
         private readonly string _connectionString;
         // Performance optimization
         private Dictionary<int,string> _dictKind = new Dictionary<int,string>();
         private readonly Dictionary<string, int> _dictFile = new Dictionary<string,int>();
 
-        public object dtTable { get; private set; }
+        public object DtTable { get; private set; }
 
-        public SymbolDb(string dbPath, LanguageClient client)
+        public SymbolDb(Settings.Settings settings, LanguageClient client)
         {
-            _dbPath = dbPath;
+            _settings = settings;
             _client = client;
-            _connectionString = LinqUtil.GetConnectionString(dbPath, out _dbProvider);
+            _connectionString = LinqUtil.GetConnectionString(_settings.SettingsItem.SqLiteDatabasePath, out _dbProvider);
            
 
         }
 
         public bool IsValid()
         {
-            return System.IO.File.Exists(_dbPath);
+            return System.IO.File.Exists(_settings.SettingsItem.SqLiteDatabasePath);
         }
         public bool IsInitialized()
         {
-            return IsValid()  && (new System.IO.FileInfo(_dbPath).Length > 1000) ;
+            return IsValid()  && (new System.IO.FileInfo(_settings.SettingsItem.SqLiteDatabasePath).Length > 1000) ;
         }
         /// <summary>
         /// Create Database
@@ -363,17 +364,18 @@ namespace LspAnalyzer.Services.Db
         }
 
         /// <summary>
-        /// Load usage for variable and functions
+        /// Load usage for variables and functions in symbol database for workspace
         /// </summary>
+        /// <param name="workspace"></param>
         public async Task<int> LoadUsage(string workspace)
         {
 
             // create all usages
             int countUsages = 0;
-            int countIgnoredUsages = 0;
             using (var db = new DataModels.Symbols.SYMBOLDB(_dbProvider, _connectionString))
 
             {
+                // Get all items from symbol database
                 var items = (from item in db.CodeItems
                     join file in db.Files on item.FileId equals file.Id
                     join kind in db.CodeItemKinds on item.Kind equals kind.Id
@@ -387,22 +389,25 @@ namespace LspAnalyzer.Services.Db
                         NameStartColumn = item.NameStartColumn
 						
                     }).ToArray();
+
                 // write to Database
                 db.BeginTransaction();
 
-                foreach (var f in items)
+                foreach (var item in items)
                 {
-                    if (IsCallable(f.ItemKind) ||
-                        IsVars(f.ItemKind))
+                    // Item used as reference
+                    if (IsCallable(item.ItemKind) ||
+                        IsVars(item.ItemKind))
                     {
-                        string method = IsCallable(f.ItemKind) ? @"$cquery/callers" : @"$cquery/vars";
+                        string method = IsCallable(item.ItemKind) ? @"$cquery/callers" : @"$cquery/vars";
                         var locations =
-                            await _client.TextDocument.Cquery(method, f.FileName, f.NameStartLine, f.NameStartColumn);
-                        foreach (var l in locations)
+                            await _client.TextDocument.Cquery(method, item.FileName, item.NameStartLine, item.NameStartColumn);
+
+                        foreach (var location in locations)
                         {
 
 
-                            string path = l.Uri.LocalPath.Substring(1).ToLower();
+                            string path = location.Uri.LocalPath.Substring(1).ToLower();
                             // only consider files with path in workspace and which are C-Files
                             if (path.Contains(workspace.ToLower()) & IsCFile(path))    // || IsHFile(path)))
                             {
@@ -411,26 +416,27 @@ namespace LspAnalyzer.Services.Db
                                 if (_dictFile.TryGetValue(path, out int fileId) == false)
                                 {
                                     MessageBox.Show(
-                                        $"path='{path}'\r\n\r\nmethod='{method}'\r\nkind='{f.ItemKind}'\r\nitem='{f.ItemName}'",
+                                        $"path='{path}'\r\n\r\nmethod='{method}'\r\nkind='{item.ItemKind}'\r\nitem='{item.ItemName}'",
                                         "Cant find file id");
                                     continue;
                                 }
 
                                 db.Insert<CodeItemUsages>(new CodeItemUsages
                                 {
-                                    CodeItemId = f.ItemId,
+                                    CodeItemId = item.ItemId,
                                     FileId = _dictFile[path],
                                     Signature = " ",
-                                    StartColumn = (int) l.Range.Start.Character,
-                                    StartLine = (int) l.Range.Start.Line,
-                                    EndColumn = (int) l.Range.End.Character,
-                                    EndLine = (int) l.Range.End.Line,
+                                    StartColumn = (int) location.Range.Start.Character,
+                                    StartLine = (int) location.Range.Start.Line,
+                                    EndColumn = (int) location.Range.End.Character,
+                                    EndLine = (int) location.Range.End.Line,
 
 
                                 });
                                 countUsages += 1;
                             } else
-                                countIgnoredUsages += 1;
+                            {
+                            }
                         }
                     }
                 }
@@ -442,7 +448,7 @@ namespace LspAnalyzer.Services.Db
 
         }
         /// <summary>
-        /// Output metrics of Code
+        /// Output metrics of Code from symbol database
         /// </summary>
         public void Metrics() {
 
@@ -483,9 +489,10 @@ namespace LspAnalyzer.Services.Db
             }
         }
         /// <summary>
-        /// Output metrics of Code
+        /// Gen data table with provided features from a file/directory
         /// </summary>
-        public DataTable GenProvidedFeatures(string componentPath)
+        /// <param name="componentPath">Folder or File</param>
+        public DataTable DataTableFromProvidedFeatures(string componentPath)
         {
 
             componentPath = NormalizePath(componentPath);
@@ -495,7 +502,10 @@ namespace LspAnalyzer.Services.Db
 
                 try
                 {
-                    var providedItemsHelp = (from reqItem in db.CodeItemUsages
+                    var providedItemsHelp = (
+                        from u in db.CodeItemUsages
+                        group u by u.CodeItemId into grp
+                        join reqItem in db.CodeItemUsages on grp.Key equals reqItem.CodeItemId
                         join reqFile in db.Files on reqItem.FileId equals reqFile.Id
                         join item in db.CodeItems on reqItem.CodeItemId equals item.Id
                         join kind in db.CodeItemKinds on item.Kind equals kind.Id
@@ -507,13 +517,37 @@ namespace LspAnalyzer.Services.Db
                         select new
                         {
                             ProvidedItem = item.Name,
-                            ProvidedFile = file.LeafName,
+                            ProvidedFile = file.Name.Substring(_settings.SettingsItem.WorkspaceDirectory.Length),
                             Kind = kind.Name,
-                            CalleeFile = reqFile.LeafName,
-                            CalleePath = reqFile.Name,
+                            Count = grp.Count(),
+                            CalleeFile = reqFile.Name.Substring(_settings.SettingsItem.WorkspaceDirectory.Length),
                             Id = item.Id
 							
-                        }).ToArray();
+                        }).Distinct().ToArray();
+
+
+
+                    //var providedItemsHelp = (
+                    //    from reqItem in db.CodeItemUsages
+                    //    join reqFile in db.Files on reqItem.FileId equals reqFile.Id
+                    //    join item in db.CodeItems on reqItem.CodeItemId equals item.Id
+                    //    join kind in db.CodeItemKinds on item.Kind equals kind.Id
+                    //    join file in db.Files on item.FileId equals file.Id
+                    //    where file.Name.StartsWith(componentPath)
+                    //    where ! reqFile.Name.StartsWith(componentPath)
+                    //    where kind.Name != "Macro" || (kind.Name == "Macro" && ! (item.Name.EndsWith("_H") || item.Name.EndsWith("_C")))
+                    //    orderby item.Name.ToLower(), kind
+                    //    select new
+                    //    {
+                    //        ProvidedItem = item.Name,
+                    //        ProvidedFile = file.LeafName,
+                    //        Kind = kind.Name,
+                    //        CalleeFile = reqFile.LeafName,
+                    //        CalleePath = reqFile.Name,
+                    //        Id = item.Id
+							
+                    //    }).Distinct().ToArray();
+
                     // Check for item kinds, it's possible to use "ALL"
                     var providedItemsHelp2 = from item in providedItemsHelp
                         join possibleKinds in lKind on item.Kind equals possibleKinds
@@ -538,9 +572,9 @@ namespace LspAnalyzer.Services.Db
         }
 
         /// <summary>
-        /// Output metrics of Code
+        /// Gen data table with required features from a file/directory
         /// </summary>
-        public DataTable GenRequiredFeatures(string componentPath )
+        public DataTable DataTableFromRequiredFeatures(string componentPath )
         {
 
             componentPath = NormalizePath(componentPath);
@@ -552,25 +586,52 @@ namespace LspAnalyzer.Services.Db
             {
                 try
                 {
-                    var requiredItemsHelp = (from reqItem in db.CodeItemUsages
-                        join reqFile in db.Files on reqItem.FileId equals reqFile.Id
-                        join item in db.CodeItems on reqItem.CodeItemId equals item.Id
-                        join kind in db.CodeItemKinds on item.Kind equals kind.Id
-                        join file in db.Files on item.FileId equals file.Id
-                        where ! file.Name.StartsWith(componentPath)
-                        where reqFile.Name.StartsWith(componentPath)
-                        where kind.Name != "Macro" || (kind.Name == "Macro" && ! (item.Name.EndsWith("_H") || item.Name.EndsWith("_C")))
-                        orderby item.Name.ToLower(), kind
-                        select new
-                        {
-                            RequiredItem = item.Name,
-                            RequiredFile = file.LeafName,
-                            Kind = kind.Name,
-                            CalleeFile = reqFile.LeafName,
-                            CalleePath = reqFile.Name,
-                            Id = item.Id
-							
+                    var requiredItemsHelp = (
+                        from x in 
+                            (from u in db.CodeItemUsages  // u: usage of an item
+                                join usageInFile in db.Files on u.FileId equals usageInFile.Id
+                                join item in db.CodeItems on u.CodeItemId equals item.Id
+                                join kind in db.CodeItemKinds on item.Kind equals kind.Id
+                                join file in db.Files on item.FileId equals file.Id
+                                where usageInFile.Name.StartsWith(componentPath)
+                                where !file.Name.StartsWith(componentPath)
+                                //where kind.name == "Function"
+                                select new { ItemId=u.CodeItemId, UsageInFileName = usageInFile.Name, ItemName=item.Name, Kind=kind.Name, File=file.Name })
+                        group x by new {  UsageInFileName=x.UsageInFileName, ItemName=x.ItemName, Kind=x.Kind, File=x.File, ItemId=x.ItemId}  into grp
+                        orderby grp.Key.ItemName.ToLower() descending
+                        select new { 
+
+                            RequiredItem=grp.Key.ItemName, 
+                            RequiredFile = grp.Key.UsageInFileName.Substring(_settings.SettingsItem.WorkspaceDirectory.Length), 
+                            Kind = grp.Key.Kind, 
+                            Count = grp.Count(),
+                            File= grp.Key.File.Substring(_settings.SettingsItem.WorkspaceDirectory.Length), 
+                            Id = grp.Key.ItemId
                         }).ToArray();
+
+                    //var requiredItemsHelp = (
+                        
+                    //    from reqItem in db.CodeItemUsages
+                    //    join reqFile in db.Files on reqItem.FileId equals reqFile.Id
+                    //    join item in db.CodeItems on reqItem.CodeItemId equals item.Id
+                    //    join kind in db.CodeItemKinds on item.Kind equals kind.Id
+                    //    join file in db.Files on item.FileId equals file.Id
+                    //    where ! file.Name.StartsWith(componentPath)
+                    //    where reqFile.Name.StartsWith(componentPath)
+                    //    where kind.Name != "Macro" || (kind.Name == "Macro" && ! (item.Name.EndsWith("_H") || item.Name.EndsWith("_C")))
+                    //    orderby item.Name.ToLower(), kind
+                    //    select new
+                    //    {
+                    //        RequiredItem = item.Name,
+                    //        RequiredFile = file.LeafName,
+                    //        Kind = kind.Name,
+                    //        CalleeFile = reqFile.LeafName,
+                    //        CalleePath = reqFile.Name,
+                    //        Id = item.Id
+							
+                    //    }).Distinct().ToArray();
+
+
                     // Check for item kinds, it's possible to use "ALL"
                     var requiredItemsHelp2 = from item in requiredItemsHelp
                         join possibleKinds in lKind on item.Kind equals possibleKinds
@@ -628,11 +689,11 @@ namespace LspAnalyzer.Services.Db
 
         private bool DeleteOldDatabase()
         {
-            if (System.IO.File.Exists(_dbPath))
+            if (System.IO.File.Exists(_settings.SettingsItem.SqLiteDatabasePath))
             {
                 try
                 {
-                    System.IO.File.Delete(_dbPath);
+                    System.IO.File.Delete(_settings.SettingsItem.SqLiteDatabasePath);
                 }
                 catch (Exception)
                 {
@@ -693,10 +754,21 @@ namespace LspAnalyzer.Services.Db
                 try
                 {
                     var res = (from i in db.CodeItems
-                        join u in db.CodeItemUsages on i.Id equals u.CodeItemId
-                        join f1 in db.Files on u.FileId equals f1.Id
-                        where i.Id == id
-                        select new {FileName = f1.Name, Position = new Position(u.StartLine,u.StartColumn) }).FirstOrDefault();
+                               join u in db.CodeItemUsages on i.Id equals u.CodeItemId
+                               join f1 in db.Files on u.FileId equals f1.Id
+                               where i.Id == id
+                               select new { FileName = f1.Name, Position = new Position(u.StartLine, u.StartColumn) }).FirstOrDefault();
+                    //var res = (from u in db.CodeItemUsages
+                    //    where u.CodeItemId == id
+                    //    group u by u.CodeItemId into grp
+                    //    join u1 in db.CodeItemUsages on grp.Key equals u1.CodeItemId
+                    //    join i in db.CodeItems on u1.CodeItemId equals i.Id
+                    //    join f1 in db.Files on i.FileId equals f1.Id
+
+                    //    select new { FileName=f1.Name,  Count = grp.Count(), u1.StartLine, u1.StartColumn}).FirstOrDefault();
+
+
+
                     pos = res.Position;
                     return res.FileName;
                 }
